@@ -255,6 +255,7 @@ ul.alert-dropdown {
     color: #df8a13;
 }
 
-.form-control {
-
+#inner {
+    width: 50%;
+    margin: 0 auto;
 }
