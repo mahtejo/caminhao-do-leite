@@ -54,8 +54,8 @@ body {
 }
 
 .top-nav>li>a {
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 19px;
+    padding-bottom: 19px;
     line-height: 20px;
     color: #999;
 }
@@ -72,11 +72,12 @@ body {
 .navbar-brand {
     height: 60px;
     text-align: end;
-    margin-top: -4px;
+    margin-top: -8px;
     display:inline-block;
-    margin-right: 0px;
+    margin-left: -3px;
     margin-bottom: 0px;
     border-bottom: 1px solid #222;
+    indent-edge-reset: content-edge;
 }
 
 p {
