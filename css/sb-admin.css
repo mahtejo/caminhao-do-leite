@@ -72,10 +72,15 @@ body {
 .navbar-brand {
     height: 60px;
     text-align: end;
-    margin-top: -5px;
+    margin-top: -4px;
     display:inline-block;
     margin-right: 0px;
     margin-bottom: 0px;
+    border-bottom: 1px solid #222;
+}
+
+p {
+    text-indent: 40px;
 }
 
 .menu {
