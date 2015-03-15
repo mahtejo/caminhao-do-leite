@@ -27,10 +27,10 @@
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
+        <!--[if lt IE 9]>-->
         <script src="@routes.Assets.at("js/html5shiv.js")"></script>
         <script src="@routes.Assets.at("js/respond.min.js")"></script>
-        <![endif]-->
+
 
     </head>
 
@@ -60,10 +60,10 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <b class="navbar-brand menu">Menu</b>
-                    <li class="active">
+                    <li>
                         <a href="@routes.Application.index()"><i class="fa fa-home"></i> Home </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="@routes.Login.show()"><i class=" fa fa-unlock-alt"></i> Login</a>
                     </li>
                     <li>
@@ -114,11 +114,13 @@
                                     <span class="input-group-addon">Senha</span>
                                     <input type="password" class="form-control" placeholder="Senha">
                                 </div>
-                                <p class="tpbutton btn-toolbar" style="text-align:center">
+
+
+                                <div id="botoesCentro">
                                     <a href="#">Esqueceu sua senha?</a><br><br>
-                                    <a class="btn navbar-btn btn-primary" href="#">Entrar</a>
-                                    <a class="btn navbar-btn btn-primary" href="@routes.Application.index()">Cancelar</a>
-                                </p>
+                                    <button type="submit" class="btn btn-primary" href="@routes.Login.login()">Entrar</button>
+                                    <button type="submit" class="btn btn-primary" href="@routes.Application.index()">Cancelar</button>
+                                </div>
 
                             </form>
                         </div>
