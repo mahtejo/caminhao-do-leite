@@ -6,6 +6,7 @@ import play.Logger;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
+import views.html.index;
 import views.html.login;
 
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.List;
 import static play.mvc.Controller.session;
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
-import static play.mvc.Results.redirect;
 
 /**
  * Created by orion on 15/03/15.
@@ -36,20 +36,20 @@ public class Login {
         } else {
             session().clear();
             session("user", filledForm.get().user);
-            return redirect(routes.Application.index());
+            return ok(index.render("Se logou!"));
         }
     }
 
     public static Result show(){
-        // deve retornar algo mais significativo
-        return ok(login.render("algo"));
+        // deve mandar como parâmetro algo mais significativo
+        return ok(login.render("Tela login"));
     }
 
     private static boolean verificaAutenticacao(String username, String password){
         List<Usuario> users = dao.findAllByClass(Usuario.class);
         for (Usuario u: users){
             if (u.getUser().equals(username) && u.autentica(username, password)){
-                Logger.debug("Se logou!");
+                Logger.debug("Login efetuado com sucesso!");
                 return true;
             }
         }

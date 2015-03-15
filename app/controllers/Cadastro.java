@@ -7,13 +7,13 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 import views.html.cadastro;
+import views.html.index;
 
 import java.util.List;
 
 import static play.data.Form.form;
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
-import static play.mvc.Results.redirect;
 
 /**
  * Created by orion on 14/03/15.
@@ -35,7 +35,7 @@ public class Cadastro {
 
             dao.persist(user);
             dao.flush();
-            return redirect(routes.Application.index());
+            return ok(index.render("Cadastro concluído com sucesso!"));
         }
     }
 
@@ -50,7 +50,7 @@ public class Cadastro {
     }
 
     public static Result show() {
-        // deve retornar algo mais significativo
-        return ok(cadastro.render("algo"));
+        // deve mandar como parâmetro algo mais significativo
+        return ok(cadastro.render("Tela cadastro"));
     }
 }

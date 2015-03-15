@@ -13,6 +13,7 @@ import java.util.Map;
 
 import static org.fest.assertions.Assertions.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static play.test.Helpers.*;
 
 
@@ -100,7 +101,41 @@ public class ApplicationTest extends AbstractTest {
         formulario.remove("nome");
         Result result = callAction(controllers.routes.ref.Login.login(), fakeRequest().withFormUrlEncodedBody(formulario));
 
-        assertEquals(303, status(result));
+        assertEquals(200, status(result));
         assertEquals("joao", session(result).get("user"));
+    }
+
+    @Test
+    public void naoDeveSeLogarComSenhaErrada(){
+        Map<String, String> formulario = new HashMap<String, String>();
+        formulario.put("nome", "joao bonifácio");
+        formulario.put("password", "123456");
+        formulario.put("user", "joao");
+        callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
+
+        Map<String, String> formularioErrado = new HashMap<String, String>();
+        formularioErrado.put("password", "123a456");
+        formularioErrado.put("user", "joao");
+        Result result = callAction(controllers.routes.ref.Login.login(), fakeRequest().withFormUrlEncodedBody(formularioErrado));
+
+        assertEquals(400, status(result));
+        assertNotEquals("joao", session(result).get("user"));
+    }
+
+    @Test
+    public void naoDeveSeLogarComUsuarioInvalido(){
+        Map<String, String> formulario = new HashMap<String, String>();
+        formulario.put("nome", "joao bonifácio");
+        formulario.put("password", "123456");
+        formulario.put("user", "joao");
+        callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
+
+        Map<String, String> formularioErrado = new HashMap<String, String>();
+        formularioErrado.put("password", "123456");
+        formularioErrado.put("user", "maria");
+        Result result = callAction(controllers.routes.ref.Login.login(), fakeRequest().withFormUrlEncodedBody(formularioErrado));
+
+        assertEquals(400, status(result));
+        assertNotEquals("maria", session(result).get("user"));
     }
 }

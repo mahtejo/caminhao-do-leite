@@ -1,5 +1,6 @@
 package models;
 
+import models.util.BCrypt;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,14 @@ public class Usuario {
         setPassword(password);
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -38,7 +47,7 @@ public class Usuario {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public String getUser() {
@@ -50,7 +59,7 @@ public class Usuario {
     }
 
     public boolean autentica(String user, String password) {
-        if (user.equals(getUser()) && password.equals(getPassword())){
+        if (user.equals(getUser()) && BCrypt.checkpw(password, getPassword())){
             return true;
         }
         return false;
