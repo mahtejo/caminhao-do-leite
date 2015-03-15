@@ -12,25 +12,25 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private String email;
+    private String nome;
     private String password;
     private String user;
 
     public Usuario() {
     }
 
-    public Usuario(String email, String password, String user) {
-        setEmail(email);
+    public Usuario(String nome, String password, String user) {
+        setNome(nome);
         setUser(user);
         setPassword(password);
     }
 
-    public String getEmail() {
-        return email;
+    public String getNome() {
+        return nome;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getPassword() {
@@ -47,5 +47,12 @@ public class Usuario {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public boolean autentica(String user, String password) {
+        if (user.equals(this.user) && password.equals(this.password)){
+            return true;
+        }
+        return false;
     }
 }

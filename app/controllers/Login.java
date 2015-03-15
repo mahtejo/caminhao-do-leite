@@ -9,41 +9,40 @@ import play.mvc.Result;
 
 import java.util.List;
 
-import static play.data.Form.form;
+import static play.mvc.Controller.session;
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.redirect;
 
 /**
- * Created by orion on 14/03/15.
+ * Created by orion on 15/03/15.
  */
-public class Cadastro {
+public class Login {
 
     private static GenericDAO dao = new GenericDAO();
     private static Form<Usuario> form = Form.form(Usuario.class);
 
     @Transactional
-    public static Result cadastrar() {
+    public static Result login(){
         Form<Usuario> filledForm = form.bindFromRequest();
         Usuario user = filledForm.get();
 
-        if (filledForm.hasErrors() || !isValido(user)) {
+        if (filledForm.hasErrors() || !verificaAutenticacao(user)) {
             return badRequest();
         } else {
-            Logger.debug("Criando usuário: " + filledForm.data().toString() + " como " + user.getUser());
-
-            dao.persist(user);
-            dao.flush();
+            session().clear();
+            session("user", filledForm.get().getUser());
             return redirect(routes.Application.index());
         }
     }
 
-    private static boolean isValido(Usuario user) {
+    private static boolean verificaAutenticacao(Usuario user){
         List<Usuario> users = dao.findAllByClass(Usuario.class);
         for (Usuario u: users){
-            if (user.getUser().equals(u.getUser()) || user.getNome().equals(u.getNome())){
-                return false;
+            if (u.getUser().equals(user.getUser()) && u.autentica(user.getUser(), user.getPassword())){
+                Logger.debug("Se logou!");
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.fest.assertions.Assertions.*;
+import static org.junit.Assert.assertEquals;
 import static play.test.Helpers.*;
 
 
@@ -27,17 +28,9 @@ public class ApplicationTest extends AbstractTest {
     List<Usuario> users = new ArrayList<Usuario>();
 
     @Test
-    public void deveSalvarUsuarioNoBD() {
-        Usuario u = new Usuario("Admin","admin@gmail.com","1234");
-        dao.persist(u);
-
-        assertThat(dao.findAllByClass(Usuario.class).size()).isEqualTo(1);
-    }
-
-    @Test
     public void deveSeCadastrar() {
         Map<String, String> formulario = new HashMap<String, String>();
-        formulario.put("email", "joao@gmail.com");
+        formulario.put("nome", "joao bonifácio");
         formulario.put("password", "123456");
         formulario.put("user", "joao");
         Result result = callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
@@ -45,5 +38,69 @@ public class ApplicationTest extends AbstractTest {
         users = dao.findAllByClass(Usuario.class);
 
         assertThat(users.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void naoDeveCadastrarMesmoUsuario(){
+        Map<String, String> formulario = new HashMap<String, String>();
+        formulario.put("nome", "joao bonifácio");
+        formulario.put("password", "123456");
+        formulario.put("user", "joao");
+
+        callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
+
+        formulario.put("nome", "maria josefina");
+        callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
+
+        users = dao.findAllByClass(Usuario.class);
+        assertThat(users.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void naoDeveCadastrarMesmoNome(){
+        Map<String, String> formulario = new HashMap<String, String>();
+        formulario.put("nome", "joao bonifácio");
+        formulario.put("password", "123456");
+        formulario.put("user", "joao");
+
+        callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
+
+        formulario.put("user", "maria");
+        callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
+
+        users = dao.findAllByClass(Usuario.class);
+        assertThat(users.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void deveCadastrarMaisDeUmUsuario(){
+        Map<String, String> formulario = new HashMap<String, String>();
+        formulario.put("nome", "joao bonifácio");
+        formulario.put("password", "123456");
+        formulario.put("user", "joao");
+
+        callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
+
+        formulario.put("user", "maria");
+        formulario.put("nome", "maria josefina");
+        callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
+
+        users = dao.findAllByClass(Usuario.class);
+        assertThat(users.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void deveSeLogar(){
+        Map<String, String> formulario = new HashMap<String, String>();
+        formulario.put("nome", "joao bonifácio");
+        formulario.put("password", "123456");
+        formulario.put("user", "joao");
+
+        callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
+        formulario.remove("nome");
+        Result result = callAction(controllers.routes.ref.Login.login(), fakeRequest().withFormUrlEncodedBody(formulario));
+
+        assertEquals(303, status(result));
+        assertEquals("joao", session(result).get("user"));
     }
 }
