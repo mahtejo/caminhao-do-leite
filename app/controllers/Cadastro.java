@@ -50,6 +50,7 @@ public class Cadastro {
     }
 
     public static Result show() {
+        // deve retornar algo mais significativo
         return ok(cadastro.render("algo"));
     }
 }

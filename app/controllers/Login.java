@@ -21,30 +21,34 @@ import static play.mvc.Results.redirect;
 public class Login {
 
     private static GenericDAO dao = new GenericDAO();
-    private static Form<Usuario> form = Form.form(Usuario.class);
+    private static Form<Login> form = Form.form(Login.class);
+
+    public String user;
+    public String password;
 
     @Transactional
     public static Result login(){
-        Form<Usuario> filledForm = form.bindFromRequest();
-        Usuario user = filledForm.get();
+        Form<Login> filledForm = form.bindFromRequest();
 
-        if (filledForm.hasErrors() || !verificaAutenticacao(user)) {
+        if (filledForm.hasErrors() || !verificaAutenticacao(filledForm.get().user, filledForm.get().password)) {
+            Logger.debug("Deu bad request com o usuário " + filledForm.get().user + " e senha " + filledForm.get().password);
             return badRequest();
         } else {
             session().clear();
-            session("user", filledForm.get().getUser());
+            session("user", filledForm.get().user);
             return redirect(routes.Application.index());
         }
     }
 
     public static Result show(){
+        // deve retornar algo mais significativo
         return ok(login.render("algo"));
     }
 
-    private static boolean verificaAutenticacao(Usuario user){
+    private static boolean verificaAutenticacao(String username, String password){
         List<Usuario> users = dao.findAllByClass(Usuario.class);
         for (Usuario u: users){
-            if (u.getUser().equals(user.getUser()) && u.autentica(user.getUser(), user.getPassword())){
+            if (u.getUser().equals(username) && u.autentica(username, password)){
                 Logger.debug("Se logou!");
                 return true;
             }

@@ -33,7 +33,7 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getPassword() {
+    private String getPassword() {
         return password;
     }
 
@@ -50,7 +50,7 @@ public class Usuario {
     }
 
     public boolean autentica(String user, String password) {
-        if (user.equals(this.user) && password.equals(this.password)){
+        if (user.equals(getUser()) && password.equals(getPassword())){
             return true;
         }
         return false;
