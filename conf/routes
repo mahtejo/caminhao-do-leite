@@ -4,7 +4,7 @@
 
 # Home page
 GET         /                    controllers.Application.index()
-#GET         /login               controllers.Assets.at("public", "html/login.html")
+#GET         /login               controllers.Assets.at(path="public/html/", file="login.html")
 POST        /cadastrar           controllers.Cadastro.cadastrar()
 POST        /login               controllers.Login.login()
 
