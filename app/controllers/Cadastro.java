@@ -8,7 +8,6 @@ import play.db.jpa.Transactional;
 import play.mvc.Result;
 
 import static play.data.Form.form;
-import static play.mvc.Controller.flash;
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.redirect;
 

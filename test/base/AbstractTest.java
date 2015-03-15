@@ -1,15 +1,14 @@
 package base;
 
-import javax.persistence.EntityManager;
-
 import org.junit.After;
 import org.junit.Before;
-
 import play.db.jpa.JPA;
 import play.db.jpa.JPAPlugin;
 import play.test.FakeApplication;
 import play.test.Helpers;
 import scala.Option;
+
+import javax.persistence.EntityManager;
 
 public abstract class AbstractTest {
     public EntityManager em;

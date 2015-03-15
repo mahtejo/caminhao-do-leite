@@ -1,26 +1,18 @@
+import base.AbstractTest;
+import models.Usuario;
+import models.dao.GenericDAO;
+import org.junit.*;
+import play.libs.F.*;
+import play.mvc.*;
+import play.test.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import base.AbstractTest;
-import com.fasterxml.jackson.databind.JsonNode;
-import models.Usuario;
-import models.dao.GenericDAO;
-import org.junit.*;
-
-import play.mvc.*;
-import play.test.*;
-import play.data.DynamicForm;
-import play.data.validation.ValidationError;
-import play.data.validation.Constraints.RequiredValidator;
-import play.i18n.Lang;
-import play.libs.F;
-import play.libs.F.*;
-import play.twirl.api.Content;
-
-import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
+import static play.test.Helpers.*;
 
 
 /**
