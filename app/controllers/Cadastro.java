@@ -6,11 +6,13 @@ import play.Logger;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
+import views.html.cadastro;
 
 import java.util.List;
 
 import static play.data.Form.form;
 import static play.mvc.Results.badRequest;
+import static play.mvc.Results.ok;
 import static play.mvc.Results.redirect;
 
 /**
@@ -45,5 +47,9 @@ public class Cadastro {
             }
         }
         return true;
+    }
+
+    public static Result show() {
+        return ok(cadastro.render("algo"));
     }
 }

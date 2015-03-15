@@ -4,6 +4,8 @@
 
 # Home page
 GET         /                    controllers.Application.index()
+
+GET         /cadastrar           controllers.Cadastro.show()
 POST        /cadastrar           controllers.Cadastro.cadastrar()
 
 GET         /login               controllers.Login.show()
