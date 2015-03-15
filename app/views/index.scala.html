@@ -40,12 +40,12 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand line" href="public/html/index.html"><img src="public/images/caminhao-nome.png" height="55" width="210"></a>
+                        <a class="navbar-brand line" href="@routes.Application.index()"><img src="@routes.Assets.at("images/caminhao-nome.png")" height="55" width="210"></a>
                     </div>
                         <!-- Top Menu Items -->
                     <ul class="nav navbar-right top-nav">
                         <li>
-                            <a href="public/html/login.html"><i class="fa fa-unlock-alt"></i> Login</a>
+                            <a href="@routes.Login.show()"><i class="fa fa-unlock-alt"></i> Login</a>
                         </li>
                     </ul>
                         <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
@@ -56,7 +56,7 @@
                                 <a href="public/html/index.html"><i class="fa fa-home"></i> Home </a>
                             </li>
                             <li>
-                                <a href="public/html/login.html"><i class=" fa fa-unlock-alt"></i> Login</a>
+                                <a href="@routes.Login.show()"><i class=" fa fa-unlock-alt"></i> Login</a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-plus"></i> Sign Up</a>

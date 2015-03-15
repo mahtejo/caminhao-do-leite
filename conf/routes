@@ -4,8 +4,9 @@
 
 # Home page
 GET         /                    controllers.Application.index()
-#GET         /login               controllers.Assets.at(path="public/html/", file="login.html")
 POST        /cadastrar           controllers.Cadastro.cadastrar()
+
+GET         /login               controllers.Login.show()
 POST        /login               controllers.Login.login()
 
 # Map static resources from the /public folder to the /assets URL path

@@ -6,11 +6,13 @@ import play.Logger;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
+import views.html.login;
 
 import java.util.List;
 
 import static play.mvc.Controller.session;
 import static play.mvc.Results.badRequest;
+import static play.mvc.Results.ok;
 import static play.mvc.Results.redirect;
 
 /**
@@ -33,6 +35,10 @@ public class Login {
             session("user", filledForm.get().getUser());
             return redirect(routes.Application.index());
         }
+    }
+
+    public static Result show(){
+        return ok(login.render("algo"));
     }
 
     private static boolean verificaAutenticacao(Usuario user){
