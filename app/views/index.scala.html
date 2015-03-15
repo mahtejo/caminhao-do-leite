@@ -53,7 +53,7 @@
                         <ul class="nav navbar-nav side-nav">
                             <b class="navbar-brand menu">Menu</b>
                             <li class="active">
-                                <a href="public/html/index.html"><i class="fa fa-home"></i> Home </a>
+                                <a href="@routes.Application.index()"><i class="fa fa-home"></i> Home </a>
                             </li>
                             <li>
                                 <a href="@routes.Login.show()"><i class=" fa fa-unlock-alt"></i> Login</a>
@@ -67,7 +67,8 @@
                             <li class="texto">
                                 <p> O caminhão do leite é um portal feito exclusivamente para auxiliar os alunos que estão cursando a disciplina
                                     Sistemas de Informação 1, trazendo valiosas dicas de alunos que já concluíram este curso, e possibilitando
-                                    que você não cometa os mesmos erros deles. Esta descrição deve ser breve para não bugar a interface xD</p></li>
+                                    que você não cometa os mesmos erros deles. Esta descrição deve ser breve para não bugar a interface xD</p>
+                            </li>
                         </ul>
                     </div>
                         <!-- /.navbar-collapse -->
@@ -127,15 +128,15 @@
                 <!-- /#wrapper -->
 
                 <!-- jQuery -->
-            <script src="../../public/js/jquery.js"></script>
+            <script src="@routes.Assets.at("js/jquery.js")"></script>
 
                 <!-- Bootstrap Core JavaScript -->
-            <script src="../../public/js/bootstrap.min.js"></script>
+            <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
 
                 <!-- Morris Charts JavaScript -->
-            <script src="../../public/js/plugins/morris/raphael.min.js"></script>
-            <script src="../../public/js/plugins/morris/morris.min.js"></script>
-            <script src="../../public/js/plugins/morris/morris-data.js"></script>
+            <script src="@routes.Assets.at("js/plugins/morris/raphael.min.js")"></script>
+            <script src="@routes.Assets.at("js/plugins/morris/morris.min.js")"></script>
+            <script src="@routes.Assets.at("js/plugins/morris/morris-data.js")"></script>
 
         </body>
 
