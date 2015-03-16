@@ -3,6 +3,7 @@ package controllers;
 import models.Usuario;
 import models.dao.GenericDAO;
 import play.Logger;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
@@ -28,14 +29,17 @@ public class Login {
 
     @Transactional
     public static Result login(){
-        Form<Login> filledForm = form.bindFromRequest();
+        DynamicForm filledForm = Form.form().bindFromRequest();
+        String login = filledForm.get("user");
+        String senha = filledForm.get("senha");
 
-        if (filledForm.hasErrors() || !verificaAutenticacao(filledForm.get().user, filledForm.get().password)) {
-            Logger.debug("Deu bad request com o usuário " + filledForm.get().user + " e senha " + filledForm.get().password);
+
+        if (filledForm.hasErrors() || !verificaAutenticacao(login, senha)) {
+            Logger.debug("Deu bad request com o usuário " + login + " e senha " + senha);
             return badRequest();
         } else {
             session().clear();
-            session("user", filledForm.get().user);
+            session("user", login);
             return ok(index.render("Se logou!"));
         }
     }
@@ -47,12 +51,17 @@ public class Login {
 
     private static boolean verificaAutenticacao(String username, String password){
         List<Usuario> users = dao.findAllByClass(Usuario.class);
-        for (Usuario u: users){
-            if (u.getUser().equals(username) && u.autentica(username, password)){
-                Logger.debug("Login efetuado com sucesso!");
-                return true;
+        if (users.isEmpty()) {
+            return false;
+        } else {
+            for (Usuario u : users) {
+                if (u.getUser().equals(username) && u.autentica(username, password)) {
+                    Logger.debug("Login efetuado com sucesso!");
+                    return true;
+                }
             }
         }
         return false;
     }
+
 }
