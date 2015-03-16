@@ -102,27 +102,27 @@
 
 
                                 <div id="inner">
-                                    <form role="form">
+                                    <form role="form" action="@routes.Cadastro.cadastrar()" method="post">
                                         Os campos marcados com <a>*</a> são obrigatórios.<br><br>
 
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">Nome<a>*</a></span>
-                                                <input type="text" class="form-control" placeholder="Nome">
+                                                <input type="text" class="form-control" placeholder="Nome" required data-validation-required-message="Por favor digite um nome" maxlength="200">
                                             </div>
 
                                         <div class="form-group input-group">
                                             <span class="input-group-addon">Login<a>*</a></span>
-                                            <input type="text" class="form-control" placeholder="Usuário">
+                                            <input type="text" class="form-control" placeholder="Usuário" required data-validation-required-message="Por favor digite um nome de usuário" maxlength="100">
                                         </div>
 
                                         <div class="form-group input-group">
                                             <span class="input-group-addon">Senha<a>*</a></span>
-                                            <input type="password" class="form-control" placeholder="Senha">
+                                            <input type="password" class="form-control" placeholder="Senha" required data-validation-required-message="Por favor digite uma senha" maxlength="100">
                                         </div>
-                                        <div>
-                                            <button type="submit" class="btn btn-primary" href="@routes.Cadastro.cadastrar()">Entrar</button>
-                                            <button type="submit" class="btn btn-primary" href="@routes.Application.index()">Cancelar</button>
-                                        </div>
+
+                                            <button type="submit" class="btn btn-primary" href="@routes.Cadastro.cadastrar()">Cadastrar</button>
+
+
                                     </form>
                                 </div>
 
