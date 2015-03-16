@@ -3,6 +3,7 @@ package controllers;
 import models.Usuario;
 import models.dao.GenericDAO;
 import play.Logger;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
@@ -11,7 +12,6 @@ import views.html.index;
 
 import java.util.List;
 
-import static play.data.Form.form;
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
 
@@ -25,8 +25,12 @@ public class Cadastro {
 
     @Transactional
     public static Result cadastrar() {
-        Form<Usuario> filledForm = form.bindFromRequest();
-        Usuario user = filledForm.get();
+        DynamicForm filledForm = Form.form().bindFromRequest();
+        String nome = filledForm.get("nome");
+        String login = filledForm.get("user");
+        String senha = filledForm.get("senha");
+
+        Usuario user = new Usuario(nome, senha, login);
 
         if (filledForm.hasErrors() || !isValido(user)) {
             return badRequest();
