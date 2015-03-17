@@ -22,6 +22,7 @@ public class Cadastro {
 
     private static GenericDAO dao = new GenericDAO();
     private static Form<Usuario> form = Form.form(Usuario.class);
+    private static boolean isValido;
 
     @Transactional
     public static Result cadastrar() {
@@ -51,6 +52,14 @@ public class Cadastro {
             }
         }
         return true;
+    }
+
+    public static boolean getIsValido() {
+        if(isValido) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static Result show() {
