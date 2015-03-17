@@ -25,28 +25,37 @@ public class Login {
     private static Form<Login> form = Form.form(Login.class);
 
     public String user;
-    public String password;
+    public String senha;
 
     @Transactional
     public static Result login(){
         DynamicForm filledForm = Form.form().bindFromRequest();
-        String login = filledForm.get("user");
+        String usuario = filledForm.get("user");
         String senha = filledForm.get("senha");
 
 
-        if (filledForm.hasErrors() || !verificaAutenticacao(login, senha)) {
-            Logger.debug("Deu bad request com o usuário " + login + " e senha " + senha);
-            return badRequest();
+        if (filledForm.hasErrors() || !verificaAutenticacao(usuario, senha)) {
+            Logger.debug("Deu bad request com o usuário " + usuario + " e senha " + senha);
+            return badRequest(login.render("Não foi possível efetuar o login!"));
         } else {
             session().clear();
-            session("user", login);
+            session("user", usuario);
             return ok(index.render("Se logou!"));
         }
     }
 
+    @Transactional
+    public static Result logout(){
+        session().clear();
+        return show();
+    }
+
+    @Transactional
     public static Result show(){
-        // deve mandar como parâmetro algo mais significativo
-        return ok(login.render("Tela login"));
+        if (session().get("user") != null) {
+            return ok(login.render("Tela login"));
+        }
+        return ok(index.render("Você já está logado!"));
     }
 
     private static boolean verificaAutenticacao(String username, String password){

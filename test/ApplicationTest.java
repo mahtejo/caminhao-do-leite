@@ -32,7 +32,7 @@ public class ApplicationTest extends AbstractTest {
     public void deveSeCadastrar() {
         Map<String, String> formulario = new HashMap<String, String>();
         formulario.put("nome", "joao bonifácio");
-        formulario.put("password", "123456");
+        formulario.put("senha", "123456");
         formulario.put("user", "joao");
         Result result = callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
 
@@ -45,7 +45,7 @@ public class ApplicationTest extends AbstractTest {
     public void naoDeveCadastrarMesmoUsuario(){
         Map<String, String> formulario = new HashMap<String, String>();
         formulario.put("nome", "joao bonifácio");
-        formulario.put("password", "123456");
+        formulario.put("senha", "123456");
         formulario.put("user", "joao");
 
         callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
@@ -61,7 +61,7 @@ public class ApplicationTest extends AbstractTest {
     public void naoDeveCadastrarMesmoNome(){
         Map<String, String> formulario = new HashMap<String, String>();
         formulario.put("nome", "joao bonifácio");
-        formulario.put("password", "123456");
+        formulario.put("senha", "123456");
         formulario.put("user", "joao");
 
         callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
@@ -77,7 +77,7 @@ public class ApplicationTest extends AbstractTest {
     public void deveCadastrarMaisDeUmUsuario(){
         Map<String, String> formulario = new HashMap<String, String>();
         formulario.put("nome", "joao bonifácio");
-        formulario.put("password", "123456");
+        formulario.put("senha", "123456");
         formulario.put("user", "joao");
 
         callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
@@ -94,7 +94,7 @@ public class ApplicationTest extends AbstractTest {
     public void deveSeLogar(){
         Map<String, String> formulario = new HashMap<String, String>();
         formulario.put("nome", "joao bonifácio");
-        formulario.put("password", "123456");
+        formulario.put("senha", "123456");
         formulario.put("user", "joao");
 
         callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
@@ -109,12 +109,12 @@ public class ApplicationTest extends AbstractTest {
     public void naoDeveSeLogarComSenhaErrada(){
         Map<String, String> formulario = new HashMap<String, String>();
         formulario.put("nome", "joao bonifácio");
-        formulario.put("password", "123456");
+        formulario.put("senha", "123456");
         formulario.put("user", "joao");
         callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
 
         Map<String, String> formularioErrado = new HashMap<String, String>();
-        formularioErrado.put("password", "123a456");
+        formularioErrado.put("senha", "123a456");
         formularioErrado.put("user", "joao");
         Result result = callAction(controllers.routes.ref.Login.login(), fakeRequest().withFormUrlEncodedBody(formularioErrado));
 
@@ -126,16 +126,33 @@ public class ApplicationTest extends AbstractTest {
     public void naoDeveSeLogarComUsuarioInvalido(){
         Map<String, String> formulario = new HashMap<String, String>();
         formulario.put("nome", "joao bonifácio");
-        formulario.put("password", "123456");
+        formulario.put("senha", "123456");
         formulario.put("user", "joao");
         callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
 
         Map<String, String> formularioErrado = new HashMap<String, String>();
-        formularioErrado.put("password", "123456");
+        formularioErrado.put("senha", "123456");
         formularioErrado.put("user", "maria");
         Result result = callAction(controllers.routes.ref.Login.login(), fakeRequest().withFormUrlEncodedBody(formularioErrado));
 
         assertEquals(400, status(result));
         assertNotEquals("maria", session(result).get("user"));
+    }
+
+    @Test
+    public void deveFazerLogout(){
+        Map<String, String> formulario = new HashMap<String, String>();
+        formulario.put("nome", "joao bonifácio");
+        formulario.put("senha", "123456");
+        formulario.put("user", "joao");
+        callAction(controllers.routes.ref.Cadastro.cadastrar(), fakeRequest().withFormUrlEncodedBody(formulario));
+
+        formulario.remove("nome");
+        callAction(controllers.routes.ref.Login.login(), fakeRequest().withFormUrlEncodedBody(formulario));
+
+        Result result = callAction(controllers.routes.ref.Login.logout(), fakeRequest().withFormUrlEncodedBody(formulario));
+
+        assertEquals(200, status(result));
+        assertEquals(null, session(result).get("user"));
     }
 }

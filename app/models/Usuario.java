@@ -1,10 +1,8 @@
 package models;
 
 import models.util.BCrypt;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 @Entity(name="Usuario")
 public class Usuario {
@@ -13,8 +11,11 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Column
     private String nome;
-    private String password;
+    @Column
+    private String senha;
+    @Column
     private String user;
 
     public Usuario() {
@@ -23,7 +24,7 @@ public class Usuario {
     public Usuario(String nome, String password, String user) {
         setNome(nome);
         setUser(user);
-        setPassword(password);
+        setSenha(password);
     }
 
     public Long getId() {
@@ -42,12 +43,12 @@ public class Usuario {
         this.nome = nome;
     }
 
-    private String getPassword() {
-        return password;
+    private String getSenha() {
+        return senha;
     }
 
-    public void setPassword(String password) {
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+    public void setSenha(String senha) {
+        this.senha = BCrypt.hashpw(senha, BCrypt.gensalt());
     }
 
     public String getUser() {
@@ -59,7 +60,7 @@ public class Usuario {
     }
 
     public boolean autentica(String user, String password) {
-        if (user.equals(getUser()) && BCrypt.checkpw(password, getPassword())){
+        if (user.equals(getUser()) && BCrypt.checkpw(password, getSenha())){
             return true;
         }
         return false;

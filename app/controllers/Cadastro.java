@@ -33,7 +33,7 @@ public class Cadastro {
         Usuario user = new Usuario(nome, senha, login);
 
         if (filledForm.hasErrors() || !isValido(user)) {
-            return badRequest();
+            return badRequest(cadastro.render("Não foi possível se cadastrar!"));
         } else {
             Logger.debug("Criando usuário: " + filledForm.data().toString() + " como " + user.getUser());
 
