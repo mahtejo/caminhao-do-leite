@@ -9,9 +9,11 @@ import play.db.jpa.Transactional;
 import play.mvc.Result;
 import views.html.cadastro;
 import views.html.index;
+import views.html.temas;
 
 import java.util.List;
 
+import static play.mvc.Controller.session;
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
 
@@ -21,8 +23,6 @@ import static play.mvc.Results.ok;
 public class Cadastro {
 
     private static GenericDAO dao = new GenericDAO();
-    private static Form<Usuario> form = Form.form(Usuario.class);
-    private static boolean isValido;
 
     @Transactional
     public static Result cadastrar() {
@@ -34,13 +34,23 @@ public class Cadastro {
         Usuario user = new Usuario(nome, senha, login);
 
         if (filledForm.hasErrors() || !isValido(user)) {
-            return badRequest(cadastro.render("Não foi possível se cadastrar!"));
+            Logger.debug("Não foi possível cadastrar");
+            return badRequest(cadastro.render("Seu cadastro não foi realizado com sucesso. Cheque os dados e tente novamente."));
         } else {
             Logger.debug("Criando usuário: " + filledForm.data().toString() + " como " + user.getUser());
 
             dao.persist(user);
             dao.flush();
-            return ok(index.render("Cadastro concluído com sucesso!"));
+            return ok(index.render("Seu cadastro foi realizado com sucesso!"));
+        }
+    }
+
+    @Transactional
+    public static Result show() {
+        if (session().get("user") == null) {
+            return ok(cadastro.render("Preencha os campos abaixo para se cadastrar."));
+        } else {
+            return badRequest(temas.render("Faça logout para se cadastrar!"));
         }
     }
 
@@ -52,18 +62,5 @@ public class Cadastro {
             }
         }
         return true;
-    }
-
-    public static boolean getIsValido() {
-        if(isValido) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static Result show() {
-        // deve mandar como parâmetro algo mais significativo
-        return ok(cadastro.render("Tela cadastro"));
     }
 }

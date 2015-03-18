@@ -119,33 +119,9 @@
                                                 <span class="input-group-addon">Senha<a>*</a></span>
                                                 <input type="password" class="form-control" name="senha" placeholder="Senha" required data-validation-required-message="Por favor digite uma senha" maxlength="100">
                                             </div>
-
-                                                <a href="@routes.Cadastro.cadastrar()" class="btn btn-primary" data-toggle="modal" data-target="#basicModal"> Cadastrar </a>
+                                                <button type="submit" class="btn btn-primary"> Cadastrar </button>
                                         </form>
-
-                                        <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                        <h4 class="modal-title" id="myModalLabel">Cadastro</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                    @if(Cadastro.getIsValido()) {
-                                                        <h6>Seu cadastro foi realizado com sucesso!</h6>
-                                                    } else {
-                                                        <h6>Seu cadastro não foi realizado com sucesso. Cheque os dados e tente novamente.</h6>
-                                                    }
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
-
-
                                 </div>
                             </div><br>
                             <ol class="breadcrumb">

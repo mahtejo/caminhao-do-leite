@@ -9,9 +9,11 @@ import play.db.jpa.Transactional;
 import play.mvc.Result;
 import views.html.index;
 import views.html.login;
+import views.html.temas;
 
 import java.util.List;
 
+import static play.mvc.Controller.flash;
 import static play.mvc.Controller.session;
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
@@ -22,8 +24,6 @@ import static play.mvc.Results.ok;
 public class Login {
 
     private static GenericDAO dao = new GenericDAO();
-    private static Form<Login> form = Form.form(Login.class);
-    private static boolean userValido;
 
     public String user;
     public String senha;
@@ -37,26 +37,31 @@ public class Login {
 
         if (filledForm.hasErrors() || !verificaAutenticacao(usuario, senha)) {
             Logger.debug("Deu bad request com o usuário " + usuario + " e senha " + senha);
-            return badRequest("Não foi possível efetuar o login!");
+            return badRequest(login.render("Não foi possível efetuar o login!"));
         } else {
             session().clear();
             session("user", usuario);
-            return ok("Se logou!");
+            return ok(temas.render("Login efetuado com sucesso!"));
         }
     }
 
     @Transactional
     public static Result logout() {
         session().clear();
-        return show();
+        if (session().get("user") == null) {
+            return show();
+        } else {
+            return badRequest(temas.render("Ocorreu um erro, tente fazer logout novamente!"));
+        }
     }
 
     @Transactional
     public static Result show() {
         if (session().get("user") == null) {
-            return ok(login.render("Tela login"));
-        } //não precisa desse tratamento pq qd um user se logar, a página 'login' não estará mais disponivel pra ele
-        return ok(index.render("Você já está logado!"));
+            return ok(login.render("Preencha os campos abaixo para efetuar o login."));
+        } else {
+            return ok(temas.render("Você já está logado!"));
+        }
     }
 
     private static boolean verificaAutenticacao(String username, String password) {
@@ -72,13 +77,5 @@ public class Login {
             }
         }
         return false;
-    }
-
-    public static boolean getUserValido() {
-        if (userValido) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }
