@@ -2,6 +2,7 @@ package base;
 
 import org.junit.After;
 import org.junit.Before;
+import play.GlobalSettings;
 import play.db.jpa.JPA;
 import play.db.jpa.JPAPlugin;
 import play.test.FakeApplication;
@@ -15,7 +16,7 @@ public abstract class AbstractTest {
 
     @Before
     public void setUp() {
-        FakeApplication app = Helpers.fakeApplication();
+        FakeApplication app = Helpers.fakeApplication(new GlobalSettings());
         Helpers.start(app);
         Option<JPAPlugin> jpaPlugin = app.getWrappedApplication().plugin(JPAPlugin.class);
         em = jpaPlugin.get().em("default");
