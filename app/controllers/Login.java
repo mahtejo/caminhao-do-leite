@@ -32,7 +32,6 @@ public class Login {
         String usuario = filledForm.get("user");
         String senha = filledForm.get("senha");
 
-
         if (filledForm.hasErrors() || !verificaAutenticacao(usuario, senha)) {
             Logger.debug("Deu bad request com o usuário " + usuario + " e senha " + senha);
             return badRequest(login.render("Erro: Usuário ou senha inválidos!"));
