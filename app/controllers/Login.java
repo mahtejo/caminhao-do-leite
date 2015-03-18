@@ -7,6 +7,7 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
+import views.html.index;
 import views.html.login;
 import views.html.temas;
 
@@ -46,7 +47,7 @@ public class Login {
     public static Result logout() {
         session().clear();
         if (session().get("user") == null) {
-            return show();
+            return ok(index.render(""));
         } else {
             return badRequest(temas.render("Erro: Tente fazer logout novamente!"));
         }
