@@ -37,7 +37,7 @@ public class Login {
 
         if (filledForm.hasErrors() || !verificaAutenticacao(usuario, senha)) {
             Logger.debug("Deu bad request com o usuário " + usuario + " e senha " + senha);
-            return badRequest(login.render("Não foi possível efetuar o login!"));
+            return badRequest(login.render("Erro: Usuário ou senha inválidos!"));
         } else {
             session().clear();
             session("user", usuario);
@@ -51,7 +51,7 @@ public class Login {
         if (session().get("user") == null) {
             return show();
         } else {
-            return badRequest(temas.render("Ocorreu um erro, tente fazer logout novamente!"));
+            return badRequest(temas.render("Erro: Tente fazer logout novamente!"));
         }
     }
 
@@ -60,7 +60,7 @@ public class Login {
         if (session().get("user") == null) {
             return ok(login.render("Preencha os campos abaixo para efetuar o login."));
         } else {
-            return ok(temas.render("Você já está logado!"));
+            return badRequest(temas.render("Erro: Você já está logado!"));
         }
     }
 

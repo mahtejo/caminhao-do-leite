@@ -35,7 +35,7 @@ public class Cadastro {
 
         if (filledForm.hasErrors() || !isValido(user)) {
             Logger.debug("Não foi possível cadastrar");
-            return badRequest(cadastro.render("Seu cadastro não foi realizado com sucesso. Cheque os dados e tente novamente."));
+            return badRequest(cadastro.render("Erro: Seu cadastro não foi realizado com sucesso. Cheque os dados e tente novamente."));
         } else {
             Logger.debug("Criando usuário: " + filledForm.data().toString() + " como " + user.getUser());
 
@@ -50,7 +50,7 @@ public class Cadastro {
         if (session().get("user") == null) {
             return ok(cadastro.render("Preencha os campos abaixo para se cadastrar."));
         } else {
-            return badRequest(temas.render("Faça logout para se cadastrar!"));
+            return badRequest(temas.render("Erro: Faça logout para se cadastrar!"));
         }
     }
 

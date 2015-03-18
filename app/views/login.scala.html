@@ -102,6 +102,19 @@
                             </li>
                         </ol>
                         <br>
+
+                        @if(message != "") {
+                            @if(message contains("Erro")){
+                                <div class="alert alert-danger" role="alert" id="successPanel">
+                                } else {
+                                <div class="alert alert-success" role="alert" id="successPanel">
+                                }
+                            <button type="button" class="close" id="close"><span aria-hidden="true">&times;</span>
+                                <span class="sr-only">Close</span></button>
+                            <p>@message</p>
+                        </div>
+                        }
+
                         <div id="inner">
                             <form role="form" action="@routes.Login.login()" method="post">
 
@@ -150,6 +163,7 @@
     <script src="@routes.Assets.at("js/plugins/morris/raphael.min.js")"></script>
     <script src="@routes.Assets.at("js/plugins/morris/morris.min.js")"></script>
     <script src="@routes.Assets.at("js/plugins/morris/morris-data.js")"></script>
+    <script src="@routes.Assets.at("javascripts/jquery-extra.js")" rel="javascript" media="screen"></script>
 
     </body>
 

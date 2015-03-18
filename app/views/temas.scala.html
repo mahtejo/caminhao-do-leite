@@ -5,9 +5,22 @@
   <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <link href="@routes.Assets.at("stylesheets/bootstrap.css")" rel="stylesheet" media="screen">
+    <script src="@routes.Assets.at("js/jquery.js")" rel="javascript" media="screen"></script>
+    <script src="@routes.Assets.at("javascripts/jquery-extra.js")" rel="javascript" media="screen"></script>
   </head>
   <body>
-    <h1>@message</h1>
+    @if(message != "") {
+      @if(message contains("Erro")){
+        <div class="alert alert-danger" role="alert" id="successPanel">
+        } else {
+        <div class="alert alert-success" role="alert" id="successPanel">
+        }
+      <button type="button" class="close" id="close"><span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span></button>
+      <p>@message</p>
+    </div>
+    }
     <form action="@routes.Login.logout()">
       <button type="submit"> Logout </button>
     </form>
