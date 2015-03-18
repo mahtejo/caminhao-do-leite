@@ -7,13 +7,11 @@ import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
-import views.html.index;
 import views.html.login;
 import views.html.temas;
 
 import java.util.List;
 
-import static play.mvc.Controller.flash;
 import static play.mvc.Controller.session;
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
@@ -57,11 +55,10 @@ public class Login {
 
     @Transactional
     public static Result show() {
-        if (session().get("user") == null) {
-            return ok(login.render("Preencha os campos abaixo para efetuar o login."));
-        } else {
+        if (session().get("user") != null) {
             return badRequest(temas.render("Erro: Você já está logado!"));
         }
+        return ok(login.render(""));
     }
 
     private static boolean verificaAutenticacao(String username, String password) {
