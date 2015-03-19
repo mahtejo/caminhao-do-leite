@@ -1,9 +1,10 @@
 package models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import models.dica.Dica;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by orion on 18/03/15.
@@ -19,10 +20,16 @@ public class Tema {
     @Column
     private String nome;
 
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn
+    private List<Dica> dicas;
+
     public Tema(){
+        dicas = new ArrayList<Dica>();
     }
 
     public Tema(String nome){
+        dicas = new ArrayList<Dica>();
         setNome(nome);
     }
 
@@ -40,5 +47,13 @@ public class Tema {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public void addDica(Dica dica) {
+        dicas.add(dica);
+    }
+
+    public List<Dica> getDicas() {
+        return dicas;
     }
 }

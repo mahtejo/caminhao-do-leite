@@ -1,6 +1,8 @@
 import base.AbstractTest;
 import models.Tema;
 import models.dao.GenericDAO;
+import models.dica.Dica;
+import models.dica.SemDificuldade;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -31,5 +33,17 @@ public class TemasTest extends AbstractTest{
 
         temas = dao.findAllByClass(Tema.class);
         assertThat(temas.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void deveInserirDicasEmTema(){
+        Tema tema = new Tema("OO");
+        Dica semDificuldades = new SemDificuldade();
+        tema.addDica(semDificuldades);
+        dao.persist(tema);
+        dao.flush();
+
+        temas = dao.findAllByClass(Tema.class);
+        assertThat(temas.get(0).getDicas().size()).isEqualTo(1);
     }
 }
