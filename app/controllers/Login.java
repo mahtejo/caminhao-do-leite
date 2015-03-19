@@ -39,7 +39,7 @@ public class Login {
         } else {
             session().clear();
             session("user", usuario);
-            return ok(temas.render("Login efetuado com sucesso!"));
+            return ok(temas.render("Login efetuado com sucesso!", Temas.temas()));
         }
     }
 
@@ -49,14 +49,14 @@ public class Login {
         if (session().get("user") == null) {
             return ok(index.render(""));
         } else {
-            return badRequest(temas.render("Erro: Tente fazer logout novamente!"));
+            return badRequest(temas.render("Erro: Tente fazer logout novamente!", Temas.temas()));
         }
     }
 
     @Transactional
     public static Result show() {
         if (session().get("user") != null) {
-            return badRequest(temas.render("Erro: Você já está logado!"));
+            return badRequest(temas.render("Erro: Você já está logado!", Temas.temas()));
         }
         return ok(login.render(""));
     }

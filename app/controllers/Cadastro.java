@@ -50,7 +50,8 @@ public class Cadastro {
         if (session().get("user") == null) {
             return ok(cadastro.render(""));
         } else {
-            return badRequest(temas.render("Erro: Faça logout para se cadastrar!"));
+            //return badRequest(temas.render("Erro: Faça logout para se cadastrar!"));
+            return badRequest(temas.render("Erro: Faça logout para se cadastrar!", Temas.temas()));
         }
     }
 
