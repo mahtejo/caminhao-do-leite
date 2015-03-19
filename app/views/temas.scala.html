@@ -52,7 +52,10 @@
                             <!-- Top Menu Items -->
                         <ul class="nav navbar-right top-nav">
                             <li>
-                            @session.get("user")
+                            <a>@session.get("user")</a>
+                            </li>
+                            <li>
+                                <a href="@routes.Login.logout()"><i class="fa fa-sign-out"></i> Logout </a>
                             </li>
                         </ul>
                             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
@@ -60,7 +63,7 @@
                             <ul class="nav navbar-nav side-nav"><br>
                                 <b class="navbar-brand menu">Menu de Temas</b>
                                 <li>
-                                    <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Temas 1<i class="fa fa-fw fa-caret-down"></i></a>
+                                    <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-book"></i> Temas Teóricos<i class="fa fa-fw fa-caret-down"></i></a>
                                     <ul id="demo" class="collapse">
                                     @for(i <- 0 to 4){
                                         <li>
@@ -70,7 +73,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="javascript:;" data-toggle="collapse" data-target="#deo"><i class="fa fa-fw fa-arrows-v"></i> Temas 2<i class="fa fa-fw fa-caret-down"></i></a>
+                                    <a href="javascript:;" data-toggle="collapse" data-target="#deo"><i class="fa fa-code-fork"></i> Novas Tecnologias<i class="fa fa-fw fa-caret-down"></i></a>
                                     <ul id="deo" class="collapse">
                                     @for(i <- 5 to 8){
                                         <li>
@@ -80,7 +83,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="javascript:;" data-toggle="collapse" data-target="#do"><i class="fa fa-fw fa-arrows-v"></i> Temas 3<i class="fa fa-fw fa-caret-down"></i></a>
+                                    <a href="javascript:;" data-toggle="collapse" data-target="#do"><i class="fa fa-fw fa-desktop"></i> Temas Práticos<i class="fa fa-fw fa-caret-down"></i></a>
                                     <ul id="do" class="collapse">
                                     @for(i <- 9 until temas.size()){
                                         <li>
@@ -123,10 +126,7 @@
                                         @message
                                     </div>
                                                                 }
-                    <br>    <form action="@routes.Login.logout()">
-                                    <button class="btn btn-primary" type="submit"> Logout </button>
-                                </form>
-                                                                          <!-- Page Content -->
+                    <br>                                                                           <!-- Page Content -->
                                 </div>
                                 </div><br>
                                 <ol class="breadcrumb">
