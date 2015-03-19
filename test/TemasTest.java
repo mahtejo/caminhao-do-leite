@@ -2,7 +2,7 @@ import base.AbstractTest;
 import models.Tema;
 import models.dao.GenericDAO;
 import models.dica.Dica;
-import models.dica.SemDificuldade;
+import models.dica.PrecisaSaber;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class TemasTest extends AbstractTest{
     @Test
     public void deveInserirDicasEmTema(){
         Tema tema = new Tema("OO");
-        Dica semDificuldades = new SemDificuldade();
+        Dica semDificuldades = new PrecisaSaber();
         tema.addDica(semDificuldades);
         dao.persist(tema);
         dao.flush();

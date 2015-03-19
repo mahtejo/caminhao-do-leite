@@ -1,5 +1,6 @@
 package models.dica;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
@@ -7,5 +8,39 @@ import javax.persistence.Entity;
  */
 @Entity(name="DisciplinaUtil")
 public class DisciplinaUtil extends Dica {
+
+    @Column
+    private String nome;
+
+    @Column
+    private String razao;
+
     public DisciplinaUtil(){}
+
+    public DisciplinaUtil(String nome, String razao) throws Exception {
+        setNome(nome);
+        setRazao(razao);
+    }
+
+    public String getRazao() {
+        return razao;
+    }
+
+    public void setRazao(String razao) throws Exception {
+        if (razao.equals("")){
+            throw new Exception("Razão não deve ser vazia!");
+        }
+        this.razao = razao;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) throws Exception {
+        if (nome.equals("")){
+            throw new Exception("Nome não deve ser vazio!");
+        }
+        this.nome = nome;
+    }
 }
