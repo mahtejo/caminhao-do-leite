@@ -72,12 +72,17 @@ body {
 .navbar-brand {
     height: 60px;
     text-align: end;
-    margin-top: -8px;
+    margin-top: 8px;
     display:inline-block;
     margin-left: -3px;
     margin-bottom: 0px;
     border-bottom: 1px solid #222;
     indent-edge-reset: content-edge;
+}
+
+.nav> .navbar-nav> .side-nav >.side-nav {
+background-color: #ffff00;
+    overflow:scroll;
 }
 
 p {

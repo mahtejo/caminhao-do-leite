@@ -1,6 +1,6 @@
 @(message: String, id: Long, temas: List[Tema])
 @main("Caminhão do Leite") {
-        <html lang="en">
+        <html lang="pt">
 
             <head>
 
@@ -57,13 +57,38 @@
                         </ul>
                             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                         <div class="collapse navbar-collapse navbar-ex1-collapse">
-                            <ul class="nav navbar-nav side-nav">
-                                <b class="navbar-brand menu">Menu</b>
-                                @for(tema <- temas){
-                                    <li>
-                                        <a href="@routes.Temas.temas(tema.getId)"> @tema.getNome() </a>
-                                    </li>
-                                }
+                            <ul class="nav navbar-nav side-nav"><br>
+                                <b class="navbar-brand menu">Menu de Temas</b>
+                                <li>
+                                    <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Temas 1<i class="fa fa-fw fa-caret-down"></i></a>
+                                    <ul id="demo" class="collapse">
+                                    @for(i <- 0 to 4){
+                                        <li>
+                                            <a href="@routes.Temas.temas(temas(i).getId)"> @temas(i).getNome() </a>
+                                        </li>
+                                    }
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-toggle="collapse" data-target="#deo"><i class="fa fa-fw fa-arrows-v"></i> Temas 2<i class="fa fa-fw fa-caret-down"></i></a>
+                                    <ul id="deo" class="collapse">
+                                    @for(i <- 5 to 8){
+                                        <li>
+                                            <a href="@routes.Temas.temas(temas(i).getId)"> @temas(i).getNome() </a>
+                                        </li>
+                                    }
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-toggle="collapse" data-target="#do"><i class="fa fa-fw fa-arrows-v"></i> Temas 3<i class="fa fa-fw fa-caret-down"></i></a>
+                                    <ul id="do" class="collapse">
+                                    @for(i <- 9 until temas.size()){
+                                        <li>
+                                            <a href="@routes.Temas.temas(temas(i).getId)"> @temas(i).getNome() </a>
+                                        </li>
+                                    }
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                             <!-- /.navbar-collapse -->
