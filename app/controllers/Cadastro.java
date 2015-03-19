@@ -51,7 +51,7 @@ public class Cadastro {
             return ok(cadastro.render(""));
         } else {
             flash("message", "Erro: Faça logout para se cadastrar!");
-            return Temas.show(400);
+            return Temas.temas(400);
         }
     }
 

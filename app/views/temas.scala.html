@@ -1,4 +1,4 @@
-@(message: String, temas: List[Tema])
+@(message: String, id: Long, temas: List[Tema])
 @main("Caminhão do Leite") {
         <html lang="en">
 
@@ -61,7 +61,7 @@
                                 <b class="navbar-brand menu">Menu</b>
                                 @for(tema <- temas){
                                     <li>
-                                        <a id="tema@tema.getId()" href="@routes.Temas.show()"> @tema.getNome() </a>
+                                        <a href="@routes.Temas.temas(tema.getId)"> @tema.getNome() </a>
                                     </li>
                                 }
                             </ul>
@@ -79,7 +79,11 @@
                                     <h1 class="page-header">
 
                                             <!-- Fim do cabeçalho! -->
-                                            Tema 1 <small> Bem vindo ao nosso portal!</small>
+                                            @for(tema <- temas){
+                                                @if(tema.getId() == id){
+                                                    @tema.getNome()
+                                                }
+                                            }
                                     </h1>
 
 

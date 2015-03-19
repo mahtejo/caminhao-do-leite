@@ -21,29 +21,39 @@ public class Temas {
 
     @Transactional
     public static Result show() {
-        return show(200);
+        return temas(200, new Long(-1));
     }
 
+    @Transactional
+    public static Result temas(Long id){
+        return temas(200, id);
+    }
 
     @Transactional
-    public static Result show(int status){
+    public static Result temas(int status){
+        return temas(status, new Long(-1));
+    }
+
+    @Transactional
+    public static Result temas(int status, Long id){
+        List<Tema> listaDeTemas = dao.findAllByClass(Tema.class);
+
         String message = flash("message");
         if(message == null) {
             message = "";
         }
+
+        if (id.equals(new Long(-1)) && listaDeTemas.size() > 0){
+            id = listaDeTemas.get(0).getId();
+        }
+
         switch (status){
             case 200:
-                return ok(temas.render(message, temas()));
+                return ok(temas.render(message, id, listaDeTemas));
             case 400:
-                return badRequest(temas.render(message,temas()));
+                return badRequest(temas.render(message, id, listaDeTemas));
             default:
-                return badRequest(temas.render(message,temas()));
+                return badRequest(temas.render(message, id, listaDeTemas));
         }
     }
-
-    public static List<Tema> temas(){
-        List<Tema> listaDeTemas = dao.findAllByClass(Tema.class);
-        return  listaDeTemas;
-    }
-
 }

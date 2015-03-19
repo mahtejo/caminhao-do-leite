@@ -40,7 +40,7 @@ public class Login {
             session().clear();
             session("user", usuario);
             flash("message", "Login efetuado com sucesso!");
-            return Temas.show(200);
+            return Temas.temas(200);
         }
     }
 
@@ -51,7 +51,7 @@ public class Login {
             return ok(index.render(""));
         } else {
             flash("message", "Erro: Tente fazer logout novamente!");
-            return Temas.show(400);
+            return Temas.temas(400);
         }
     }
 
@@ -60,7 +60,7 @@ public class Login {
         if (session().get("user") != null) {
             //return badRequest(temas.render("Erro: Você já está logado!", Temas.temas()));
             flash("message", "Erro: Você já está logado!");
-            return Temas.show(400);
+            return Temas.temas(400);
         }
         return ok(login.render(""));
     }
