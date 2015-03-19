@@ -62,13 +62,14 @@
                                 <li class="active">
                                     <a href="@routes.Temas.show()"><i class="fa fa-home"></i> Tema1 </a>
                                 </li>
-                                <li>
-                                    <a href="#"><i class=" fa fa-unlock-alt"></i> Tema2</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-plus"></i> Tema3</a>
-                                </li>
-                                </ul>
+
+
+                                @for(tema <- temas){
+                                    <li>
+                                        <a id="tema@tema.getId()" href="@routes.Temas.show()"> @tema.getNome() </a>
+                                    </li>
+                                }
+                            </ul>
                         </div>
                             <!-- /.navbar-collapse -->
                     </nav>
