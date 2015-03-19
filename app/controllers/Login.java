@@ -9,10 +9,10 @@ import play.db.jpa.Transactional;
 import play.mvc.Result;
 import views.html.index;
 import views.html.login;
-import views.html.temas;
 
 import java.util.List;
 
+import static play.mvc.Controller.flash;
 import static play.mvc.Controller.session;
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
@@ -39,7 +39,8 @@ public class Login {
         } else {
             session().clear();
             session("user", usuario);
-            return ok(temas.render("Login efetuado com sucesso!", Temas.temas()));
+            flash("message", "Login efetuado com sucesso!");
+            return Temas.show(200);
         }
     }
 
@@ -49,14 +50,17 @@ public class Login {
         if (session().get("user") == null) {
             return ok(index.render(""));
         } else {
-            return badRequest(temas.render("Erro: Tente fazer logout novamente!", Temas.temas()));
+            flash("message", "Erro: Tente fazer logout novamente!");
+            return Temas.show(400);
         }
     }
 
     @Transactional
     public static Result show() {
         if (session().get("user") != null) {
-            return badRequest(temas.render("Erro: Você já está logado!", Temas.temas()));
+            //return badRequest(temas.render("Erro: Você já está logado!", Temas.temas()));
+            flash("message", "Erro: Você já está logado!");
+            return Temas.show(400);
         }
         return ok(login.render(""));
     }

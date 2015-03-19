@@ -59,11 +59,6 @@
                         <div class="collapse navbar-collapse navbar-ex1-collapse">
                             <ul class="nav navbar-nav side-nav">
                                 <b class="navbar-brand menu">Menu</b>
-                                <li class="active">
-                                    <a href="@routes.Temas.show()"><i class="fa fa-home"></i> Tema1 </a>
-                                </li>
-
-
                                 @for(tema <- temas){
                                     <li>
                                         <a id="tema@tema.getId()" href="@routes.Temas.show()"> @tema.getNome() </a>
@@ -86,14 +81,7 @@
                                             <!-- Fim do cabeçalho! -->
                                             Tema 1 <small> Bem vindo ao nosso portal!</small>
                                     </h1>
-                                    <ol class="breadcrumb">
-                                        <li>
-                                            <i class="fa fa-home"></i>  <a href="@routes.Application.index()"> Home</a>
-                                        </li>
-                                        <li class="active">
-                                            <i class="fa fa-unlock-alt"></i> Login
-                                        </li>
-                                    </ol>
+
 
                                     @if(message != "") {
                                         @if(message contains("Erro")){

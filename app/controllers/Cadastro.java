@@ -9,10 +9,10 @@ import play.db.jpa.Transactional;
 import play.mvc.Result;
 import views.html.cadastro;
 import views.html.index;
-import views.html.temas;
 
 import java.util.List;
 
+import static play.mvc.Controller.flash;
 import static play.mvc.Controller.session;
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
@@ -50,8 +50,8 @@ public class Cadastro {
         if (session().get("user") == null) {
             return ok(cadastro.render(""));
         } else {
-            //return badRequest(temas.render("Erro: Faça logout para se cadastrar!"));
-            return badRequest(temas.render("Erro: Faça logout para se cadastrar!", Temas.temas()));
+            flash("message", "Erro: Faça logout para se cadastrar!");
+            return Temas.show(400);
         }
     }
 
