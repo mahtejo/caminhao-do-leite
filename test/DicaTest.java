@@ -1,11 +1,14 @@
 import base.AbstractTest;
 import models.dao.GenericDAO;
 import models.dica.*;
+import models.opiniao.OpiniaoNegativa;
+import models.opiniao.OpiniaoPositiva;
 import org.junit.Test;
 
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Created by orion on 19/03/15.
@@ -153,5 +156,38 @@ public class DicaTest extends AbstractTest{
             dicas = dao.findAllByClass(Dica.class);
             assertThat(dicas.size()).isEqualTo(0);
         }
+    }
+
+    @Test
+    public void deveAdicionarOpiniaoADica() throws Exception {
+        Dica dica = new PrecisaSaber("Programar muito bem");
+        /*dao.persist(dica);
+        dao.flush();*/
+
+        dica.addOpiniao("usuario", new OpiniaoPositiva());
+        dica.addOpiniao("usuario2", new OpiniaoNegativa("Não concordo"));
+        /*dao.merge(dica);
+        dao.flush();
+*/
+        //assertThat(dao.findAllByClass(Dica.class).size()).isEqualTo(1);
+        assertThat(dica.getNumeroConcordaram()).isEqualTo(1);
+        assertThat(dica.getNumeroDiscordaram()).isEqualTo(1);
+        assertThat(dica.concordancia()).isEqualTo(0.5);
+    }
+
+    @Test
+    public void devePoderMudarDeOpiniao() throws Exception{
+        Dica dica = new PrecisaSaber("Programar muito bem");
+        /*dao.persist(dica);
+        dao.flush();*/
+
+        dica.addOpiniao("usuario", new OpiniaoPositiva());
+        assertThat(dica.getNumeroConcordaram()).isEqualTo(1);
+        assertThat(dica.getNumeroDiscordaram()).isEqualTo(0);
+        assertThat(dica.concordancia()).isEqualTo(1);
+        dica.addOpiniao("usuario", new OpiniaoNegativa("Não concordo"));
+        assertThat(dica.getNumeroConcordaram()).isEqualTo(0);
+        assertThat(dica.getNumeroDiscordaram()).isEqualTo(1);
+        assertThat(dica.concordancia()).isEqualTo(0);
     }
 }

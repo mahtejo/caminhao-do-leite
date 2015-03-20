@@ -1,11 +1,11 @@
 package models.dica;
 
+import models.opiniao.Opiniao;
 import models.Tema;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by orion on 19/03/15.
@@ -19,7 +19,15 @@ public abstract class Dica {
     @ManyToOne
     private Tema tema;
 
-    public Dica(){}
+    @ElementCollection
+    @MapKeyColumn
+    @Column
+    @CollectionTable
+    private Map<String, Opiniao> opinioesDosUsuarios;
+
+    public Dica(){
+        this.opinioesDosUsuarios = new HashMap<String, Opiniao>();
+    }
 
     public Long getId() {
         return id;
@@ -37,5 +45,43 @@ public abstract class Dica {
 
     public void setTema(Tema tema) {
         this.tema = tema;
+    }
+
+    public Map<String, Opiniao> getOpinioesDosUsuarios() {
+        return opinioesDosUsuarios;
+    }
+
+    public void setOpinioesDosUsuarios(Map<String, Opiniao> opinioesDosUsuarios) {
+        this.opinioesDosUsuarios = opinioesDosUsuarios;
+    }
+
+    public void addOpiniao(String usuario, Opiniao opiniao){
+        opinioesDosUsuarios.put(usuario, opiniao);
+    }
+
+    public int getNumeroConcordaram(){
+        int soma = 0;
+        for (Opiniao o: opinioesDosUsuarios.values()){
+            if (o.isConcorda()){
+                soma++;
+            }
+        }
+        return soma;
+    }
+
+    public int getNumeroDiscordaram(){
+        int soma = 0;
+        for (Opiniao o: opinioesDosUsuarios.values()){
+            if (!o.isConcorda()){
+                soma++;
+            }
+        }
+        return soma;
+    }
+
+    public double concordancia(){
+        double concordaram = getNumeroConcordaram();
+        double discordaram = getNumeroDiscordaram();
+        return concordaram / (concordaram + discordaram);
     }
 }
