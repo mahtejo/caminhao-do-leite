@@ -1,4 +1,4 @@
-@(message: String, id: Long, temas: List[Tema])
+@(message: String, idTema: Long, temas: List[Tema])
 @main("Caminhão do Leite") {
     <html lang="pt">
 
@@ -112,7 +112,7 @@
 
                                         <!-- Fim do cabeçalho! -->
                                     @for(tema <- temas){
-                                        @if(tema.getId() == id){
+                                        @if(tema.getId() == idTema){
                                             @tema.getNome()
                                         }
                                     }
@@ -131,7 +131,7 @@
                                 }
                                 <ul>
                                     @for(tema <- temas){
-                                        @if(tema.getId() == id){
+                                        @if(tema.getId() == idTema){
                                             @for(dica <- tema.getDicas()){
                                                 <li>@dica.toString()</li>
                                             }
@@ -239,18 +239,18 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 <h4 class="modal-title" id="upload-avatar-title">Dicas para não ter dificuldade em SI1</h4>
                                             </div>
-                                            <div class="modal-body">
-                                                <form role="form">
+                                            <form role="form" action="@routes.Dica.addDica(idTema)" method="POST">
+                                                <div class="modal-body">
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="control-label">Dica:</label>
-                                                        <textarea class="form-control" id="message-text"></textarea>
+                                                        <textarea class="form-control" name="assunto" placeholder="Assunto" id="message-text"></textarea>
                                                     </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                                                <button type="submit" class="btn btn-primary" >Enviar</button>
-                                            </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                                                    <button type="submit" class="btn btn-primary" >Enviar</button>
+                                                </div>
+                                            </form>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div>
@@ -265,20 +265,20 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 <h4 class="modal-title" id="upload-avatar-title">Disciplinas anteriores que te ajudarão em SI1</h4>
                                             </div>
-                                            <div class="modal-body">
-                                                <form role="form">
+                                            <form role="form" action="@routes.Dica.addDica(idTema)" method="POST">
+                                                <div class="modal-body">
                                                     <div class="form-group">
                                                         <label for="name" class="control-label">Nome:</label>
-                                                        <input type="name" class="form-control"  name="url" required data-validation-required-message="" maxlength="200"><br>
+                                                        <input type="name" class="form-control"  name="disciplina" placeholder="Disciplina" required data-validation-required-message="" maxlength="200"><br>
                                                         <label for="recipient-name" class="control-label">Dica:</label>
-                                                        <textarea class="form-control" id="message-text" required data-validation-required-message="" maxlength="600"></textarea>
+                                                        <textarea class="form-control" id="message-text" name="razao" placeholder="Razão" required data-validation-required-message="" maxlength="600"></textarea>
                                                     </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" >Cancelar</button>
-                                                <button type="submit" class="btn btn-primary" >Enviar</button>
-                                            </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" >Cancelar</button>
+                                                    <button type="submit" class="btn btn-primary" >Enviar</button>
+                                                </div>
+                                            </form>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div>
@@ -294,18 +294,18 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             <h4 class="modal-title" id="upload-avatar-title">URL de uma matéria útil para SI1</h4>
                                         </div>
-                                        <div class="modal-body">
-                                            <form role="form">
+                                        <form role="form" action="@routes.Dica.addDica(idTema)" method="POST">
+                                            <div class="modal-body">
                                                 <div class="form-group">
                                                     <label for="url" class="control-label">URL:</label>
-                                                    <input type="url" class="form-control"  name="url" required data-validation-required-message="" maxlength="200">
+                                                    <input type="url" class="form-control"  name="url" placeholder="http://www.site.com.br" required data-validation-required-message="" maxlength="200">
                                                 </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                                            <button type="submit" class="btn btn-primary" >Enviar</button>
-                                        </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                                                <button type="submit" class="btn btn-primary" >Enviar</button>
+                                            </div>
+                                        </form>
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div>
@@ -320,18 +320,18 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         <h4 class="modal-title" id="upload-avatar-title">Conselho para cursar bem SI1</h4>
                                     </div>
-                                    <div class="modal-body">
-                                        <form role="form">
+                                    <form role="form" action="@routes.Dica.addDica(idTema)" method="POST">
+                                        <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="recipient-name" class="control-label">Dica:</label>
-                                                <textarea class="form-control" id="message-text"></textarea>
+                                                <textarea type="text" class="form-control" name="conselho" placeholder="Conselho" required data-validation-required-message="Digite um conselho que não seja vazio"></textarea>
                                             </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary" >Enviar</button>
-                                    </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary" >Enviar</button>
+                                        </div>
+                                    </form>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div>

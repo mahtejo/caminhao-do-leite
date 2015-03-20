@@ -39,7 +39,7 @@ public class DisciplinaUtil extends Dica {
 
     public void setNome(String nome) throws Exception {
         if (nome.equals("")){
-            throw new Exception("Nome não deve ser vazio!");
+            throw new Exception("Erro: Nome não deve ser vazio!");
         }
         this.nome = nome;
     }

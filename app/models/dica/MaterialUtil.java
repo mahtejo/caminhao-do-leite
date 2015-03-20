@@ -26,7 +26,7 @@ public class MaterialUtil extends Dica {
 
     public void setMaterial(String material) throws Exception {
         if (!verificaAutenticidadeDoMaterial(material)){
-            throw new Exception("URL do material deve começar com http:// e acabar com .com, .com.br, .edu ou .edu.br");
+            throw new Exception("Erro: URL do material deve começar com http:// e acabar com .com, .com.br, .edu ou .edu.br");
         }
         this.material = material;
     }

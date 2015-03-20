@@ -24,7 +24,7 @@ public class Conselho extends Dica {
 
     public void setConselho(String conselho) throws Exception {
         if (conselho.equals("")){
-            throw new Exception("Conselho não deve ser vazio!");
+            throw new Exception("Erro: Conselho não deve ser vazio!");
         }
         this.conselho = conselho;
     }

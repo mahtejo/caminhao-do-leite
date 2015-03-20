@@ -24,7 +24,7 @@ public class PrecisaSaber extends Dica {
 
     public void setAssunto(String assunto) throws Exception {
         if (assunto.equals("")){
-            throw new Exception("Assunto não deve ser vazio!");
+            throw new Exception("Erro: Assunto não deve ser vazio!");
         }
         this.assunto = assunto;
     }
