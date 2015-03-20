@@ -128,6 +128,52 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary"> Entrar </button>
                             </form><br>
+                       <a data-toggle="modal" data-target="#exampleModal">Esqueceu a senha?</a><br>
+
+
+
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="exampleModalLabel">Esqueci minha senha</h4><br>
+                                        </div>
+                                        <div class="modal-body">
+                                              Contate o administrador do sistema para recuperar sua senha.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" >Ok</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div id="form-content" class="modal hide fade in" style="display: none;">
+                                <div class="modal-header">
+                                    <a class="close" data-dismiss="modal">×</a>
+                                    <h3>Esqueci minha senha</h3><br>
+                                    Entre com seu usuário e o código de segurança escolhido por você na hora do seu cadastro
+                                </div>
+                                <div class="modal-body">
+                                    <form class="contact" name="contact">
+                                        <label class="label" for="name">Usuário</label><br>
+                                        <input type="text" name="name" class="input-xlarge"><br>
+                                        <label class="label" for="name">Código de Segurança</label><br>
+                                        <input type="text" name="name" class="input-xlarge"><br>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <form role="form" action="@routes.Login.login()" method="post">
+                                    <input class="btn btn-success" type="submit" value="Enviar" id="submit">
+                                        </form>
+                                    <a href="#" class="btn" data-dismiss="modal">Cancelar</a>
+                                </div>
+                            </div>
+
                         </div>
                         <!-- Page Content -->
                     </div>
