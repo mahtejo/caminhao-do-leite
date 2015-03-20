@@ -1,6 +1,5 @@
 package models.dica;
 
-import models.opiniao.Opiniao;
 import models.Tema;
 
 import javax.persistence.*;
@@ -16,17 +15,30 @@ public abstract class Dica {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    private Tema tema;
+    @Column
+    private String usuario;
 
     @ElementCollection
     @MapKeyColumn
     @Column
     @CollectionTable
-    private Map<String, Opiniao> opinioesDosUsuarios;
+    private Map<String, String> opinioesNegativas;
+
+    @ElementCollection
+    @MapKeyColumn
+    @Column
+    @CollectionTable
+    private Map<String, String> opinioesPositivas;
 
     public Dica(){
-        this.opinioesDosUsuarios = new HashMap<String, Opiniao>();
+        this.opinioesNegativas = new HashMap<String, String>();
+        this.opinioesPositivas = new HashMap<String, String>();
+    }
+
+    public Dica(String usuario){
+        this.opinioesNegativas = new HashMap<String, String>();
+        this.opinioesPositivas = new HashMap<String, String>();
+        setUsuario(usuario);
     }
 
     public Long getId() {
@@ -39,49 +51,56 @@ public abstract class Dica {
 
     public abstract String toString();
 
-    public Tema getTema() {
-        return tema;
+    public void addOpiniaoPositiva(String usuario){
+        opinioesNegativas.remove(usuario);
+        opinioesPositivas.put(usuario, "");
     }
 
-    public void setTema(Tema tema) {
-        this.tema = tema;
-    }
-
-    public Map<String, Opiniao> getOpinioesDosUsuarios() {
-        return opinioesDosUsuarios;
-    }
-
-    public void setOpinioesDosUsuarios(Map<String, Opiniao> opinioesDosUsuarios) {
-        this.opinioesDosUsuarios = opinioesDosUsuarios;
-    }
-
-    public void addOpiniao(String usuario, Opiniao opiniao){
-        opinioesDosUsuarios.put(usuario, opiniao);
+    public void addOpiniaoNegativa(String usuario, String opiniao) throws Exception {
+        if (opiniao.length() > 100){
+            throw new Exception("Erro: Opinião deve conter menos que 100 caracteres!");
+        } else if (opiniao.length() == 0){
+            throw new Exception("Erro: Opinião deve conter mais que 0 caracteres!");
+        }
+        opinioesPositivas.remove(usuario);
+        opinioesNegativas.put(usuario, opiniao);
     }
 
     public int getNumeroConcordaram(){
-        int soma = 0;
-        for (Opiniao o: opinioesDosUsuarios.values()){
-            if (o.isConcorda()){
-                soma++;
-            }
-        }
-        return soma;
+        return opinioesPositivas.size();
     }
 
     public int getNumeroDiscordaram(){
-        int soma = 0;
-        for (Opiniao o: opinioesDosUsuarios.values()){
-            if (!o.isConcorda()){
-                soma++;
-            }
-        }
-        return soma;
+        return opinioesNegativas.size();
     }
 
     public double concordancia(){
         double concordaram = getNumeroConcordaram();
         double discordaram = getNumeroDiscordaram();
         return concordaram / (concordaram + discordaram);
+    }
+
+    public Map<String, String> getOpinioesNegativas() {
+        return opinioesNegativas;
+    }
+
+    public void setOpinioesNegativas(Map<String, String> opinioesNegativas) {
+        this.opinioesNegativas = opinioesNegativas;
+    }
+
+    public Map<String, String> getOpinioesPositivas() {
+        return opinioesPositivas;
+    }
+
+    public void setOpinioesPositivas(Map<String, String> opinioesPositivas) {
+        this.opinioesPositivas = opinioesPositivas;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 }

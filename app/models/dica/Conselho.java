@@ -14,7 +14,8 @@ public class Conselho extends Dica {
 
     public Conselho(){}
 
-    public Conselho(String conselho) throws Exception {
+    public Conselho(String usuario, String conselho) throws Exception {
+        super(usuario);
         setConselho(conselho);
     }
 

@@ -14,7 +14,8 @@ public class PrecisaSaber extends Dica {
 
     public PrecisaSaber(){}
 
-    public PrecisaSaber(String assunto) throws Exception {
+    public PrecisaSaber(String usuario, String assunto) throws Exception {
+        super(usuario);
         setAssunto(assunto);
     }
 

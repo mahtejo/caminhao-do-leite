@@ -1,13 +1,13 @@
 import base.AbstractTest;
 import models.dao.GenericDAO;
 import models.dica.*;
-import models.opiniao.OpiniaoNegativa;
-import models.opiniao.OpiniaoPositiva;
 import org.junit.Test;
 
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -19,7 +19,7 @@ public class DicaTest extends AbstractTest{
 
     @Test
     public void deveCriarDicaDoTipoConselho() throws Exception{
-        Dica dica = new Conselho("Estude o play!");
+        Dica dica = new Conselho("Usuário", "Estude o play!");
         dao.persist(dica);
         dao.flush();
 
@@ -32,7 +32,7 @@ public class DicaTest extends AbstractTest{
     @Test
     public void naoDeveCriarConselhoVazio(){
         try {
-            Dica dica = new Conselho("");
+            Dica dica = new Conselho("", "");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
@@ -43,7 +43,7 @@ public class DicaTest extends AbstractTest{
 
     @Test
     public void deveCriarDicaDeDisciplinaUtil() throws Exception {
-        Dica dica = new DisciplinaUtil("Programação 2", "Padrões de projeto");
+        Dica dica = new DisciplinaUtil("Usuário", "Programação 2", "Padrões de projeto");
         dao.persist(dica);
         dao.flush();
 
@@ -56,7 +56,7 @@ public class DicaTest extends AbstractTest{
     @Test
     public void naoDeveCriarDisciplinaUtilVazia(){
         try {
-            Dica dica = new DisciplinaUtil("", "Padrões de projeto");
+            Dica dica = new DisciplinaUtil("", "", "Padrões de projeto");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
@@ -65,7 +65,7 @@ public class DicaTest extends AbstractTest{
         }
 
         try {
-            Dica dica = new DisciplinaUtil("Programação 2", "");
+            Dica dica = new DisciplinaUtil("", "Programação 2", "");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
@@ -74,7 +74,7 @@ public class DicaTest extends AbstractTest{
         }
 
         try {
-            Dica dica = new DisciplinaUtil("", "");
+            Dica dica = new DisciplinaUtil("", "", "");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
@@ -85,7 +85,7 @@ public class DicaTest extends AbstractTest{
 
     @Test
     public void deveCriarDicaDeMaterialUtil() throws Exception {
-        Dica dica = new MaterialUtil("http://www.playframework.com");
+        Dica dica = new MaterialUtil("Usuário", "http://www.playframework.com");
         dao.persist(dica);
         dao.flush();
 
@@ -98,7 +98,7 @@ public class DicaTest extends AbstractTest{
     @Test
     public void naoDeveCriarDicaDeMaterialUtilInvalido(){
         try{
-            Dica dica = new MaterialUtil("");
+            Dica dica = new MaterialUtil("", "");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
@@ -107,7 +107,7 @@ public class DicaTest extends AbstractTest{
         }
 
         try{
-            Dica dica = new MaterialUtil("https://www.playframework.com");
+            Dica dica = new MaterialUtil("Usuário", "https://www.playframework.com");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
@@ -116,7 +116,7 @@ public class DicaTest extends AbstractTest{
         }
 
         try{
-            Dica dica = new MaterialUtil("http://www.playframework.net");
+            Dica dica = new MaterialUtil("Usuário", "http://www.playframework.net");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
@@ -125,7 +125,7 @@ public class DicaTest extends AbstractTest{
         }
 
         try{
-            Dica dica = new MaterialUtil("https://www.playframework.net");
+            Dica dica = new MaterialUtil("Usuário", "https://www.playframework.net");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
@@ -136,7 +136,7 @@ public class DicaTest extends AbstractTest{
 
     @Test
     public void deveCriarDicaParaNaoTerDificuldade() throws Exception {
-        Dica dica = new PrecisaSaber("Saber programar em Java muito bem!");
+        Dica dica = new PrecisaSaber("Usuário", "Saber programar em Java muito bem!");
         dao.persist(dica);
         dao.flush();
 
@@ -149,7 +149,7 @@ public class DicaTest extends AbstractTest{
     @Test
     public void naoDeveCriarDicaParaNaoTerDificuldadeVazia(){
         try{
-            Dica dica = new PrecisaSaber("");
+            Dica dica = new PrecisaSaber("Usuário", "");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e) {
@@ -159,35 +159,68 @@ public class DicaTest extends AbstractTest{
     }
 
     @Test
-    public void deveAdicionarOpiniaoADica() throws Exception {
-        Dica dica = new PrecisaSaber("Programar muito bem");
-        /*dao.persist(dica);
-        dao.flush();*/
-
-        dica.addOpiniao("usuario", new OpiniaoPositiva());
-        dica.addOpiniao("usuario2", new OpiniaoNegativa("Não concordo"));
-        /*dao.merge(dica);
+    public void deveAdicionarOpiniao() throws Exception {
+        Dica dica = new PrecisaSaber("Usuário", "Saber programar em Java muito bem!");
+        dica.addOpiniaoNegativa("Joao", "Sabe de nada");
+        dica.addOpiniaoPositiva("Maria");
+        dao.persist(dica);
         dao.flush();
-*/
-        //assertThat(dao.findAllByClass(Dica.class).size()).isEqualTo(1);
+
+        dicas = dao.findAllByClass(Dica.class);
+
+        dica = dicas.get(0);
+
         assertThat(dica.getNumeroConcordaram()).isEqualTo(1);
         assertThat(dica.getNumeroDiscordaram()).isEqualTo(1);
         assertThat(dica.concordancia()).isEqualTo(0.5);
     }
 
     @Test
-    public void devePoderMudarDeOpiniao() throws Exception{
-        Dica dica = new PrecisaSaber("Programar muito bem");
-        /*dao.persist(dica);
-        dao.flush();*/
+    public void devePoderMudarDeOpiniao() throws Exception {
+        Dica dica = new PrecisaSaber("Usuário", "Saber programar em Java muito bem!");
+        dica.addOpiniaoNegativa("Joao", "Sabe de nada");
+        assertTrue(dica.getOpinioesNegativas().containsKey("Joao"));
+        dica.addOpiniaoPositiva("Joao");
+        assertFalse(dica.getOpinioesNegativas().containsKey("Joao"));
+        assertTrue(dica.getOpinioesPositivas().containsKey("Joao"));
+        dao.persist(dica);
+        dao.flush();
 
-        dica.addOpiniao("usuario", new OpiniaoPositiva());
+        dicas = dao.findAllByClass(Dica.class);
+
+        dica = dicas.get(0);
+
         assertThat(dica.getNumeroConcordaram()).isEqualTo(1);
         assertThat(dica.getNumeroDiscordaram()).isEqualTo(0);
         assertThat(dica.concordancia()).isEqualTo(1);
-        dica.addOpiniao("usuario", new OpiniaoNegativa("Não concordo"));
-        assertThat(dica.getNumeroConcordaram()).isEqualTo(0);
-        assertThat(dica.getNumeroDiscordaram()).isEqualTo(1);
-        assertThat(dica.concordancia()).isEqualTo(0);
+    }
+
+    @Test
+    public void naoDevePoderInserirComentarioNegativoVazio(){
+        try{
+            Dica dica = new PrecisaSaber("Usuário", "Saber programar em Java muito bem!");
+            dica.addOpiniaoNegativa("Joao", "");
+            fail();
+        } catch (Exception e) {
+        }
+    }
+
+    @Test
+    public void naoDevePoderInserirComentarioNegativoMaisDe100Caracteres(){
+        try{
+            Dica dica = new PrecisaSaber("Usuário", "Saber programar em Java muito bem!");
+            dica.addOpiniaoNegativa("Joao", "çalskdfjasçldkjfasçldkjfasçlkdjfasçldjfaslkdjfasdlkjfçasdjfçlajsdflasjkdfçlasdfjasdlçfjsadçlfkjasdlçfkajsdçfljsdalfkjasdçlfkjasçldfkjsdaçflkjasdlçfjasldkfaslkçdfçasdflasdfçlkjsadfçljsadfçlaksdfçlasjdfçlasdkjf");
+            fail();
+        } catch (Exception e) {
+        }
+    }
+
+    @Test
+    public void devePoderMudarComentarioNegativo() throws Exception {
+        Dica dica = new PrecisaSaber("Usuário", "Saber programar em Java muito bem!");
+        dica.addOpiniaoNegativa("Malandrão", "Gostei não");
+        assertThat(dica.getOpinioesNegativas().get("Malandrão")).isEqualTo("Gostei não");
+        dica.addOpiniaoNegativa("Malandrão", "Sabe de nada");
+        assertThat(dica.getOpinioesNegativas().get("Malandrão")).isEqualTo("Sabe de nada");
     }
 }

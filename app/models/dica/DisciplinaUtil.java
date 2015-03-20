@@ -17,7 +17,8 @@ public class DisciplinaUtil extends Dica {
 
     public DisciplinaUtil(){}
 
-    public DisciplinaUtil(String nome, String razao) throws Exception {
+    public DisciplinaUtil(String usuario, String nome, String razao) throws Exception {
+        super(usuario);
         setNome(nome);
         setRazao(razao);
     }

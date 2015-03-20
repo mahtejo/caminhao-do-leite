@@ -16,7 +16,8 @@ public class MaterialUtil extends Dica {
 
     public MaterialUtil(){}
 
-    public MaterialUtil(String material) throws Exception {
+    public MaterialUtil(String usuario, String material) throws Exception {
+        super(usuario);
         setMaterial(material);
     }
 

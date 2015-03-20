@@ -31,6 +31,7 @@ public class Tema {
 
     public Tema(){
         dicas = new ArrayList<Dica>();
+        dificuldadeUsuarios = new HashMap<String, Integer>();
     }
 
     public Tema(String nome){
