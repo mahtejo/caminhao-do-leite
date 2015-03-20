@@ -129,49 +129,70 @@
                                     @message
                                 </div>
                                 }
-                                <form action="@routes.Temas.addDificuldade(idTema)" method="POST">
-                                    Dificuldade:
-                                    <input type="number" class="form-control" name="dificuldade" placeholder="Deve ser um número entre -2 e 2" required >
-                                    <button type="submit">OK</button>
-                                </form>
-
-                                <ul>
-                                    @for(tema <- temas){
-                                        @if(tema.getId() == idTema){
-                                            @for(dica <- tema.getDicas()){
-                                                <li>@dica.toString()</li>
-                                            }
-                                        }
-                                    }
-                                </ul>
                                 <br>
 
 <!--Inicio forum de discussao-->
                                 <div class="panel panel-default">
-                                    <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Dicas</h4></div>
+                                    <div class="panel-heading"> <h4>Dicas</h4></div>
                                     <div class="panel-body">
-                                        <img src="//placehold.it/150x150" class="img-circle pull-right"> <a href="#">Keyword: Bootstrap</a>
-                                        <div class="clearfix"></div>
-                                        <hr>
-
-                                        <p>If you're looking for help with Bootstrap code, the <code>twitter-bootstrap</code> tag at <a href="http://stackoverflow.com/questions/tagged/twitter-bootstrap">Stackoverflow</a> is a good place to find answers.</p>
-
-                                        <hr>
-                                        <form>
-                                            <div class="input-group">
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-default">+1</button><button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
+                                        @for(tema <- temas) {
+                                            @if(tema.getId() == idTema) {
+                                                @if(tema.getDicas().isEmpty) {
+                                                    Nenhuma dica cadastrada para este tema.
+                                                } else {
+                                                @for(dica <- tema.getDicas()) {
+                                                    <div class="panel panel-info">
+                                                    <div class="panel-heading">
+                                                        <div class="pull-right"><a data-target="#avaliarNeg" data-toggle="modal"><i class="fa fa-thumbs-o-down"></i></a>&nbsp;&nbsp;<a href="#"><i class="fa fa-thumbs-o-up"></i></a></div>
+                                                            <h3 class="panel-title">
+        @dica.getTipo()
+                                                        </h3>
+                                                        </div>
+                                                    <div class="panel-body">
+                                                    @dica.toString()<hr>
+                                                        <div class="pull-right"><small>Posted by: @session().get("user")</small></div>
+                                                    </div>
                                                 </div>
-                                                <input type="text" class="form-control" placeholder="Add a comment..">
-                                            </div>
-                                        </form>
+                                                }
+                                            }
+                                            }
+                                        }
+
+
+                                        <hr>
+
+                                        <button type="submit" class="btn btn-primary" data-target="#addDica" data-toggle="modal">Adicionar Dica</button>
+                                        <button type="submit" class="btn btn-primary" data-target="#avaliacao" data-toggle="modal">Avaliar Tema</button>
+
+
 
                                     </div>
+                                    </div>
+
+
+
+                                    <!--Modal para avaliar dica negativo-->
+                                <div class="modal" id="avaliarNeg" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="upload-avatar-title">Avaliação Negativa - Justificativa</h4>
+                                            </div>
+                                            <form role="form">
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:</label>
+                                                        <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary" >Enviar</button>
+                                                </div>
+                                            </form>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
                                 </div>
-
-
-                                <button type="submit" class="btn btn-primary" data-target="#addDica" data-toggle="modal">Adicionar Dica</button>
-                                <button type="submit" class="btn btn-primary" data-target="#avaliacao" data-toggle="modal">Avaliar Tema</button>
+                                <div id="push"></div>
 
 
 
@@ -183,30 +204,38 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 <h4 class="modal-title" id="exampleModalLabel">Avaliar Tema</h4>
                                             </div>
+                                            <form action="@routes.Temas.addDificuldade(idTema)" method="POST" name="dificuldade">
                                             <div class="modal-body">
                                                Escolha uma nota de dificuldade para este tema (-2 para muito fácil e +2 para muito difícil):<br><br>
-
-                                                   <form role="form">
-                                                       <label class="radio-inline">
-                                                           <input type="radio" name="optradio">-2
-                                                       </label>
-                                                       <label class="radio-inline">
-                                                           <input type="radio" name="optradio">-1
-                                                       </label>
-                                                       <label class="radio-inline">
-                                                           <input type="radio" name="optradio">0
-                                                       </label>
-                                                       <label class="radio-inline">
-                                                           <input type="radio" name="optradio">1
-                                                       </label>
-                                                       <label class="radio-inline">
-                                                           <input type="radio" name="optradio">2
-                                                       </label>
-                                                   </form>
+                                                <input type="number" max="2" min="-2" name="dificuldade" required data-validation-required-message="">
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                                                            <button type="subimit" class="btn btn-primary" name="dificuldade">Enviar</button>
                                             </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+
+
+
+                                <!--Modal para avaliar o tema -->
+                                <div class="modal" id="avaliarDica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title" id="exampleModalLabel">Avaliar Dica</h4>
+                                            </div>
+                                            <form action="@routes.Temas.addDificuldade(idTema)" method="POST" name="dificuldade">
+                                                <div class="modal-body">
+                                                    Escolha uma nota de dificuldade para este tema (-2 para muito fácil e +2 para muito difícil):<br><br>
+                                                    <input type="number" max="2" min="-2" name="dificuldade" required data-validation-required-message="">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="subimit" class="btn btn-primary" name="dificuldade">Enviar</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
@@ -223,10 +252,10 @@
                                                 <h4 class="modal-title" id="exampleModalLabel">Escolha o tipo de dica</h4>
                                             </div>
                                             <div class="modal-body">
-                                                <p><button class="btn btn-default" data-target="#dica1" data-toggle="modal">Para não ter dificuldades</button><br><br></p>
-                                                <p><button class="btn btn-info" data-target="#dica2" data-toggle="modal">Disciplinas anteriores que te ajudarão</button><br><br></p>
-                                                <p><button class="btn btn-warning" data-target="#dica3" data-toggle="modal">URL de uma matéria útil</button><br><br></p>
-                                                <p><button class="btn btn-success" data-target="#dica4" data-toggle="modal">Conselho</button></p>
+                                                <button class="btn btn-default" data-target="#dica1" data-toggle="modal">Para não ter dificuldades</button><br><br>
+                                                <button class="btn btn-info" data-target="#dica2" data-toggle="modal">Disciplinas anteriores que te ajudarão</button><br><br>
+                                                <button class="btn btn-warning" data-target="#dica3" data-toggle="modal">URL de uma matéria útil</button><br><br>
+                                                <button class="btn btn-success" data-target="#dica4" data-toggle="modal">Conselho</button>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
@@ -274,9 +303,9 @@
                                             <form role="form" action="@routes.Dica.addDica(idTema)" method="POST">
                                                 <div class="modal-body">
                                                     <div class="form-group">
-                                                        <label for="name" class="control-label">Nome:</label>
+                                                        <label for="name" class="control-label">Nome da disciplina:</label>
                                                         <input type="name" class="form-control"  name="disciplina" placeholder="Disciplina" required data-validation-required-message="" maxlength="200"><br>
-                                                        <label for="recipient-name" class="control-label">Dica:</label>
+                                                        <label for="recipient-name" class="control-label">Razão pela qual ela é útil:</label>
                                                         <textarea class="form-control" id="message-text" name="razao" placeholder="Razão" required data-validation-required-message="" maxlength="600"></textarea>
                                                     </div>
                                                 </div>
@@ -329,8 +358,8 @@
                                     <form role="form" action="@routes.Dica.addDica(idTema)" method="POST">
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <label for="recipient-name" class="control-label">Dica:</label>
-                                                <textarea type="text" class="form-control" name="conselho" placeholder="Conselho" required data-validation-required-message="Digite um conselho que não seja vazio"></textarea>
+                                                <label for="recipient-name" class="control-label">Conselho:</label>
+                                                <textarea type="text" class="form-control" name="conselho" placeholder="Conselho" required data-validation-required-message="Digite um conselho que não seja vazio" maxlength="200"></textarea>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -363,6 +392,7 @@
             </div>
 
             </div>
+</div>
                 <!--</div>-->
                 <!-- /#page-wrapper -->
 
@@ -384,22 +414,4 @@
 
     </html>
 
-    <!--
-
-
-  <!DOCTYPE html>
-  <html>
-  <head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-    <link href="@routes.Assets.at("stylesheets/bootstrap.css")" rel="stylesheet" media="screen">
-    <script src="@routes.Assets.at("js/jquery.js")" rel="javascript" media="screen"></script>
-    <script src="@routes.Assets.at("javascripts/jquery-extra.js")" rel="javascript" media="screen"></script>
-
-    <body>
-        <form action="@routes.Login.logout()">
-            <button type="submit"> Logout </button>
-        </form>
-    </body>
-    -->
 }

@@ -103,4 +103,7 @@ public abstract class Dica {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
+
+    public abstract String getTipo();
+
 }

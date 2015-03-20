@@ -32,6 +32,11 @@ public class PrecisaSaber extends Dica {
 
     @Override
     public String toString() {
-        return "O que precisa saber para não ter dificuldades: " + getAssunto();
+        return getAssunto();
+    }
+
+    @Override
+    public String getTipo() {
+        return "O que precisa saber para não ter dificuldades" ;
     }
 }

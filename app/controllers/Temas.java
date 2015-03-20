@@ -69,13 +69,14 @@ public class Temas {
     @Transactional
     public static Result addDificuldade(Long idTema) {
         DynamicForm filledForm = Form.form().bindFromRequest();
+        String dificul = filledForm.get("dificuldade");
         int dificuldade;
         if (filledForm.hasErrors()){
             flash("message", "Formulário invalido!");
             return Temas.temas(400, idTema);
         }
         try{
-            dificuldade = Integer.parseInt(filledForm.get("dificuldade"));
+            dificuldade = Integer.parseInt(dificul);
             Logger.debug("Dificuldade: " + dificuldade);
             Logger.debug("Usuário: " + session().get("user"));
         } catch (Exception e){
