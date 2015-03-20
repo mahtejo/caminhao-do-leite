@@ -1,7 +1,5 @@
 package models.dica;
 
-import models.Tema;
-
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;

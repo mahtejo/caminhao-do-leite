@@ -117,7 +117,7 @@
                                         }
                                     }
                                 </h1>
-<!--Inicio alert -->
+                                    <!--Inicio alert -->
                                 @if(message != "") {
                                     @if(message contains("Erro")){
                                         <div class="alert alert-danger" role="alert" id="successPanel">
@@ -131,7 +131,7 @@
                                 }
                                 <br>
 
-<!--Inicio forum de discussao-->
+                                    <!--Inicio forum de discussao-->
                                 <div class="panel panel-default">
                                     <div class="panel-heading"> <h4>Dicas</h4></div>
                                     <div class="panel-body">
@@ -140,52 +140,77 @@
                                                 @if(tema.getDicas().isEmpty) {
                                                     Nenhuma dica cadastrada para este tema.
                                                 } else {
-                                                @for(dica <- tema.getDicas()) {
-                                                    <div class="panel panel-info">
-                                                    <div class="panel-heading">
-                                                        <div class="pull-right"><a href="" data-target="#avaliarNeg" data-toggle="modal">
-                                                            <i class="fa fa-thumbs-o-down"></i></a>&nbsp;&nbsp;
-                                                            <form action="@routes.Dicas.addOpiniao(idTema, dica.getId, 1)" method="POST">
-                                                                <button href=""> <i class="fa fa-thumbs-o-up"></i></button>
-                                                            </form>
-                                                        </div>
-
-                                                            <h3 class="panel-title">
-        @dica.getTipo()
-                                                        </h3>
-                                                        </div>
-                                                    <div class="panel-body">
-                                                    @dica.toString()<hr>
-                                                        <div class="pull-right"><small>Posted by: @dica.getUsuario()</small></div>
-                                                    </div>
-                                                </div>
-
-                                                        <!--Modal para avaliar dica negativo-->
-                                                    <div class="modal" id="avaliarNeg" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title" id="upload-avatar-title">Avaliação Negativa - Justificativa</h4>
-                                                                </div>
-                                                                <form role="form" action="@routes.Dicas.addOpiniao(idTema, dica.getId, 0)" method="POST">
-                                                                    <div class="modal-body">
-                                                                        <div class="form-group">
-                                                                            <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:</label>
-                                                                            <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="submit" class="btn btn-primary" >Enviar</button>
-                                                                    </div>
+                                                    @for(dica <- tema.getDicas()) {
+                                                        <div class="panel panel-info">
+                                                            <div class="panel-heading">
+                                                                <div class="pull-right" style='display:inline;'>
+                                                                    @dica.getNumeroDiscordaram <button href="" data-target="#avaliarNeg" data-toggle="modal">
+                                                                    <i class="fa fa-thumbs-o-down"></i></button>&nbsp;&nbsp; @dica.getNumeroConcordaram
+                                                                <form action="@routes.Dicas.addOpiniao(idTema, dica.getId, 1)" method="POST" style='display:inline;'>
+                                                                    <button href=""><i class="fa fa-thumbs-o-up"></i></button>
                                                                 </form>
-                                                            </div><!-- /.modal-content -->
-                                                        </div><!-- /.modal-dialog -->
-                                                    </div>
-                                                    <div id="push"></div>
+                                                                </div>
+
+                                                                <h3 class="panel-title">
+                                                                @dica.getTipo()
+                                                                </h3>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                @dica.toString()
+                                                            <hr>
+                                                            <div class="pull-right"><small>Posted by: @dica.getUsuario()</small></div><br>
+
+                                                                @if(!dica.getOpinioesNegativas.isEmpty) {
+                                                                    <div class="panel panel-warning">
+                                                                        <div class="panel-heading">
+                                                                            <h3 class="panel-title">Respostas a esta dica</h3>
+                                                                        </div>
+                                                                        <div class="panel-body">
+                                                                                <!--Orion, dá um help aqui!-->
+                                                                            @for(opinioes <- dica.getOpinioesNegativas.values()) {
+                                                                                <div class="panel panel-default">
+                                                                                    <div class="panel-body">
+                                                                                        @for(opiniao <- opinioes) {
+                                                                                            @opiniao
+                                                                                        }
+                                                                                    <hr>
+                                                                                    @dica.getOpinioesNegativas.get("user")
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+
+                                                                    </div>}
+                                                            </div>
+
+                                                        </div>
+
+                                                            <!--Modal para avaliar dica negativo-->
+                                                        <div class="modal" id="avaliarNeg" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title" id="upload-avatar-title">Avaliação Negativa - Justificativa</h4>
+                                                                    </div>
+                                                                    <form role="form" action="@routes.Dicas.addOpiniao(idTema, dica.getId, 0)" method="POST">
+                                                                        <div class="modal-body">
+                                                                            <div class="form-group">
+                                                                                <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:</label>
+                                                                                <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="submit" class="btn btn-primary" >Enviar</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div><!-- /.modal-content -->
+                                                            </div><!-- /.modal-dialog -->
+                                                        </div>
+                                                        <div id="push"></div>
 
 
+                                                    }
                                                 }
-                                            }
                                             }
                                         }
 
@@ -198,7 +223,7 @@
 
 
                                     </div>
-                                    </div>
+                                </div>
 
 
 
@@ -212,13 +237,13 @@
                                                 <h4 class="modal-title" id="exampleModalLabel">Avaliar Tema</h4>
                                             </div>
                                             <form action="@routes.Temas.addDificuldade(idTema)" method="POST" name="dificuldade">
-                                            <div class="modal-body">
-                                               Escolha uma nota de dificuldade para este tema (-2 para muito fácil e +2 para muito difícil):<br><br>
-                                                <input type="number" max="2" min="-2" name="dificuldade" required data-validation-required-message="">
-                                            </div>
-                                            <div class="modal-footer">
-                                                            <button type="subimit" class="btn btn-primary" name="dificuldade">Enviar</button>
-                                            </div>
+                                                <div class="modal-body">
+                                                    Escolha uma nota de dificuldade para este tema (-2 para muito fácil e +2 para muito difícil):<br><br>
+                                                    <input type="number" max="2" min="-2" name="dificuldade" required data-validation-required-message="">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="subimit" class="btn btn-primary" name="dificuldade">Enviar</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div><!-- /.modal-content -->
@@ -250,7 +275,7 @@
 
 
 
-                                    <!--Modal para escolher o tipo de dica-->
+                                <!--Modal para escolher o tipo de dica-->
                                 <div class="modal" id="addDica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -324,79 +349,79 @@
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div>
-                            <div id="push"></div>
+                                <div id="push"></div>
 
 
 
-                                <!--Modal for dica3-->
-                            <div class="modal" id="dica3" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            <h4 class="modal-title" id="upload-avatar-title">URL de uma matéria útil para SI1</h4>
-                                        </div>
-                                        <form role="form" action="@routes.Dicas.addDica(idTema)" method="POST">
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <label for="url" class="control-label">URL:</label>
-                                                    <input type="url" class="form-control"  name="url" placeholder="http://www.site.com.br" required data-validation-required-message="" maxlength="200">
+                                    <!--Modal for dica3-->
+                                <div class="modal" id="dica3" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title" id="upload-avatar-title">URL de uma matéria útil para SI1</h4>
+                                            </div>
+                                            <form role="form" action="@routes.Dicas.addDica(idTema)" method="POST">
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="url" class="control-label">URL:</label>
+                                                        <input type="url" class="form-control"  name="url" placeholder="http://www.site.com.br" required data-validation-required-message="" maxlength="200">
+                                                    </div>
                                                 </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                                                    <button type="submit" class="btn btn-primary" >Enviar</button>
+                                                </div>
+                                            </form>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div>
+                                <div id="push"></div>
+
+
+                                    <!--Modal for dica4-->
+                                <div class="modal" id="dica4" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title" id="upload-avatar-title">Conselho para cursar bem SI1</h4>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                                                <button type="submit" class="btn btn-primary" >Enviar</button>
-                                            </div>
-                                        </form>
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
+                                            <form role="form" action="@routes.Dicas.addDica(idTema)" method="POST">
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="control-label">Conselho:</label>
+                                                        <textarea type="text" class="form-control" name="conselho" placeholder="Conselho" required data-validation-required-message="Digite um conselho que não seja vazio" maxlength="200"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                                                    <button type="submit" class="btn btn-primary" >Enviar</button>
+                                                </div>
+                                            </form>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div>
                             </div>
-                        <div id="push"></div>
+                                <div id="push"></div>
 
-
-                            <!--Modal for dica4-->
-                        <div class="modal" id="dica4" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        <h4 class="modal-title" id="upload-avatar-title">Conselho para cursar bem SI1</h4>
-                                    </div>
-                                    <form role="form" action="@routes.Dicas.addDica(idTema)" method="POST">
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="recipient-name" class="control-label">Conselho:</label>
-                                                <textarea type="text" class="form-control" name="conselho" placeholder="Conselho" required data-validation-required-message="Digite um conselho que não seja vazio" maxlength="200"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                                            <button type="submit" class="btn btn-primary" >Enviar</button>
-                                        </div>
-                                    </form>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div>
-                   </div>
-                    <div id="push"></div>
-
-                        <!--Modal para o tipo de dica 2-->
-                        <!-- Page Content -->
+                                    <!--Modal para o tipo de dica 2-->
+                                    <!-- Page Content -->
+                            </div>
+                        </div><br>
+                        <ol class="breadcrumb">
+                            <li>
+                                <small>Caminhão do Leite</small>
+                            </li>
+                            <li>
+                                <small> Copyright © - 2015</small>
+                            </li>
+                            <li>
+                                <small> Desenvolvido por Marcela Tejo e Órion Winter para a disciplina SI1</small>
+                            </li>
+                        </ol>
+                    </div>
                 </div>
-            </div><br>
-            <ol class="breadcrumb">
-                <li>
-                    <small>Caminhão do Leite</small>
-                </li>
-                <li>
-                    <small> Copyright © - 2015</small>
-                </li>
-                <li>
-                    <small> Desenvolvido por Marcela Tejo e Órion Winter para a disciplina SI1</small>
-                </li>
-            </ol>
-                </div>
-            </div>
 
             </div>
 
