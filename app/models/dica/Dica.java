@@ -38,4 +38,7 @@ public abstract class Dica {
     public void setTema(Tema tema) {
         this.tema = tema;
     }
+
+    public abstract String getTipo();
+
 }

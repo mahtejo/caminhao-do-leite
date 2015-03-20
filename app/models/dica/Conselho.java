@@ -33,4 +33,9 @@ public class Conselho extends Dica {
     public String toString() {
         return "Conselho: " + conselho;
     }
+
+    @Override
+    public String getTipo() {
+        return "Material útil";
+    }
 }

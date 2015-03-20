@@ -1,7 +1,5 @@
 package models.dica;
 
-import play.Logger;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -44,6 +42,11 @@ public class MaterialUtil extends Dica {
 
     @Override
     public String toString() {
-        return "Material útil: " + getMaterial();
+        return getMaterial();
+    }
+
+    @Override
+    public String getTipo() {
+        return "Material útil";
     }
 }

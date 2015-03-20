@@ -8,7 +8,7 @@
 
 body {
     margin-top: 100px;
-    background-color: #222;
+    background-color: #777;
 }
 
 @media(min-width:768px) {
@@ -87,6 +87,10 @@ background-color: #ffff00;
 
 p {
     text-indent: 40px;
+}
+
+body {
+    background-color:#777;
 }
 
 .menu {
