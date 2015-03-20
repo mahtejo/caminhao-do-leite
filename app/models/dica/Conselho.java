@@ -31,11 +31,11 @@ public class Conselho extends Dica {
 
     @Override
     public String toString() {
-        return "Conselho: " + conselho;
+        return conselho;
     }
 
     @Override
     public String getTipo() {
-        return "Material útil";
+        return "Conselho";
     }
 }
