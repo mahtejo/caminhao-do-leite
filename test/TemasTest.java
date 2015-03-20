@@ -54,4 +54,35 @@ public class TemasTest extends AbstractTest{
         temas = dao.findAllByClass(Tema.class);
         assertThat(temas.get(0).getDicas().size()).isEqualTo(1);
     }
+
+    @Test
+    public void deveAdicionarEPegarDificuldadeMedia() throws Exception {
+        Tema tema = new Tema("OO");
+        assertThat(tema.getDificuldadeMedia()).isEqualTo(0);
+
+        tema.addDificuldade("usuario", 2);
+        assertThat(tema.getDificuldadeMedia()).isEqualTo(2);
+        tema.addDificuldade("usuario", 1);
+        assertThat(tema.getDificuldadeMedia()).isEqualTo(1);
+
+        tema.addDificuldade("Usuario2", -2);
+        assertThat(tema.getDificuldadeMedia()).isEqualTo(-0.5);
+    }
+
+    @Test
+    public void deveAdicionarEPegarDificuldadeMediana() throws Exception{
+        Tema tema = new Tema("OO");
+        assertThat(tema.getDificuldadeMediana()).isEqualTo(0);
+
+        tema.addDificuldade("usuario", 2);
+        assertThat(tema.getDificuldadeMediana()).isEqualTo(2);
+        tema.addDificuldade("usuario", 1);
+        assertThat(tema.getDificuldadeMediana()).isEqualTo(1);
+
+        tema.addDificuldade("usuario2", 2);
+        assertThat(tema.getDificuldadeMediana()).isEqualTo(1.5);
+
+        tema.addDificuldade("usuario3", -2);
+        assertThat(tema.getDificuldadeMediana()).isEqualTo(1);
+    }
 }

@@ -113,7 +113,7 @@
                                         <!-- Fim do cabeçalho! -->
                                     @for(tema <- temas){
                                         @if(tema.getId() == idTema){
-                                            @tema.getNome()
+                                            @tema.getNome() <small>- Dificuldade média: @tema.getDificuldadeMediaFormatada() - Mediana da dificuldade: @tema.getDificuldadeMedianaFormatada()</small>
                                         }
                                     }
                                 </h1>
@@ -129,6 +129,12 @@
                                     @message
                                 </div>
                                 }
+                                <form action="@routes.Temas.addDificuldade(idTema)" method="POST">
+                                    Dificuldade:
+                                    <input type="number" class="form-control" name="dificuldade" placeholder="Deve ser um número entre -2 e 2" required >
+                                    <button type="submit">OK</button>
+                                </form>
+
                                 <ul>
                                     @for(tema <- temas){
                                         @if(tema.getId() == idTema){

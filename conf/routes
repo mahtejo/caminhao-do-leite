@@ -3,20 +3,21 @@
 # ~~~~
 
 # Home page
-GET         /                    controllers.Application.index()
+GET         /                           controllers.Application.index()
 
-GET         /cadastrar           controllers.Cadastro.show()
-POST        /cadastrar           controllers.Cadastro.cadastrar()
+GET         /cadastrar                  controllers.Cadastro.show()
+POST        /cadastrar                  controllers.Cadastro.cadastrar()
 
-GET         /login               controllers.Login.show()
-POST        /login               controllers.Login.login()
+GET         /login                      controllers.Login.show()
+POST        /login                      controllers.Login.login()
 
-GET         /logout              controllers.Login.logout()
+GET         /logout                     controllers.Login.logout()
 
-GET         /home                controllers.Temas.show()
-GET         /tema/:id            controllers.Temas.temas(id: Long)
+GET         /home                       controllers.Temas.show()
+GET         /tema/:id                   controllers.Temas.temas(id: Long)
+POST        /tema/dificuldade/:idTema   controllers.Temas.addDificuldade(idTema: Long)
 
-POST        /dica/:idTema        controllers.Dica.addDica(idTema: Long)
+POST        /dica/:idTema               controllers.Dica.addDica(idTema: Long)
 
 
 # Map static resources from the /public folder to the /assets URL path

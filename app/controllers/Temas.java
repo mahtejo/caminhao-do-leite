@@ -2,6 +2,9 @@ package controllers;
 
 import models.Tema;
 import models.dao.GenericDAO;
+import play.Logger;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 import views.html.index;
@@ -60,6 +63,34 @@ public class Temas {
             }
         } else {
             return badRequest(index.render("Erro: Você não está logado!"));
+        }
+    }
+
+    @Transactional
+    public static Result addDificuldade(Long idTema) {
+        DynamicForm filledForm = Form.form().bindFromRequest();
+        int dificuldade;
+        if (filledForm.hasErrors()){
+            flash("message", "Formulário invalido!");
+            return Temas.temas(400, idTema);
+        }
+        try{
+            dificuldade = Integer.parseInt(filledForm.get("dificuldade"));
+            Logger.debug("Dificuldade: " + dificuldade);
+            Logger.debug("Usuário: " + session().get("user"));
+        } catch (Exception e){
+            flash("message", "Dificuldade deve ser um número inteiro!");
+            return Temas.temas(400, idTema);
+        }
+        try{
+            Tema tema = dao.findByEntityId(Tema.class, idTema);
+            tema.addDificuldade(session().get("user"), dificuldade);
+            dao.merge(tema);
+            dao.flush();
+            return Temas.temas(200, idTema);
+        } catch (Exception e){
+            flash("message", e.getMessage());
+            return Temas.temas(400, idTema);
         }
     }
 }
