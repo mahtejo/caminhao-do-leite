@@ -130,7 +130,8 @@
                                 }
 
                                     <!--Inicio forum de discussao-->
-                                <div class="panel panel-warning">
+                                <!--Div de ações dsiponíveis para o tema-->
+                                <div class="panel panel-success">
                                     <div class="panel-heading">
                                         <h3 class="panel-title">Ações Disponíveis para este tema</h3>
                                     </div>
@@ -141,6 +142,7 @@
                                 </div>
                                 <br>
 
+                                <!--Div de Dicas-->
                                 <div class="panel-group" id="accordion">
                                     <div class="panel panel-default" id="panel1">
                                         <div class="panel-heading"><h4 class="panel-title">
@@ -158,18 +160,41 @@
                                                                     <div class="panel panel-info">
                                                                         <div class="panel-heading">
                                                                             <div class="pull-right" style='display:inline;'>
-                                                                                @dica.getNumeroDiscordaram <button href="" data-target="#avaliarNeg" data-toggle="modal">
-                                                                                <i class="fa fa-thumbs-o-down"></i></button>&nbsp;&nbsp; @dica.getNumeroConcordaram
+                                                                                @dica.getNumeroConcordaram
                                                                             <form action="@routes.Dicas.addOpiniao(idTema, dica.getId, 1)" method="POST" style="display:inline!important;">
-                                                                                <button href=""><i class="fa fa-thumbs-o-up"></i></button>
-                                                                            </form>
+                                                                                <button href="" class="btn btn-xs btn-success"><i class="fa fa-thumbs-o-up"></i></button>
+                                                                            </form> &nbsp;&nbsp; @dica.getNumeroDiscordaram <button href="" class="btn btn-xs btn-danger" data-target="#avaliarNeg" data-toggle="modal">
+                                                                                <i class="fa fa-thumbs-o-down"></i></button>
                                                                             </div>
-
                                                                             <h3 class="panel-title">
                                                                                 <a data-toggle="collapse" data-target="#collapse@dica.getId"
                                                                                 href="#collapseOne">@dica.getTipo()<i class="fa fa-fw fa-caret-down"></i></a>
                                                                             </h3>
                                                                         </div>
+
+                                                                            <!--Modal para avaliar dica negativo-->
+                                                                        <div class="modal" id="avaliarNeg" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h4 class="modal-title" id="upload-avatar-title">Avaliação Negativa - Justificativa</h4>
+                                                                                    </div>
+                                                                                    <form action="@routes.Dicas.addOpiniao(idTema, dica.getId, 0)" method="POST">
+                                                                                        <div class="modal-body">
+
+                                                                                            <div class="form-group">
+                                                                                                <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:</label>
+                                                                                                <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica"></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="submit" class="btn btn-primary" >Enviar</button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div><!-- /.modal-content -->
+                                                                            </div><!-- /.modal-dialog -->
+                                                                        </div>
+
                                                                         <div id="collapse@dica.getId" class="panel-collapse collapse in">
                                                                             <div class="panel-body">
                                                                                 @dica.toString()
@@ -193,51 +218,26 @@
                                                                                                     <div class="pull-right"><small>Posted by: @dica.getOpinioesNegativas.get("user")</small></div>
                                                                                                     </div>
                                                                                                 </div>
-
-
                                                                                             }
-
-                                                                                        }
-                                                                            </div>
-                                                                            </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                            <!--Modal para avaliar dica negativo-->
-                                                                        <div class="modal" id="avaliarNeg" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h4 class="modal-title" id="upload-avatar-title">Avaliação Negativa - Justificativa</h4>
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <form role="form" action="@routes.Dicas.addOpiniao(idTema, dica.getId, 0)" method="POST">
-                                                                                        <div class="modal-body">
-                                                                                            <div class="form-group">
-                                                                                                <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:</label>
-                                                                                                <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica"></textarea>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="modal-footer">
-                                                                                            <button type="submit" class="btn btn-primary" >Enviar</button>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div><!-- /.modal-content -->
-                                                                            </div><!-- /.modal-dialog -->
+                                                                                }
+                                                                            </div>
                                                                         </div>
-                                                                        <div id="push"></div>
+                                                                    </div>
+                                                                </div>
                                                                         }
+
                                                         }
                                                     }
+
                                                 }
-                                            </div>
-                                            </div>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
 
 
                                     <!--Modal para avaliar o tema -->
