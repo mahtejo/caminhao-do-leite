@@ -65,30 +65,36 @@
                             <li>
                                 <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-book"></i> Temas Teóricos<i class="fa fa-fw fa-caret-down"></i></a>
                                 <ul id="demo" class="collapse">
-                                @for(i <- 0 to 4){
-                                    <li>
-                                        <a href="@routes.Temas.temas(temas(i).getId)"> @temas(i).getNome() </a>
-                                    </li>
+                                @if(temas.size >= 3) {
+                                    @for(i <- 0 to 4) {
+                                        <li>
+                                            <a href="@routes.Temas.temas(temas(i).getId)"> @temas(i).getNome() </a>
+                                        </li>
+                                    }
                                 }
                                 </ul>
                             </li>
                             <li>
                                 <a href="javascript:;" data-toggle="collapse" data-target="#deo"><i class="fa fa-code-fork"></i> Novas Tecnologias<i class="fa fa-fw fa-caret-down"></i></a>
                                 <ul id="deo" class="collapse">
-                                @for(i <- 5 to 8){
-                                    <li>
-                                        <a href="@routes.Temas.temas(temas(i).getId)"> @temas(i).getNome() </a>
-                                    </li>
+                                @if(temas.size >= 8) {
+                                    @for(i <- 5 to 8) {
+                                        <li>
+                                            <a href="@routes.Temas.temas(temas(i).getId)"> @temas(i).getNome() </a>
+                                        </li>
+                                    }
                                 }
                                 </ul>
                             </li>
                             <li>
                                 <a href="javascript:;" data-toggle="collapse" data-target="#do"><i class="fa fa-fw fa-desktop"></i> Temas Práticos<i class="fa fa-fw fa-caret-down"></i></a>
                                 <ul id="do" class="collapse">
-                                @for(i <- 9 until temas.size()){
-                                    <li>
-                                        <a href="@routes.Temas.temas(temas(i).getId)"> @temas(i).getNome() </a>
-                                    </li>
+                                @if(temas.size >= 9) {
+                                    @for(i <- 9 until temas.size) {
+                                        <li>
+                                            <a href="@routes.Temas.temas(temas(i).getId)"> @temas(i).getNome() </a>
+                                        </li>
+                                    }
                                 }
                                 </ul>
                             </li>
