@@ -114,7 +114,6 @@
                                     @for(tema <- temas){
                                         @if(tema.getId() == id){
                                             @tema.getNome()
-
                                         }
                                     }
                                 </h1>
@@ -130,8 +129,16 @@
                                     @message
                                 </div>
                                 }
+                                <ul>
+                                    @for(tema <- temas){
+                                        @if(tema.getId() == id){
+                                            @for(dica <- tema.getDicas()){
+                                                <li>@dica.toString()</li>
+                                            }
+                                        }
+                                    }
+                                </ul>
                                 <br>
-
                                 <button type="submit" class="btn btn-primary" data-target="#addDica" data-toggle="modal">Adicionar Dica</button>
 
 

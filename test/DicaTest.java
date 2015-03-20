@@ -23,6 +23,7 @@ public class DicaTest extends AbstractTest{
         dicas = dao.findAllByClass(Dica.class);
 
         assertThat(dicas.size()).isEqualTo(1);
+        assertThat(dicas.get(0).toString()).isEqualTo("Conselho: Estude o play!");
     }
 
     @Test
@@ -46,6 +47,7 @@ public class DicaTest extends AbstractTest{
         dicas = dao.findAllByClass(Dica.class);
 
         assertThat(dicas.size()).isEqualTo(1);
+        assertThat(dicas.get(0).toString()).isEqualTo("Disciplina útil: Programação 2 - Razão: Padrões de projeto");
     }
 
     @Test
@@ -87,6 +89,7 @@ public class DicaTest extends AbstractTest{
         dicas = dao.findAllByClass(Dica.class);
 
         assertThat(dicas.size()).isEqualTo(1);
+        assertThat(dicas.get(0).toString()).isEqualTo("Material útil: http://www.playframework.com");
     }
 
     @Test
@@ -130,13 +133,14 @@ public class DicaTest extends AbstractTest{
 
     @Test
     public void deveCriarDicaParaNaoTerDificuldade() throws Exception {
-        Dica dica = new PrecisaSaber("Assunto");
+        Dica dica = new PrecisaSaber("Saber programar em Java muito bem!");
         dao.persist(dica);
         dao.flush();
 
         dicas = dao.findAllByClass(Dica.class);
 
         assertThat(dicas.size()).isEqualTo(1);
+        assertThat(dicas.get(0).toString()).isEqualTo("O que precisa saber para não ter dificuldades: Saber programar em Java muito bem!");
     }
 
     @Test

@@ -43,4 +43,9 @@ public class DisciplinaUtil extends Dica {
         }
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        return "Disciplina útil: " + getNome() + " - Razão: " + getRazao();
+    }
 }

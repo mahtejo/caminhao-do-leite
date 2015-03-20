@@ -41,4 +41,9 @@ public class MaterialUtil extends Dica {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Material útil: " + getMaterial();
+    }
 }

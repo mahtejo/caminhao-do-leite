@@ -28,4 +28,9 @@ public class Conselho extends Dica {
         }
         this.conselho = conselho;
     }
+
+    @Override
+    public String toString() {
+        return "Conselho: " + conselho;
+    }
 }
