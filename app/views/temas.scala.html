@@ -126,26 +126,169 @@
                                 }
                                 <br>
 
+                                <button type="submit" class="btn btn-primary" data-target="#addDica" data-toggle="modal">Adicionar Dica</button>
 
-                                    <!-- Page Content -->
+
+                                    <!--Modal para escolher o tipo de dica-->
+                                <div class="modal" id="addDica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title" id="exampleModalLabel">Escolha o tipo de dica</h4>
+                                            </div>
+
+                                                <!-- START OF MODAL BODY-->
+
+
+                                            <div class="modal-body">
+                                                <button class="btn btn-default" data-target="#dica1" data-toggle="modal">Para não ter dificuldades</button><br><br>
+                                                <button class="btn btn-info" data-target="#dica2" data-toggle="modal">Disciplinas anteriores que te ajudarão</button><br>
+                                                <br><button class="btn btn-warning" data-target="#dica3" data-toggle="modal">URL de uma matéria útil</button><br>
+                                                <br><button class="btn btn-success" data-target="#dica4" data-toggle="modal">Conselho</button>
+                                              <!--  <ul>
+                                                    <li><a href="#" class="button" data-target="#dica1" data-toggle="modal">Para não ter dificuldades</a><br><br></li>
+                                                    <li><a href="#" class="button" data-target="#dica2" data-toggle="modal">Disciplinas anteriores que te ajudarão</a><br><br></li>
+                                                    <li><a href="#" class="button" data-target="#dica3" data-toggle="modal">URL de uma matéria útil</a><br><br></li>
+                                                    <li><a href="#" class="button" data-target="#dica4" data-toggle="modal">Conselho</a></li>
+                                                </ul>-->
+                                            </div>
+
+
+                                                <!-- END OF APPLICATION FORM MODAL BODY -->
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+
+                                <!--Modal for dica1-->
+                                <div class="modal" id="dica1" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title" id="upload-avatar-title">Dicas para não ter dificuldade em SI1</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form role="form">
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="control-label">Dica:</label>
+                                                        <textarea class="form-control" id="message-text"></textarea>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                                                <button type="submit" class="btn btn-primary" >Enviar</button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div>
+                                <div id="push"></div>
+
+
+                                    <!--Modal for dica2-->
+                                <div class="modal" id="dica2" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title" id="upload-avatar-title">Disciplinas anteriores que te ajudarão em SI1</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form role="form">
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="control-label">Dica:</label>
+                                                        <textarea class="form-control" id="message-text"></textarea>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" >Cancelar</button>
+                                                <button type="submit" class="btn btn-primary" >Enviar</button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div>
+                            <div id="push"></div>
+
+
+
+                                <!--Modal for dica3-->
+                            <div class="modal" id="dica3" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="upload-avatar-title">URL de uma matéria útil para SI1</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form role="form">
+                                                <div class="form-group">
+                                                    <label for="recipient-name" class="control-label">Dica:</label>
+                                                    <textarea class="form-control" id="message-text"></textarea>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary" >Enviar</button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
                             </div>
-                            </div><br>
-                            <ol class="breadcrumb">
-                                <li>
-                                    <small>Caminhão do Leite</small>
-                                </li>
-                                <li>
-                                    <small> Copyright © - 2015</small>
-                                </li>
-                                <li>
-                                    <small> Desenvolvido por Marcela Tejo e Órion Winter para a disciplina SI1</small>
-                                </li>
-                            </ol>
+                        <div id="push"></div>
+
+
+                            <!--Modal for dica4-->
+                        <div class="modal" id="dica4" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title" id="upload-avatar-title">Conselho para cursar bem SI1</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form role="form">
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="control-label">Dica:</label>
+                                                <textarea class="form-control" id="message-text"></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary" >Enviar</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
                         </div>
-                    </div>
-                        <!-- /.row -->
+                   </div>
+                    <div id="push"></div>
+
+                        <!--Modal para o tipo de dica 2-->
+                        <!-- Page Content -->
+                </div>
+            </div><br>
+            <ol class="breadcrumb">
+                <li>
+                    <small>Caminhão do Leite</small>
+                </li>
+                <li>
+                    <small> Copyright © - 2015</small>
+                </li>
+                <li>
+                    <small> Desenvolvido por Marcela Tejo e Órion Winter para a disciplina SI1</small>
+                </li>
+            </ol>
                 </div>
             </div>
+
+            </div>
+                <!--</div>-->
                 <!-- /#page-wrapper -->
 
                 <!-- /#wrapper -->
