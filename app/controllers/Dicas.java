@@ -2,24 +2,20 @@ package controllers;
 
 import models.Tema;
 import models.dao.GenericDAO;
-import models.dica.Conselho;
-import models.dica.DisciplinaUtil;
-import models.dica.MaterialUtil;
-import models.dica.PrecisaSaber;
+import models.dica.*;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
-import java.util.List;
-
 import static play.mvc.Controller.flash;
+import static play.mvc.Controller.session;
 
 /**
  * Created by orion on 19/03/15.
  */
-public class Dica {
+public class Dicas {
 
     private static GenericDAO dao = new GenericDAO();
 
@@ -34,7 +30,7 @@ public class Dica {
             try {
                 Tema tema = dao.findByEntityId(Tema.class, idTema);
                 String conselho = filledForm.get("conselho");
-                tema.addDica(new Conselho(conselho));
+                tema.addDica(new Conselho(session().get("user"), conselho));
                 dao.merge(tema);
                 dao.flush();
 
@@ -48,7 +44,7 @@ public class Dica {
             try {
                 Tema tema = dao.findByEntityId(Tema.class, idTema);
                 String url = filledForm.get("url");
-                tema.addDica(new MaterialUtil(url));
+                tema.addDica(new MaterialUtil(session().get("user"), url));
                 dao.merge(tema);
                 dao.flush();
 
@@ -63,7 +59,7 @@ public class Dica {
                 Tema tema = dao.findByEntityId(Tema.class, idTema);
                 String disciplina = filledForm.get("disciplina");
                 String razao = filledForm.get("razao");
-                tema.addDica(new DisciplinaUtil(disciplina, razao));
+                tema.addDica(new DisciplinaUtil(session().get("user"), disciplina, razao));
                 dao.merge(tema);
                 dao.flush();
 
@@ -77,7 +73,7 @@ public class Dica {
             try {
                 Tema tema = dao.findByEntityId(Tema.class, idTema);
                 String assunto = filledForm.get("assunto");
-                tema.addDica(new PrecisaSaber(assunto));
+                tema.addDica(new PrecisaSaber(session().get("user"), assunto));
                 dao.merge(tema);
                 dao.flush();
 
@@ -90,5 +86,40 @@ public class Dica {
         }
         flash("message", "Ocorreu um erro");
         return Temas.temas(400, idTema);
+    }
+
+    @Transactional
+    public static Result addOpiniao(long idTema, long idDica, int opiniao) {
+        DynamicForm filledForm = Form.form().bindFromRequest();
+        if (filledForm.hasErrors()){
+            flash("message", "Formulário invalido!");
+            return Temas.temas(400, idTema);
+        }
+        Dica dica = dao.findByEntityId(Dica.class, idDica);
+        if (opiniao == 0){
+            String justificativa = filledForm.get("justificativa");
+            try {
+                dica.addOpiniaoNegativa(session().get("user"), justificativa);
+                dao.merge(dica);
+                dao.flush();
+                return Temas.temas(200, idTema);
+            } catch (Exception e) {
+                flash("message", e.getMessage());
+                return Temas.temas(400, idTema);
+            }
+        } else if (opiniao == 1){
+            try {
+                dica.addOpiniaoPositiva(session().get("user"));
+                dao.merge(dica);
+                dao.flush();
+                return Temas.temas(200, idTema);
+            } catch (Exception e) {
+                flash("message", e.getMessage());
+                return Temas.temas(400, idTema);
+            }
+        } else {
+            flash("message", "Erro: Não foi possível adicionar opinião!");
+            return Temas.temas(400, idTema);
+        }
     }
 }

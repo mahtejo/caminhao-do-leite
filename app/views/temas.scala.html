@@ -143,16 +143,47 @@
                                                 @for(dica <- tema.getDicas()) {
                                                     <div class="panel panel-info">
                                                     <div class="panel-heading">
-                                                        <div class="pull-right"><a data-target="#avaliarNeg" data-toggle="modal"><i class="fa fa-thumbs-o-down"></i></a>&nbsp;&nbsp;<a href="#"><i class="fa fa-thumbs-o-up"></i></a></div>
+                                                        <div class="pull-right"><a href="" data-target="#avaliarNeg" data-toggle="modal">
+                                                            <i class="fa fa-thumbs-o-down"></i></a>&nbsp;&nbsp;
+                                                            <form action="@routes.Dicas.addOpiniao(idTema, dica.getId, 1)" method="POST">
+                                                                <button href=""> <i class="fa fa-thumbs-o-up"></i></button>
+                                                            </form>
+                                                        </div>
+
                                                             <h3 class="panel-title">
         @dica.getTipo()
                                                         </h3>
                                                         </div>
                                                     <div class="panel-body">
                                                     @dica.toString()<hr>
-                                                        <div class="pull-right"><small>Posted by: @session().get("user")</small></div>
+                                                        <div class="pull-right"><small>Posted by: @dica.getUsuario()</small></div>
                                                     </div>
                                                 </div>
+
+                                                        <!--Modal para avaliar dica negativo-->
+                                                    <div class="modal" id="avaliarNeg" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title" id="upload-avatar-title">Avaliação Negativa - Justificativa</h4>
+                                                                </div>
+                                                                <form role="form" action="@routes.Dicas.addOpiniao(idTema, dica.getId, 0)" method="POST">
+                                                                    <div class="modal-body">
+                                                                        <div class="form-group">
+                                                                            <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:</label>
+                                                                            <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="submit" class="btn btn-primary" >Enviar</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div><!-- /.modal-content -->
+                                                        </div><!-- /.modal-dialog -->
+                                                    </div>
+                                                    <div id="push"></div>
+
+
                                                 }
                                             }
                                             }
@@ -169,30 +200,6 @@
                                     </div>
                                     </div>
 
-
-
-                                    <!--Modal para avaliar dica negativo-->
-                                <div class="modal" id="avaliarNeg" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="upload-avatar-title">Avaliação Negativa - Justificativa</h4>
-                                            </div>
-                                            <form role="form">
-                                                <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:</label>
-                                                        <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary" >Enviar</button>
-                                                </div>
-                                            </form>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div>
-                                <div id="push"></div>
 
 
 
@@ -274,7 +281,7 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 <h4 class="modal-title" id="upload-avatar-title">Dicas para não ter dificuldade em SI1</h4>
                                             </div>
-                                            <form role="form" action="@routes.Dica.addDica(idTema)" method="POST">
+                                            <form role="form" action="@routes.Dicas.addDica(idTema)" method="POST">
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="control-label">Dica:</label>
@@ -300,7 +307,7 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 <h4 class="modal-title" id="upload-avatar-title">Disciplinas anteriores que te ajudarão em SI1</h4>
                                             </div>
-                                            <form role="form" action="@routes.Dica.addDica(idTema)" method="POST">
+                                            <form role="form" action="@routes.Dicas.addDica(idTema)" method="POST">
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <label for="name" class="control-label">Nome da disciplina:</label>
@@ -329,7 +336,7 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             <h4 class="modal-title" id="upload-avatar-title">URL de uma matéria útil para SI1</h4>
                                         </div>
-                                        <form role="form" action="@routes.Dica.addDica(idTema)" method="POST">
+                                        <form role="form" action="@routes.Dicas.addDica(idTema)" method="POST">
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <label for="url" class="control-label">URL:</label>
@@ -355,7 +362,7 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         <h4 class="modal-title" id="upload-avatar-title">Conselho para cursar bem SI1</h4>
                                     </div>
-                                    <form role="form" action="@routes.Dica.addDica(idTema)" method="POST">
+                                    <form role="form" action="@routes.Dicas.addDica(idTema)" method="POST">
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="recipient-name" class="control-label">Conselho:</label>
@@ -392,7 +399,7 @@
             </div>
 
             </div>
-</div>
+
                 <!--</div>-->
                 <!-- /#page-wrapper -->
 
