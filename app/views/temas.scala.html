@@ -143,13 +143,14 @@
                                                 @for(dica <- tema.getDicas()) {
                                                     <div class="panel panel-info">
                                                     <div class="panel-heading">
-                                                        <a href="#" class="pull-right">Avaliar @dica.getTipo()</a>
+                                                        <div class="pull-right"><a data-target="#avaliarNeg" data-toggle="modal"><i class="fa fa-thumbs-o-down"></i></a>&nbsp;&nbsp;<a href="#"><i class="fa fa-thumbs-o-up"></i></a></div>
                                                             <h3 class="panel-title">
         @dica.getTipo()
                                                         </h3>
                                                         </div>
                                                     <div class="panel-body">
-                                                    @dica.toString()
+                                                    @dica.toString()<hr>
+                                                        <div class="pull-right"><small>Posted by: @session().get("user")</small></div>
                                                     </div>
                                                 </div>
                                                 }
@@ -170,6 +171,31 @@
 
 
 
+                                    <!--Modal para avaliar dica negativo-->
+                                <div class="modal" id="avaliarNeg" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="upload-avatar-title">Avaliação Negativa - Justificativa</h4>
+                                            </div>
+                                            <form role="form">
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:</label>
+                                                        <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary" >Enviar</button>
+                                                </div>
+                                            </form>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div>
+                                <div id="push"></div>
+
+
+
                                     <!--Modal para avaliar o tema -->
                                 <div class="modal" id="avaliacao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
                                     <div class="modal-dialog">
@@ -186,6 +212,29 @@
                                             <div class="modal-footer">
                                                             <button type="subimit" class="btn btn-primary" name="dificuldade">Enviar</button>
                                             </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+
+
+
+                                <!--Modal para avaliar o tema -->
+                                <div class="modal" id="avaliarDica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title" id="exampleModalLabel">Avaliar Dica</h4>
+                                            </div>
+                                            <form action="@routes.Temas.addDificuldade(idTema)" method="POST" name="dificuldade">
+                                                <div class="modal-body">
+                                                    Escolha uma nota de dificuldade para este tema (-2 para muito fácil e +2 para muito difícil):<br><br>
+                                                    <input type="number" max="2" min="-2" name="dificuldade" required data-validation-required-message="">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="subimit" class="btn btn-primary" name="dificuldade">Enviar</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div><!-- /.modal-content -->
@@ -343,7 +392,7 @@
             </div>
 
             </div>
-
+</div>
                 <!--</div>-->
                 <!-- /#page-wrapper -->
 
@@ -365,22 +414,4 @@
 
     </html>
 
-    <!--
-
-
-  <!DOCTYPE html>
-  <html>
-  <head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-    <link href="@routes.Assets.at("stylesheets/bootstrap.css")" rel="stylesheet" media="screen">
-    <script src="@routes.Assets.at("js/jquery.js")" rel="javascript" media="screen"></script>
-    <script src="@routes.Assets.at("javascripts/jquery-extra.js")" rel="javascript" media="screen"></script>
-
-    <body>
-        <form action="@routes.Login.logout()">
-            <button type="submit"> Logout </button>
-        </form>
-    </body>
-    -->
 }

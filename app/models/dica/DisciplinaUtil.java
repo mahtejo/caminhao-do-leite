@@ -46,7 +46,9 @@ public class DisciplinaUtil extends Dica {
 
     @Override
     public String toString() {
-        return "Nome:" + getNome() + "Razão: " + getRazao();
+        StringBuffer str = new StringBuffer ("Nome: ");
+        str.append(getNome()).append("Razão: ").append(getRazao());
+        return str.toString();
     }
 
     @Override
