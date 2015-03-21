@@ -1,4 +1,5 @@
 import base.AbstractTest;
+import models.Tema;
 import models.dao.GenericDAO;
 import models.dica.*;
 import org.junit.Test;
@@ -222,5 +223,40 @@ public class DicaTest extends AbstractTest{
         assertThat(dica.getOpinioesNegativas().get("Malandrão")).isEqualTo("Gostei não");
         dica.addOpiniaoNegativa("Malandrão", "Sabe de nada");
         assertThat(dica.getOpinioesNegativas().get("Malandrão")).isEqualTo("Sabe de nada");
+    }
+
+    @Test
+    public void devePegarDicasOrdenadasInversamente() throws Exception {
+        Tema tema = new Tema("OO");
+        Conselho conselho = new Conselho("joana", "Estude");
+        conselho.addOpiniaoPositiva("belarmino");
+        conselho.addOpiniaoPositiva("rudckleidson");
+        conselho.addOpiniaoNegativa("sinfronio", "Maiisss ou menoss!");
+
+        PrecisaSaber ps = new PrecisaSaber("joao", "Um pouco de tudo");
+        ps.addOpiniaoPositiva("josefina");
+        ps.addOpiniaoNegativa("Paulo", "Muito vago!");
+        ps.addOpiniaoNegativa("Marcio", "Não precisa saber de tuuuudo!");
+
+        DisciplinaUtil disciplinaUtil = new DisciplinaUtil("maria", "Programação 2", "Padrões de projeto");
+        disciplinaUtil.addOpiniaoPositiva("Moacir");
+        disciplinaUtil.addOpiniaoPositiva("Motumbo");
+        disciplinaUtil.addOpiniaoPositiva("Felipe");
+        disciplinaUtil.addOpiniaoPositiva("Oscar");
+
+        Conselho conselho2 = new Conselho("Bonifácio", "Faça o projeto de última hora! kkkk");
+        conselho2.addOpiniaoNegativa("Paulo", "Pensee");
+        conselho2.addOpiniaoNegativa("Marcio", "kkkkkkkkkk");
+
+        tema.addDica(conselho);
+        tema.addDica(ps);
+        tema.addDica(disciplinaUtil);
+        tema.addDica(conselho2);
+
+        dicas = tema.getDicas();
+        assertThat(dicas.get(0)).isEqualTo(disciplinaUtil);
+        assertThat(dicas.get(1)).isEqualTo(conselho);
+        assertThat(dicas.get(2)).isEqualTo(ps);
+        assertThat(dicas.get(3)).isEqualTo(conselho2);
     }
 }

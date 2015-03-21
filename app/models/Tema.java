@@ -61,6 +61,8 @@ public class Tema {
     }
 
     public List<Dica> getDicas() {
+        Collections.sort(dicas);
+        Collections.reverse(dicas);
         return dicas;
     }
 

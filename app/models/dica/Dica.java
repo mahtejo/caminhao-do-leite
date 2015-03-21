@@ -8,7 +8,7 @@ import java.util.Map;
  * Created by orion on 19/03/15.
  */
 @Entity(name="Dica")
-public abstract class Dica {
+public abstract class Dica implements Comparable<Dica> {
     @Id
     @GeneratedValue
     private Long id;
@@ -104,4 +104,13 @@ public abstract class Dica {
 
     public abstract String getTipo();
 
+    public int compareTo(Dica outraDica){
+        if (this.getNumeroConcordaram() < outraDica.getNumeroConcordaram()){
+            return -1;
+        } else if (this.getNumeroConcordaram() > outraDica.getNumeroConcordaram()){
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }
