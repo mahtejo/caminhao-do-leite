@@ -259,4 +259,52 @@ public class DicaTest extends AbstractTest{
         assertThat(dicas.get(2)).isEqualTo(ps);
         assertThat(dicas.get(3)).isEqualTo(conselho2);
     }
+
+    @Test
+    public void deveAdicionarNoMaximo20Concordancias() throws Exception {
+        Dica dica = new Conselho("usuario", "conselho");
+
+        try {
+            for (int i = 0; i < 21; i++) {
+                dica.addOpiniaoPositiva("usuario" + i);
+            }
+        } catch (Exception e){
+        }
+        assertThat(dica.getNumeroConcordaram()).isEqualTo(20);
+    }
+
+    @Test
+    public void deveAdicionarNoMaximo20Discordancias() throws Exception {
+        Dica dica = new Conselho("usuario", "conselho");
+        try {
+            for (int i = 0; i < 21; i++) {
+                dica.addOpiniaoNegativa("usuario"+i, "opinião");
+            }
+        } catch (Exception e) {
+        }
+        assertThat(dica.getNumeroDiscordaram()).isEqualTo(20);
+    }
+
+    @Test
+    public void naoDeveExcluirADicaDepoisDe20ConcordanciasOuDiscordancias() throws Exception {
+        Tema tema = new Tema("OO");
+        Dica dica = new Conselho("usuario", "conselho");
+        tema.addDica(dica);
+        tema.informaConteudoInapropriado(dica, "admon");
+        for (int i = 0; i < 19; i++) {
+            dica.addOpiniaoPositiva("usuario"+i);
+        }
+        for (int i = 20; i < 40; i++) {
+            dica.addOpiniaoNegativa("usuario"+i, "opinião");
+        }
+        assertThat(dica.getNumeroDiscordaram()).isEqualTo(20);
+        assertThat(dica.getNumeroConcordaram()).isEqualTo(19);
+        try{
+            tema.informaConteudoInapropriado(dica, "admin");
+        } catch (Exception e){
+        }
+        assertThat(dica.numeroConteudoInapropriado()).isEqualTo(1);
+        assertThat(dica.getNumeroDiscordaram()).isEqualTo(20);
+        assertThat(dica.getNumeroConcordaram()).isEqualTo(19);
+    }
 }

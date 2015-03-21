@@ -123,7 +123,7 @@ public class Tema {
         }
     }
 
-    public void informaConteudoInapropriado(Dica dica, String usuario){
+    public void informaConteudoInapropriado(Dica dica, String usuario) throws Exception {
         dica.informaConteudoInapropriado(usuario);
         if (dica.numeroConteudoInapropriado() >= 3){
             dicas.remove(dica);
