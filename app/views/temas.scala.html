@@ -160,11 +160,24 @@
                                                                     <div class="panel panel-info">
                                                                         <div class="panel-heading">
                                                                             <div class="pull-right" style='display:inline;'>
+                                                                                    <!--Thumbs-up -->
                                                                                 @dica.getNumeroConcordaram
                                                                             <form action="@routes.Dicas.addOpiniao(idTema, dica.getId, 1)" method="POST" style="display:inline!important;">
-                                                                                <button href="" class="btn btn-xs btn-success" title="Avalie esta dica positivamente"><i class="fa fa-thumbs-o-up"></i></button>
-                                                                            </form> &nbsp;&nbsp; @dica.getNumeroDiscordaram <button href="" class="btn btn-xs btn-danger" data-target="#avaliarNeg@dica.getId" data-toggle="modal" title="Avalie esta dica negativamente (você terá que justificar sua resposta)">
-                                                                                <i class="fa fa-thumbs-o-down"></i></button>
+                                                                                <button href="" class="btn btn-xs btn-success" title="Avalie esta dica positivamente">
+                                                                                    <i class="fa fa-thumbs-o-up"></i>
+                                                                                </button>
+                                                                            </form> &nbsp;&nbsp;
+                                                                                <!--Thumbs-down -->
+                                                                                @dica.getNumeroDiscordaram
+                                                                                <button href="" class="btn btn-xs btn-danger" data-target="#avaliarNeg@dica.getId" data-toggle="modal" title="Avalie esta dica negativamente (você terá que justificar sua resposta)">
+                                                                                <i class="fa fa-thumbs-o-down"></i>
+                                                                                </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                <!--Flag -->
+                                                                                @dica.numeroConteudoInapropriado() <form action="@routes.Dicas.reportarConteudoInapropriado(idTema, dica.getId)" method="POST" style="display:inline!important;">
+                                                                                <button class="btn btn-xs btn-danger" title="Sinalizar conteúdo inapropriado">
+                                                                                    <i class="fa fa-flag"></i>
+                                                                                </button>
+                                                                                </form>
                                                                             </div>
                                                                             <h3 class="panel-title">
                                                                                 <a data-toggle="collapse" data-target="#collapse@dica.getId"
