@@ -136,8 +136,8 @@
                                         <h3 class="panel-title">Ações Disponíveis para este tema</h3>
                                     </div>
                                     <div class="panel-body">
-                                        <button type="submit" class="btn btn-primary" data-target="#addDica" data-toggle="modal">Adicionar Dica</button>
-                                        <button type="submit" class="btn btn-primary" data-target="#avaliacao" data-toggle="modal">Avaliar Tema</button>
+                                        <button type="submit" class="btn btn-primary" data-target="#addDica" data-toggle="modal" title="Adicione uma dica a este tema">Adicionar Dica</button>
+                                        <button type="submit" class="btn btn-primary" data-target="#avaliacao" data-toggle="modal" title="Avalie a dificuldade deste tema">Avaliar Tema</button>
                                     </div>
                                 </div>
                                 <br>
@@ -162,8 +162,8 @@
                                                                             <div class="pull-right" style='display:inline;'>
                                                                                 @dica.getNumeroConcordaram
                                                                             <form action="@routes.Dicas.addOpiniao(idTema, dica.getId, 1)" method="POST" style="display:inline!important;">
-                                                                                <button href="" class="btn btn-xs btn-success"><i class="fa fa-thumbs-o-up"></i></button>
-                                                                            </form> &nbsp;&nbsp; @dica.getNumeroDiscordaram <button href="" class="btn btn-xs btn-danger" data-target="#avaliarNeg@dica.getId" data-toggle="modal">
+                                                                                <button href="" class="btn btn-xs btn-success" title="Avalie esta dica positivamente"><i class="fa fa-thumbs-o-up"></i></button>
+                                                                            </form> &nbsp;&nbsp; @dica.getNumeroDiscordaram <button href="" class="btn btn-xs btn-danger" data-target="#avaliarNeg@dica.getId" data-toggle="modal" title="Avalie esta dica negativamente (você terá que justificar sua resposta)">
                                                                                 <i class="fa fa-thumbs-o-down"></i></button>
                                                                             </div>
                                                                             <h3 class="panel-title">
@@ -268,10 +268,11 @@
                                                 <h4 class="modal-title" id="exampleModalLabel">Escolha o tipo de dica</h4>
                                             </div>
                                             <div class="modal-body">
-                                                <button class="btn btn-default" data-target="#dica1" data-toggle="modal">Para não ter dificuldades</button><br><br>
-                                                <button class="btn btn-info" data-target="#dica2" data-toggle="modal">Disciplinas anteriores que te ajudarão</button><br><br>
-                                                <button class="btn btn-warning" data-target="#dica3" data-toggle="modal">URL de uma matéria útil</button><br><br>
-                                                <button class="btn btn-success" data-target="#dica4" data-toggle="modal">Conselho</button>
+                                                Passe o mouse em cima dos botões para escolher o tipo de dica: <br><br>
+                                                <button class="btn btn-default" data-target="#dica1" data-toggle="modal" title="Dicas para não ter dificuldades em SI1">Dica Tipo 1</button><br><br>
+                                                <button class="btn btn-info" data-target="#dica2" data-toggle="modal" title="Disciplinas anteriores que te ajudarão em SI1">Dica Tipo 2</button><br><br>
+                                                <button class="btn btn-warning" data-target="#dica3" data-toggle="modal" title="URL de uma matéria útil">Dica Tipo 3</button><br><br>
+                                                <button class="btn btn-success" data-target="#dica4" data-toggle="modal" title="Conselho para futuros alunos">Dica Tipo 4</button>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
@@ -294,7 +295,7 @@
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="control-label">Dica:</label>
-                                                        <textarea class="form-control" name="assunto" placeholder="Assunto" id="message-text" maxlength="250"></textarea>
+                                                        <textarea class="form-control" name="assunto" placeholder="Assunto" id="message-text" maxlength="255"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -322,7 +323,7 @@
                                                         <label for="name" class="control-label">Nome da disciplina:</label>
                                                         <input type="name" class="form-control"  name="disciplina" placeholder="Disciplina" required data-validation-required-message="" maxlength="200"><br>
                                                         <label for="recipient-name" class="control-label">Razão pela qual ela é útil:</label>
-                                                        <textarea class="form-control" id="message-text" name="razao" placeholder="Razão" required data-validation-required-message="" maxlength="600"></textarea>
+                                                        <textarea class="form-control" id="message-text" name="razao" placeholder="Razão" required data-validation-required-message="" maxlength="255"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -375,7 +376,7 @@
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="control-label">Conselho:</label>
-                                                        <textarea type="text" class="form-control" name="conselho" placeholder="Conselho" required data-validation-required-message="Digite um conselho que não seja vazio" maxlength="300"></textarea>
+                                                        <textarea type="text" class="form-control" name="conselho" placeholder="Conselho" required data-validation-required-message="Digite um conselho que não seja vazio" maxlength="255"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
