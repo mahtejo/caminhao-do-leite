@@ -1,5 +1,7 @@
 package models.dica;
 
+import models.Tema;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -17,8 +19,8 @@ public class DisciplinaUtil extends Dica {
 
     public DisciplinaUtil(){}
 
-    public DisciplinaUtil(String usuario, String nome, String razao) throws Exception {
-        super(usuario);
+    public DisciplinaUtil(String usuario, Tema tema, String nome, String razao) throws Exception {
+        super(usuario, tema);
         setNome(nome);
         setRazao(razao);
     }

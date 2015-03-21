@@ -2,6 +2,7 @@ import base.AbstractTest;
 import models.Tema;
 import models.dao.GenericDAO;
 import models.dica.*;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,15 +17,21 @@ import static org.junit.Assert.fail;
  */
 public class DicaTest extends AbstractTest{
     GenericDAO dao = new GenericDAO();
-    List<Dica> dicas;
+    List<DicaGenerica> dicas;
+    Tema tema;
+
+    @Before
+    public void before(){
+        Tema tema = new Tema("OO");
+    }
 
     @Test
     public void deveCriarDicaDoTipoConselho() throws Exception{
-        Dica dica = new Conselho("Usuário", "Estude o play!");
+        DicaGenerica dica = new Conselho("Usuário", tema, "Estude o play!");
         dao.persist(dica);
         dao.flush();
 
-        dicas = dao.findAllByClass(Dica.class);
+        dicas = dao.findAllByClass(DicaGenerica.class);
 
         assertThat(dicas.size()).isEqualTo(1);
         assertThat(dicas.get(0).toString()).isEqualTo("Estude o play!");
@@ -33,22 +40,22 @@ public class DicaTest extends AbstractTest{
     @Test
     public void naoDeveCriarConselhoVazio(){
         try {
-            Dica dica = new Conselho("", "");
+            DicaGenerica dica = new Conselho("", tema, "");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
-            dicas = dao.findAllByClass(Dica.class);
+            dicas = dao.findAllByClass(DicaGenerica.class);
             assertThat(dicas.size()).isEqualTo(0);
         }
     }
 
     @Test
     public void deveCriarDicaDeDisciplinaUtil() throws Exception {
-        Dica dica = new DisciplinaUtil("Usuário", "Programação 2", "Padrões de projeto");
+        DicaGenerica dica = new DisciplinaUtil("Usuário", tema, "Programação 2", "Padrões de projeto");
         dao.persist(dica);
         dao.flush();
 
-        dicas = dao.findAllByClass(Dica.class);
+        dicas = dao.findAllByClass(DicaGenerica.class);
 
         assertThat(dicas.size()).isEqualTo(1);
         assertThat(dicas.get(0).toString()).isEqualTo("Nome: Programação 2\n Razão: Padrões de projeto");
@@ -57,40 +64,40 @@ public class DicaTest extends AbstractTest{
     @Test
     public void naoDeveCriarDisciplinaUtilVazia(){
         try {
-            Dica dica = new DisciplinaUtil("", "", "Padrões de projeto");
+            DicaGenerica dica = new DisciplinaUtil("", tema, "", "Padrões de projeto");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
-            dicas = dao.findAllByClass(Dica.class);
+            dicas = dao.findAllByClass(DicaGenerica.class);
             assertThat(dicas.size()).isEqualTo(0);
         }
 
         try {
-            Dica dica = new DisciplinaUtil("", "Programação 2", "");
+            DicaGenerica dica = new DisciplinaUtil("", tema, "Programação 2", "");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
-            dicas = dao.findAllByClass(Dica.class);
+            dicas = dao.findAllByClass(DicaGenerica.class);
             assertThat(dicas.size()).isEqualTo(0);
         }
 
         try {
-            Dica dica = new DisciplinaUtil("", "", "");
+            DicaGenerica dica = new DisciplinaUtil("", tema, "", "");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
-            dicas = dao.findAllByClass(Dica.class);
+            dicas = dao.findAllByClass(DicaGenerica.class);
             assertThat(dicas.size()).isEqualTo(0);
         }
     }
 
     @Test
     public void deveCriarDicaDeMaterialUtil() throws Exception {
-        Dica dica = new MaterialUtil("Usuário", "http://www.playframework.com");
+        DicaGenerica dica = new MaterialUtil("Usuário", tema, "http://www.playframework.com");
         dao.persist(dica);
         dao.flush();
 
-        dicas = dao.findAllByClass(Dica.class);
+        dicas = dao.findAllByClass(DicaGenerica.class);
 
         assertThat(dicas.size()).isEqualTo(1);
         assertThat(dicas.get(0).toString()).isEqualTo("http://www.playframework.com");
@@ -99,49 +106,49 @@ public class DicaTest extends AbstractTest{
     @Test
     public void naoDeveCriarDicaDeMaterialUtilInvalido(){
         try{
-            Dica dica = new MaterialUtil("", "");
+            DicaGenerica dica = new MaterialUtil("", tema, "");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
-            dicas = dao.findAllByClass(Dica.class);
+            dicas = dao.findAllByClass(DicaGenerica.class);
             assertThat(dicas.size()).isEqualTo(0);
         }
 
         try{
-            Dica dica = new MaterialUtil("Usuário", "https://www.playframework.com");
+            DicaGenerica dica = new MaterialUtil("Usuário", tema, "https://www.playframework.com");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
-            dicas = dao.findAllByClass(Dica.class);
+            dicas = dao.findAllByClass(DicaGenerica.class);
             assertThat(dicas.size()).isEqualTo(0);
         }
 
         try{
-            Dica dica = new MaterialUtil("Usuário", "http://www.playframework.net");
+            DicaGenerica dica = new MaterialUtil("Usuário", tema, "http://www.playframework.net");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
-            dicas = dao.findAllByClass(Dica.class);
+            dicas = dao.findAllByClass(DicaGenerica.class);
             assertThat(dicas.size()).isEqualTo(0);
         }
 
         try{
-            Dica dica = new MaterialUtil("Usuário", "https://www.playframework.net");
+            DicaGenerica dica = new MaterialUtil("Usuário", tema, "https://www.playframework.net");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e){
-            dicas = dao.findAllByClass(Dica.class);
+            dicas = dao.findAllByClass(DicaGenerica.class);
             assertThat(dicas.size()).isEqualTo(0);
         }
     }
 
     @Test
     public void deveCriarDicaParaNaoTerDificuldade() throws Exception {
-        Dica dica = new PrecisaSaber("Usuário", "Saber programar em Java muito bem!");
+        DicaGenerica dica = new PrecisaSaber("Usuário", tema, "Saber programar em Java muito bem!");
         dao.persist(dica);
         dao.flush();
 
-        dicas = dao.findAllByClass(Dica.class);
+        dicas = dao.findAllByClass(DicaGenerica.class);
 
         assertThat(dicas.size()).isEqualTo(1);
         assertThat(dicas.get(0).toString()).isEqualTo("Saber programar em Java muito bem!");
@@ -150,24 +157,24 @@ public class DicaTest extends AbstractTest{
     @Test
     public void naoDeveCriarDicaParaNaoTerDificuldadeVazia(){
         try{
-            Dica dica = new PrecisaSaber("Usuário", "");
+            DicaGenerica dica = new PrecisaSaber("Usuário", tema, "");
             dao.persist(dica);
             dao.flush();
         } catch (Exception e) {
-            dicas = dao.findAllByClass(Dica.class);
+            dicas = dao.findAllByClass(DicaGenerica.class);
             assertThat(dicas.size()).isEqualTo(0);
         }
     }
 
     @Test
     public void deveAdicionarOpiniao() throws Exception {
-        Dica dica = new PrecisaSaber("Usuário", "Saber programar em Java muito bem!");
+        DicaGenerica dica = new PrecisaSaber("Usuário", tema, "Saber programar em Java muito bem!");
         dica.addOpiniaoNegativa("Joao", "Sabe de nada");
         dica.addOpiniaoPositiva("Maria");
         dao.persist(dica);
         dao.flush();
 
-        dicas = dao.findAllByClass(Dica.class);
+        dicas = dao.findAllByClass(DicaGenerica.class);
 
         dica = dicas.get(0);
 
@@ -178,7 +185,7 @@ public class DicaTest extends AbstractTest{
 
     @Test
     public void devePoderMudarDeOpiniao() throws Exception {
-        Dica dica = new PrecisaSaber("Usuário", "Saber programar em Java muito bem!");
+        DicaGenerica dica = new PrecisaSaber("Usuário", tema, "Saber programar em Java muito bem!");
         dica.addOpiniaoNegativa("Joao", "Sabe de nada");
         assertTrue(dica.getOpinioesNegativas().containsKey("Joao"));
         dica.addOpiniaoPositiva("Joao");
@@ -187,7 +194,7 @@ public class DicaTest extends AbstractTest{
         dao.persist(dica);
         dao.flush();
 
-        dicas = dao.findAllByClass(Dica.class);
+        dicas = dao.findAllByClass(DicaGenerica.class);
 
         dica = dicas.get(0);
 
@@ -199,7 +206,7 @@ public class DicaTest extends AbstractTest{
     @Test
     public void naoDevePoderInserirComentarioNegativoVazio(){
         try{
-            Dica dica = new PrecisaSaber("Usuário", "Saber programar em Java muito bem!");
+            DicaGenerica dica = new PrecisaSaber("Usuário", tema, "Saber programar em Java muito bem!");
             dica.addOpiniaoNegativa("Joao", "");
             fail();
         } catch (Exception e) {
@@ -209,7 +216,7 @@ public class DicaTest extends AbstractTest{
     @Test
     public void naoDevePoderInserirComentarioNegativoMaisDe100Caracteres(){
         try{
-            Dica dica = new PrecisaSaber("Usuário", "Saber programar em Java muito bem!");
+            DicaGenerica dica = new PrecisaSaber("Usuário", tema, "Saber programar em Java muito bem!");
             dica.addOpiniaoNegativa("Joao", "çalskdfjasçldkjfasçldkjfasçlkdjfasçldjfaslkdjfasdlkjfçasdjfçlajsdflasjkdfçlasdfjasdlçfjsadçlfkjasdlçfkajsdçfljsdalfkjasdçlfkjasçldfkjsdaçflkjasdlçfjasldkfaslkçdfçasdflasdfçlkjsadfçljsadfçlaksdfçlasjdfçlasdkjf");
             fail();
         } catch (Exception e) {
@@ -218,33 +225,32 @@ public class DicaTest extends AbstractTest{
 
     @Test
     public void devePoderMudarComentarioNegativo() throws Exception {
-        Dica dica = new PrecisaSaber("Usuário", "Saber programar em Java muito bem!");
+        DicaGenerica dica = new PrecisaSaber("Usuário", tema, "Saber programar em Java muito bem!");
         dica.addOpiniaoNegativa("Malandrão", "Gostei não");
         assertThat(dica.getOpinioesNegativas().get("Malandrão")).isEqualTo("Gostei não");
         dica.addOpiniaoNegativa("Malandrão", "Sabe de nada");
         assertThat(dica.getOpinioesNegativas().get("Malandrão")).isEqualTo("Sabe de nada");
     }
 
-    @Test
-    public void devePegarDicasOrdenadasInversamente() throws Exception {
-        Tema tema = new Tema("OO");
-        Conselho conselho = new Conselho("joana", "Estude");
+/*    @Test
+    public void naoDeveExcluirADicaDepoisDe20ConcordanciasOuDiscordancias() throws Exception {
+        DicaGenerica conselho = new Conselho("joana", tema, "Estude");
         conselho.addOpiniaoPositiva("belarmino");
         conselho.addOpiniaoPositiva("rudckleidson");
         conselho.addOpiniaoNegativa("sinfronio", "Maiisss ou menoss!");
 
-        PrecisaSaber ps = new PrecisaSaber("joao", "Um pouco de tudo");
+        DicaGenerica ps = new PrecisaSaber("joao", tema, "Um pouco de tudo");
         ps.addOpiniaoPositiva("josefina");
         ps.addOpiniaoNegativa("Paulo", "Muito vago!");
         ps.addOpiniaoNegativa("Marcio", "Não precisa saber de tuuuudo!");
 
-        DisciplinaUtil disciplinaUtil = new DisciplinaUtil("maria", "Programação 2", "Padrões de projeto");
+        DicaGenerica disciplinaUtil = new DisciplinaUtil("maria", tema, "Programação 2", "Padrões de projeto");
         disciplinaUtil.addOpiniaoPositiva("Moacir");
         disciplinaUtil.addOpiniaoPositiva("Motumbo");
         disciplinaUtil.addOpiniaoPositiva("Felipe");
         disciplinaUtil.addOpiniaoPositiva("Oscar");
 
-        Conselho conselho2 = new Conselho("Bonifácio", "Faça o projeto de última hora! kkkk");
+        DicaGenerica conselho2 = new Conselho("Bonifácio", tema, "Faça o projeto de última hora! kkkk");
         conselho2.addOpiniaoNegativa("Paulo", "Pensee");
         conselho2.addOpiniaoNegativa("Marcio", "kkkkkkkkkk");
 
@@ -258,11 +264,11 @@ public class DicaTest extends AbstractTest{
         assertThat(dicas.get(1)).isEqualTo(conselho);
         assertThat(dicas.get(2)).isEqualTo(ps);
         assertThat(dicas.get(3)).isEqualTo(conselho2);
-    }
+    }*/
 
     @Test
     public void deveAdicionarNoMaximo20Concordancias() throws Exception {
-        Dica dica = new Conselho("usuario", "conselho");
+        DicaGenerica dica = new Conselho("usuario", tema, "conselho");
 
         try {
             for (int i = 0; i < 21; i++) {
@@ -275,7 +281,7 @@ public class DicaTest extends AbstractTest{
 
     @Test
     public void deveAdicionarNoMaximo20Discordancias() throws Exception {
-        Dica dica = new Conselho("usuario", "conselho");
+        DicaGenerica dica = new Conselho("usuario", tema, "conselho");
         try {
             for (int i = 0; i < 21; i++) {
                 dica.addOpiniaoNegativa("usuario"+i, "opinião");
@@ -285,10 +291,9 @@ public class DicaTest extends AbstractTest{
         assertThat(dica.getNumeroDiscordaram()).isEqualTo(20);
     }
 
-    @Test
+    /*@Test
     public void naoDeveExcluirADicaDepoisDe20ConcordanciasOuDiscordancias() throws Exception {
-        Tema tema = new Tema("OO");
-        Dica dica = new Conselho("usuario", "conselho");
+        DicaGenerica dica = new Conselho("usuario", tema, "conselho");
         tema.addDica(dica);
         tema.informaConteudoInapropriado(dica, "admon");
         for (int i = 0; i < 19; i++) {
@@ -306,5 +311,5 @@ public class DicaTest extends AbstractTest{
         assertThat(dica.numeroConteudoInapropriado()).isEqualTo(1);
         assertThat(dica.getNumeroDiscordaram()).isEqualTo(20);
         assertThat(dica.getNumeroConcordaram()).isEqualTo(19);
-    }
+    }*/
 }

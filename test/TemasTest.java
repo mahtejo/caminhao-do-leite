@@ -3,6 +3,7 @@ import models.Tema;
 import models.dao.GenericDAO;
 import models.dica.Conselho;
 import models.dica.Dica;
+import models.dica.DicaGenerica;
 import models.dica.PrecisaSaber;
 import org.junit.Test;
 import play.Logger;
@@ -46,7 +47,7 @@ public class TemasTest extends AbstractTest{
     @Test
     public void deveInserirDicasEmTema(){
         Tema tema = new Tema("OO");
-        Dica semDificuldades = new PrecisaSaber();
+        DicaGenerica semDificuldades = new PrecisaSaber();
         tema.addDica(semDificuldades);
         dao.persist(tema);
         dao.flush();
@@ -89,7 +90,7 @@ public class TemasTest extends AbstractTest{
     @Test
     public void deveReportarConteudoInapropriado() throws Exception {
         Tema tema = new Tema("OO");
-        Dica dica = new Conselho("usuario", "Vão se foderem");
+        DicaGenerica dica = new Conselho("usuario", tema, "Vão se foderem");
         tema.addDica(dica);
         tema.informaConteudoInapropriado(dica, "usuario2");
         assertThat(tema.getDicas().size()).isEqualTo(1);
@@ -102,7 +103,7 @@ public class TemasTest extends AbstractTest{
     @Test
     public void usuarioNaoDeveReportarMaisDeUmaVez() throws Exception {
         Tema tema = new Tema("OO");
-        Dica dica = new Conselho("usuario", "Vão se foderem");
+        DicaGenerica dica = new Conselho("usuario", tema, "Vão se foderem");
         tema.addDica(dica);
         tema.informaConteudoInapropriado(dica, "usuario2");
         assertThat(dica.numeroConteudoInapropriado()).isEqualTo(1);

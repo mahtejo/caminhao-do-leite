@@ -1,6 +1,7 @@
 package models;
 
 import models.dica.Dica;
+import models.dica.DicaGenerica;
 
 import javax.persistence.*;
 import java.util.*;
@@ -21,7 +22,7 @@ public class Tema {
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn
-    private List<Dica> dicas;
+    private List<DicaGenerica> dicas;
 
     @ElementCollection
     @MapKeyColumn
@@ -30,12 +31,12 @@ public class Tema {
     private Map<String, Integer> dificuldadeUsuarios;
 
     public Tema(){
-        dicas = new ArrayList<Dica>();
+        dicas = new ArrayList<DicaGenerica>();
         dificuldadeUsuarios = new HashMap<String, Integer>();
     }
 
     public Tema(String nome){
-        dicas = new ArrayList<Dica>();
+        dicas = new ArrayList<DicaGenerica>();
         dificuldadeUsuarios = new HashMap<String, Integer>();
         setNome(nome);
     }
@@ -56,11 +57,11 @@ public class Tema {
         this.nome = nome;
     }
 
-    public void addDica(Dica dica) {
+    public void addDica(DicaGenerica dica) {
         dicas.add(dica);
     }
 
-    public List<Dica> getDicas() {
+    public List<DicaGenerica> getDicas() {
         Collections.sort(dicas);
         Collections.reverse(dicas);
         return dicas;
@@ -123,7 +124,7 @@ public class Tema {
         }
     }
 
-    public void informaConteudoInapropriado(Dica dica, String usuario) throws Exception {
+    public void informaConteudoInapropriado(DicaGenerica dica, String usuario) throws Exception {
         dica.informaConteudoInapropriado(usuario);
         if (dica.numeroConteudoInapropriado() >= 3){
             dicas.remove(dica);

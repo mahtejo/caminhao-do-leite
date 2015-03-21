@@ -1,5 +1,7 @@
 package models.dica;
 
+import models.Tema;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -14,8 +16,8 @@ public class MaterialUtil extends Dica {
 
     public MaterialUtil(){}
 
-    public MaterialUtil(String usuario, String material) throws Exception {
-        super(usuario);
+    public MaterialUtil(String usuario, Tema tema, String material) throws Exception {
+        super(usuario, tema);
         setMaterial(material);
     }
 

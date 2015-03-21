@@ -1,10 +1,7 @@
 import models.Tema;
 import models.Usuario;
 import models.dao.GenericDAO;
-import models.dica.Conselho;
-import models.dica.Dica;
-import models.dica.MaterialUtil;
-import models.dica.PrecisaSaber;
+import models.dica.*;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -55,17 +52,17 @@ public class Global extends GlobalSettings {
         dao.persist(usuario2);
 
         Tema tema1 = new Tema("Análise x Design");
-        tema1.addDica(new Conselho("admin", "Estude bastante!"));
-        Dica dica1 = new MaterialUtil("admin", "http://www.google.com");
+        tema1.addDica(new Conselho("admin", tema1, "Estude bastante!"));
+        DicaGenerica dica1 = new MaterialUtil("admin", tema1, "http://www.google.com");
         dica1.addOpiniaoNegativa("orion", "Engraçado, fera!");
-        Dica dica2 = new PrecisaSaber("orion", "tudo");
+        DicaGenerica dica2 = new PrecisaSaber("orion", tema1, "tudo");
         dica2.addOpiniaoPositiva("admin");
         tema1.addDica(dica1);
         tema1.addDica(dica2);
         dao.persist(tema1);
 
         Tema tema2 = new Tema("OO");
-        tema2.addDica(new PrecisaSaber("admin", "Programar em Java!"));
+        tema2.addDica(new PrecisaSaber("admin", tema2, "Programar em Java!"));
         dao.persist(tema2);
 
         Tema tema3 = new Tema("GRASP");
@@ -78,7 +75,7 @@ public class Global extends GlobalSettings {
         dao.persist(tema5);
 
         Tema tema6 = new Tema("Play");
-        Dica dica = new Conselho("admin", "Não se estresse, é assim mesmo!");
+        DicaGenerica dica = new Conselho("admin", tema6, "Não se estresse, é assim mesmo!");
         dica.addOpiniaoPositiva("admin");
         tema6.addDica(dica);
         dao.persist(tema6);

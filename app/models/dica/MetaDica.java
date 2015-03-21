@@ -8,19 +8,19 @@ import java.util.List;
  * Created by orion on 21/03/15.
  */
 @Entity(name="MetaDica")
-public class MetaDica extends Dica {
+public class MetaDica extends DicaGenerica {
 
     @ManyToMany(cascade= CascadeType.ALL)
-    private List<Dica> dicas;
+    private List<DicaGenerica> dicas;
 
     @Column
     private String comentario;
 
     public MetaDica(){
-        dicas = new ArrayList<Dica>();
+        dicas = new ArrayList<DicaGenerica>();
     }
 
-    public MetaDica(String usuario, String comentario, List<Dica> dicas) throws Exception {
+    public MetaDica(String usuario, String comentario, List<DicaGenerica> dicas) throws Exception {
         super(usuario);
         setComentario(comentario);
         setDicas(dicas);
@@ -47,11 +47,11 @@ public class MetaDica extends Dica {
         this.comentario = comentario;
     }
 
-    public List<Dica> getDicas() {
+    public List<DicaGenerica> getDicas() {
         return dicas;
     }
 
-    public void setDicas(List<Dica> dicas) throws Exception {
+    public void setDicas(List<DicaGenerica> dicas) throws Exception {
         if (dicas.size() == 0){
             throw new Exception("Erro: Uma meta dica deve deve ter pelo menos uma dica");
         }

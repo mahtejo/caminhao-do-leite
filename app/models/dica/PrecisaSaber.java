@@ -1,5 +1,7 @@
 package models.dica;
 
+import models.Tema;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -14,8 +16,8 @@ public class PrecisaSaber extends Dica {
 
     public PrecisaSaber(){}
 
-    public PrecisaSaber(String usuario, String assunto) throws Exception {
-        super(usuario);
+    public PrecisaSaber(String usuario, Tema tema, String assunto) throws Exception {
+        super(usuario, tema);
         setAssunto(assunto);
     }
 

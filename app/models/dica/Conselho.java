@@ -1,5 +1,7 @@
 package models.dica;
 
+import models.Tema;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -14,8 +16,8 @@ public class Conselho extends Dica {
 
     public Conselho(){}
 
-    public Conselho(String usuario, String conselho) throws Exception {
-        super(usuario);
+    public Conselho(String usuario, Tema tema, String conselho) throws Exception {
+        super(usuario, tema);
         setConselho(conselho);
     }
 

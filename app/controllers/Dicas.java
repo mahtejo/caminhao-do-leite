@@ -26,11 +26,11 @@ public class Dicas {
             flash("message", "Formulário invalido!");
             return Temas.temas(400, idTema);
         }
+        Tema tema = dao.findByEntityId(Tema.class, idTema);
         if (filledForm.get("conselho") != null) {
             try {
-                Tema tema = dao.findByEntityId(Tema.class, idTema);
                 String conselho = filledForm.get("conselho");
-                tema.addDica(new Conselho(session().get("user"), conselho));
+                tema.addDica(new Conselho(session().get("user"), tema, conselho));
                 dao.merge(tema);
                 dao.flush();
 
@@ -42,9 +42,8 @@ public class Dicas {
             }
         } else if (filledForm.get("url") != null){
             try {
-                Tema tema = dao.findByEntityId(Tema.class, idTema);
                 String url = filledForm.get("url");
-                tema.addDica(new MaterialUtil(session().get("user"), url));
+                tema.addDica(new MaterialUtil(session().get("user"), tema, url));
                 dao.merge(tema);
                 dao.flush();
 
@@ -56,10 +55,9 @@ public class Dicas {
             }
         } else if (filledForm.get("disciplina") != null){
             try {
-                Tema tema = dao.findByEntityId(Tema.class, idTema);
                 String disciplina = filledForm.get("disciplina");
                 String razao = filledForm.get("razao");
-                tema.addDica(new DisciplinaUtil(session().get("user"), disciplina, razao));
+                tema.addDica(new DisciplinaUtil(session().get("user"), tema, disciplina, razao));
                 dao.merge(tema);
                 dao.flush();
 
@@ -71,9 +69,8 @@ public class Dicas {
             }
         } else if (filledForm.get("assunto") != null){
             try {
-                Tema tema = dao.findByEntityId(Tema.class, idTema);
                 String assunto = filledForm.get("assunto");
-                tema.addDica(new PrecisaSaber(session().get("user"), assunto));
+                tema.addDica(new PrecisaSaber(session().get("user"), tema, assunto));
                 dao.merge(tema);
                 dao.flush();
 
@@ -95,7 +92,7 @@ public class Dicas {
             flash("message", "Formulário invalido!");
             return Temas.temas(400, idTema);
         }
-        Dica dica = dao.findByEntityId(Dica.class, idDica);
+        DicaGenerica dica = dao.findByEntityId(DicaGenerica.class, idDica);
         if (opiniao == 0){
             String justificativa = filledForm.get("justificativa");
             try {
@@ -126,7 +123,7 @@ public class Dicas {
     @Transactional
     public static Result reportarConteudoInapropriado(long idTema, long idDica) {
         Tema tema = dao.findByEntityId(Tema.class, idTema);
-        Dica dica = dao.findByEntityId(Dica.class, idDica);
+        DicaGenerica dica = dao.findByEntityId(DicaGenerica.class, idDica);
 
         try {
             tema.informaConteudoInapropriado(dica, session().get("user"));
