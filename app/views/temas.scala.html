@@ -131,16 +131,11 @@
 
                                     <!--Inicio forum de discussao-->
                                 <!--Div de ações dsiponíveis para o tema-->
-                                <div class="panel panel-success">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Ações Disponíveis para este tema</h3>
-                                    </div>
-                                    <div class="panel-body">
+<br>
                                         <button type="submit" class="btn btn-primary" data-target="#addDica" data-toggle="modal" title="Adicione uma dica a este tema">Adicionar Dica</button>
                                         <button type="submit" class="btn btn-primary" data-target="#avaliacao" data-toggle="modal" title="Avalie a dificuldade deste tema">Avaliar Tema</button>
-                                    </div>
-                                </div>
-                                <br>
+
+                                <br><br>
 
                                 <!--Div de Dicas-->
                                 <div class="panel-group" id="accordion">
@@ -210,11 +205,11 @@
 
                                                                         <div id="collapse@dica.getId" class="panel-collapse collapse in">
                                                                             <div class="panel-body">
-                                                                                @dica.toString()
-                                                                            <hr>
+                                                                                @dica.toString()<hr>
                                                                             <div class="pull-right"><small>Posted by: @dica.getUsuario()</small></div><br>
 
                                                                                 @if(!dica.getOpinioesNegativas.isEmpty) {
+                                                                                    <br>
                                                                                     <div class="panel panel-danger">
                                                                                         <div class="panel-heading">
                                                                                             <h3 class="panel-title">Respostas a esta dica</h3>

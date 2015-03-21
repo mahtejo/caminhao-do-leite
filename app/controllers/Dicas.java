@@ -123,6 +123,7 @@ public class Dicas {
         }
     }
 
+    @Transactional
     public static Result reportarConteudoInapropriado(long idTema, long idDica) {
         Tema tema = dao.findByEntityId(Tema.class, idTema);
         Dica dica = dao.findByEntityId(Dica.class, idDica);
