@@ -19,7 +19,7 @@ POST        /tema/dificuldade/:idTema                   controllers.Temas.addDif
 
 POST        /dica/addDica/:idTema                       controllers.Dicas.addDica(idTema: Long)
 POST        /dica/addOpiniao/:idTema/:idDica/:opiniao   controllers.Dicas.addOpiniao(idTema: Long, idDica: Long, opiniao: Int)
-
+POST        /dica/reportarConteudo/:idTema/:idDica      controllers.Dicas.reportarConteudoInapropriado(idTema: Long, idDica: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                    controllers.Assets.at(path="/public", file)

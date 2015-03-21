@@ -122,4 +122,13 @@ public class Dicas {
             return Temas.temas(400, idTema);
         }
     }
+
+    public static Result reportarConteudoInapropriado(long idTema, long idDica) {
+        Tema tema = dao.findByEntityId(Tema.class, idTema);
+        Dica dica = dao.findByEntityId(Dica.class, idDica);
+
+        tema.informaConteudoInapropriado(dica, session().get("user"));
+
+        return Temas.temas(200, idTema);
+    }
 }

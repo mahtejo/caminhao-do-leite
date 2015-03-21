@@ -85,4 +85,32 @@ public class TemasTest extends AbstractTest{
         tema.addDificuldade("usuario3", -2);
         assertThat(tema.getDificuldadeMediana()).isEqualTo(1);
     }
+
+    @Test
+    public void deveReportarConteudoInapropriado() throws Exception {
+        Tema tema = new Tema("OO");
+        Dica dica = new Conselho("usuario", "Vão se foderem");
+        tema.addDica(dica);
+        tema.informaConteudoInapropriado(dica, "usuario2");
+        assertThat(tema.getDicas().size()).isEqualTo(1);
+        tema.informaConteudoInapropriado(dica, "usuario3");
+        assertThat(tema.getDicas().size()).isEqualTo(1);
+        tema.informaConteudoInapropriado(dica, "usuario4");
+        assertThat(tema.getDicas().size()).isEqualTo(0);
+    }
+
+    @Test
+    public void usuarioNaoDeveReportarMaisDeUmaVez() throws Exception {
+        Tema tema = new Tema("OO");
+        Dica dica = new Conselho("usuario", "Vão se foderem");
+        tema.addDica(dica);
+        tema.informaConteudoInapropriado(dica, "usuario2");
+        assertThat(dica.numeroConteudoInapropriado()).isEqualTo(1);
+        tema.informaConteudoInapropriado(dica, "usuario2");
+        assertThat(dica.numeroConteudoInapropriado()).isEqualTo(1);
+        tema.informaConteudoInapropriado(dica, "usuario3");
+        assertThat(dica.numeroConteudoInapropriado()).isEqualTo(2);
+        tema.informaConteudoInapropriado(dica, "usuario3");
+        assertThat(dica.numeroConteudoInapropriado()).isEqualTo(2);
+    }
 }

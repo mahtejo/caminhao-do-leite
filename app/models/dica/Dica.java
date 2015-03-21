@@ -20,20 +20,16 @@ public abstract class Dica implements Comparable<Dica> {
     @MapKeyColumn
     @Column
     @CollectionTable
-    private Map<String, String> opinioesNegativas;
-
-    @ElementCollection
-    @MapKeyColumn
-    @Column
-    @CollectionTable
-    private Map<String, String> opinioesPositivas;
+    private Map<String, String> opinioesNegativas, opinioesPositivas, conteudoInapropriado;
 
     public Dica(){
+        this.conteudoInapropriado = new HashMap<String, String>();
         this.opinioesNegativas = new HashMap<String, String>();
         this.opinioesPositivas = new HashMap<String, String>();
     }
 
     public Dica(String usuario){
+        this.conteudoInapropriado = new HashMap<String, String>();
         this.opinioesNegativas = new HashMap<String, String>();
         this.opinioesPositivas = new HashMap<String, String>();
         setUsuario(usuario);
@@ -116,5 +112,21 @@ public abstract class Dica implements Comparable<Dica> {
         } else {
             return 0;
         }
+    }
+
+    public void informaConteudoInapropriado(String usuario){
+        conteudoInapropriado.put(usuario, "");
+    }
+
+    public void setConteudoInapropriado(Map<String, String> conteudoInapropriado) {
+        this.conteudoInapropriado = conteudoInapropriado;
+    }
+
+    public Map<String, String> getConteudoInapropriado(){
+        return conteudoInapropriado;
+    }
+
+    public int numeroConteudoInapropriado(){
+        return getConteudoInapropriado().size();
     }
 }

@@ -122,4 +122,11 @@ public class Tema {
             return (lista.get(n/2) + lista.get((n/2)-1)) / 2.0;
         }
     }
+
+    public void informaConteudoInapropriado(Dica dica, String usuario){
+        dica.informaConteudoInapropriado(usuario);
+        if (dica.numeroConteudoInapropriado() >= 3){
+            dicas.remove(dica);
+        }
+    }
 }

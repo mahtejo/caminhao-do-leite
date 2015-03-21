@@ -8,11 +8,8 @@ import models.dica.PrecisaSaber;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
-import play.Play;
 import play.db.jpa.JPA;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.List;
 
 /**
@@ -20,7 +17,6 @@ import java.util.List;
  */
 public class Global extends GlobalSettings {
 
-    private static final int TEMA = 0;
     private static GenericDAO dao = new GenericDAO();
 
     @Override
@@ -51,38 +47,6 @@ public class Global extends GlobalSettings {
             }
         });
     }
-
-    /*private void popularBD() {
-        String csvFile = Play.application().getFile("/conf/temasFile.csv").getAbsolutePath();
-        BufferedReader br = null;
-        String line = "";
-
-        try {
-            br = new BufferedReader(new FileReader(csvFile));
-            line = br.readLine();
-            String[] info = line.split(",");
-
-            while ((line = br.readLine()) != null) {
-                info = line.split(",");
-                Tema tema = new Tema(info[TEMA]);
-
-                Logger.debug("Inserindo o tema - " + tema.getNome());
-
-                dao.persist(tema);
-            }
-            Logger.debug("Inseriu no bd");
-        } catch (Exception e){
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }*/
 
     private void popularBD() throws Exception {
         Usuario usuario1 = new Usuario("Admin", "admin", "admin");
@@ -136,5 +100,7 @@ public class Global extends GlobalSettings {
 
         Tema tema12 = new Tema("Projeto");
         dao.persist(tema12);
+
+        Logger.debug("Terminando de inserir os dados!");
     }
 }
