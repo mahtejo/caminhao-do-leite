@@ -285,3 +285,8 @@ ul.alert-dropdown {
 .panel-heading a.collapsed:after {
     content:"\e080";
 }
+
+.panel {
+    overflow-y: auto;
+    height: 100px;
+}
