@@ -32,6 +32,59 @@
         <script src="@routes.Assets.at("js/respond.min.js")"></script>
 
 
+            <!--Login com o G+-->
+            <!-- Coloque esse JavaScript assíncrono antes de sua tag </body> -->
+        <script type="text/javascript">
+        (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/client:plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+
+        function signinCallback(authResult) {
+        if (authResult['access_token']) {
+        // Autorizado com sucesso
+        // Ocultar o botão de login agora que o usuário está autorizado, por exemplo:
+        document.getElementById('signinButton').setAttribute('style', 'display: none');
+        } else if (authResult['error']) {
+        // Ocorreu um erro.
+        // Possíveis códigos de erro:
+        //  "access_denied" - o usuário negou o acesso a seu aplicativo
+        //   "immediate_failed" - não foi possível fazer o login do usuário automaticamente
+        // console.log('There was an error: ' + authResult['error']);
+        }
+        }
+        </script>
+
+        <script type="text/javascript">
+        function disconnectUser(access_token) {
+        var revokeUrl = 'https://accounts.google.com/o/oauth2/revoke?token=' +
+        access_token;
+
+        // Realizar uma solicitação GET assíncrona.
+        $.ajax({
+        type: 'GET',
+        url: revokeUrl,
+        async: false,
+        contentType: "application/json",
+        dataType: 'jsonp',
+        success: function(nullResponse) {
+        // Fazer algo agora que o usuário está desconectado
+        // A resposta é sempre indefinida.
+        },
+        error: function(e) {
+        // Gerenciar o erro
+        // console.log(e);
+        // Você pode apontar usuários para desconectar manualmente se não for bem-sucedido
+        // https://plus.google.com/apps
+        }
+        });
+        }
+        // É possível desconectar com um clique no botão
+        $('#revokeButton').click(disconnectUser);
+        </script>
+
+
     </head>
 
     <body>
@@ -125,7 +178,18 @@
                                     <span class="input-group-addon">Senha</span>
                                     <input type="password" class="form-control" name="senha" placeholder="Senha" required data-validation-required-message="Por favor digite uma senha" maxlength="100">
                                 </div>
-                                <button type="submit" class="btn btn-primary"> Entrar </button>
+                                <div class="btn-group" style="display:inline">
+                                <button type="submit" class="btn btn-sm btn-primary"><b>Entrar</b></button> &nbsp; <span id="signinButton">
+                              <span
+                                class="g-signin"
+                                data-callback="signinCallback"
+                                data-clientid="CLIENT_ID"
+                                data-cookiepolicy="single_host_origin"
+                                data-requestvisibleactions="http://schemas.google.com/AddActivity"
+                                data-scope="https://www.googleapis.com/auth/plus.login">
+                                </span>
+                            </span>
+                                </div>
                             </form><br>
                        <a data-toggle="modal" data-target="#exampleModal">Esqueceu a senha?</a><br>
 
