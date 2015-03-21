@@ -232,8 +232,9 @@ public class DicaTest extends AbstractTest{
         assertThat(dica.getOpinioesNegativas().get("Malandrão")).isEqualTo("Sabe de nada");
     }
 
-/*    @Test
-    public void naoDeveExcluirADicaDepoisDe20ConcordanciasOuDiscordancias() throws Exception {
+    @Test
+    public void devePegarDicasOrdenadasInversamente() throws Exception {
+        tema = new Tema("OO");
         DicaGenerica conselho = new Conselho("joana", tema, "Estude");
         conselho.addOpiniaoPositiva("belarmino");
         conselho.addOpiniaoPositiva("rudckleidson");
@@ -264,7 +265,7 @@ public class DicaTest extends AbstractTest{
         assertThat(dicas.get(1)).isEqualTo(conselho);
         assertThat(dicas.get(2)).isEqualTo(ps);
         assertThat(dicas.get(3)).isEqualTo(conselho2);
-    }*/
+    }
 
     @Test
     public void deveAdicionarNoMaximo20Concordancias() throws Exception {
@@ -291,8 +292,9 @@ public class DicaTest extends AbstractTest{
         assertThat(dica.getNumeroDiscordaram()).isEqualTo(20);
     }
 
-    /*@Test
+    @Test
     public void naoDeveExcluirADicaDepoisDe20ConcordanciasOuDiscordancias() throws Exception {
+        tema = new Tema("OO");
         DicaGenerica dica = new Conselho("usuario", tema, "conselho");
         tema.addDica(dica);
         tema.informaConteudoInapropriado(dica, "admon");
@@ -311,5 +313,5 @@ public class DicaTest extends AbstractTest{
         assertThat(dica.numeroConteudoInapropriado()).isEqualTo(1);
         assertThat(dica.getNumeroDiscordaram()).isEqualTo(20);
         assertThat(dica.getNumeroConcordaram()).isEqualTo(19);
-    }*/
+    }
 }
