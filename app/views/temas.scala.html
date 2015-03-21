@@ -24,12 +24,34 @@
                 <!-- Custom Fonts -->
             <link href="@routes.Assets.at("font-awesome/css/font-awesome.min.css")" rel="stylesheet" type="text/css">
 
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
                 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
                 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
                 <!--[if lt IE 9]>-->
             <script src="@routes.Assets.at("js/html5shiv.js")"></script>
             <script src="@routes.Assets.at("js/respond.min.js")"></script>
 
+            <script type="text/javascript">
+            $(document).ready(function(){
+            $('[data-show="tooltip"]').tooltip({
+            placement : 'top'
+            });
+            $('[data-show="tooltip-right"]').tooltip({
+            placement : 'right'
+            });
+            $('[data-show="tooltip-down"]').tooltip({
+            placement : 'bottom'
+            });
+            });
+            </script>
+
+            <style type="text/css">
+            .bs-example{
+            margin: 100px 50px;
+            }
+            </style>
 
         </head>
 
@@ -106,16 +128,20 @@
                     <div class="container-fluid">
                             <!-- Page Heading -->
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-12">@for(tema <- temas){
+                                @if(tema.getId() == idTema){
                                 <h1 class="page-header">
-
                                         <!-- Fim do cabeçalho! -->
-                                    @for(tema <- temas){
-                                        @if(tema.getId() == idTema){
-                                            @tema.getNome() <small>- Média da dificuldade: @tema.getDificuldadeMediaFormatada() - Mediana da dificuldade: @tema.getDificuldadeMedianaFormatada()</small>
-                                        }
-                                    }
+
+                                            @tema.getNome() &nbsp;
+                                    <span class="badge" title ="Média da Dificuldade" data-show="tooltip">
+                                    @tema.getDificuldadeMediaFormatada()
+                                    </span>
+                                    <span class="badge" title ="Mediana da Dificuldade" data-show="tooltip-down">
+                                    @tema.getDificuldadeMedianaFormatada()
+                                    </span>
                                 </h1>
+
                                     <!--Inicio alert sucesso login-->
                                 @if(message != "") {
                                     @if(message contains("Erro")){
@@ -128,12 +154,13 @@
                                     @message
                                 </div>
                                 }
-
+                                }
+                            }
                                     <!--Inicio forum de discussao-->
                                 <!--Div de ações dsiponíveis para o tema-->
 <br>
-                                        <button type="submit" class="btn btn-primary" data-target="#addDica" data-toggle="modal" title="Adicione uma dica a este tema">Adicionar Dica</button>
-                                        <button type="submit" class="btn btn-primary" data-target="#avaliacao" data-toggle="modal" title="Avalie a dificuldade deste tema">Avaliar Tema</button>
+                                        <button type="submit" class="btn btn-primary" data-target="#addDica" data-show="tooltip"  data-toggle="modal" title="Adicione uma dica a este tema">Adicionar Dica</button>&nbsp;
+                                        <button type="submit" class="btn btn-primary" data-target="#avaliacao" data-show="tooltip" data-toggle="modal" title="Avalie a dificuldade deste tema">Avaliar Tema</button>
 
                                 <br><br>
 
@@ -158,18 +185,18 @@
                                                                                     <!--Thumbs-up -->
                                                                                 @dica.getNumeroConcordaram
                                                                             <form action="@routes.Dicas.addOpiniao(idTema, dica.getId, 1)" method="POST" style="display:inline!important;">
-                                                                                <button href="" class="btn btn-xs btn-success" title="Avalie esta dica positivamente">
+                                                                                <button href="" class="btn btn-xs btn-success" data-show="tooltip" title="Avalie esta dica positivamente">
                                                                                     <i class="fa fa-thumbs-o-up"></i>
                                                                                 </button>
                                                                             </form> &nbsp;&nbsp;
                                                                                 <!--Thumbs-down -->
                                                                                 @dica.getNumeroDiscordaram
-                                                                                <button href="" class="btn btn-xs btn-danger" data-target="#avaliarNeg@dica.getId" data-toggle="modal" title="Avalie esta dica negativamente (você terá que justificar sua resposta)">
+                                                                                <button href="" class="btn btn-xs btn-danger" data-target="#avaliarNeg@dica.getId" data-show="tooltip" data-toggle="modal" title="Avalie esta dica negativamente (você terá que justificar sua resposta)">
                                                                                 <i class="fa fa-thumbs-o-down"></i>
                                                                                 </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                                 <!--Flag -->
                                                                                 @dica.numeroConteudoInapropriado() <form action="@routes.Dicas.reportarConteudoInapropriado(idTema, dica.getId)" method="POST" style="display:inline!important;">
-                                                                                <button class="btn btn-xs btn-danger" title="Sinalizar conteúdo inapropriado">
+                                                                                <button class="btn btn-xs btn-danger" data-show="tooltip" title="Sinalizar conteúdo inapropriado">
                                                                                     <i class="fa fa-flag"></i>
                                                                                 </button>
                                                                                 </form>
@@ -203,6 +230,40 @@
                                                                             </div><!-- /.modal-dialog -->
                                                                         </div>
 
+
+                                                                        @if(dica.getTipo() == "Material útil") {
+
+                                                                            <div id="collapse@dica.getId" class="panel-collapse collapse in">
+                                                                                <div class="panel-body">
+                                                                                    <a href="@dica.toString()" target="_blank">@dica.toString()</a><hr>
+                                                                                    <div class="pull-right"><small>Posted by: @dica.getUsuario()</small></div><br>
+
+                                                                                    @if(!dica.getOpinioesNegativas.isEmpty) {
+                                                                                        <br>
+                                                                                        <div class="panel panel-danger">
+                                                                                            <div class="panel-heading">
+                                                                                                <h3 class="panel-title">Respostas a esta dica</h3>
+                                                                                            </div>
+                                                                                            <div class="panel-body">
+                                                                                                    <!--Orion, dá um help aqui!-->
+                                                                                                @for(usuario <- dica.getOpinioesNegativas.keySet()) {
+                                                                                                    <div class="panel panel-default">
+                                                                                                        <div class="panel-body">
+                                                                                                            @dica.getOpinioesNegativas.get(usuario)
+                                                                                                        <hr>
+                                                                                                        <div class="pull-right"><small>Posted by: @usuario</small></div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                }
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        } else {
+
                                                                         <div id="collapse@dica.getId" class="panel-collapse collapse in">
                                                                             <div class="panel-body">
                                                                                 @dica.toString()<hr>
@@ -230,6 +291,7 @@
                                                                                 }
                                                                             </div>
                                                                         </div>
+                                                                        }
                                                                     </div>
                                                                 </div>
                                                                         }
@@ -277,10 +339,10 @@
                                             </div>
                                             <div class="modal-body">
                                                 Passe o mouse em cima dos botões para escolher o tipo de dica: <br><br>
-                                                <button class="btn btn-default" data-target="#dica1" data-toggle="modal" title="Dicas para não ter dificuldades em SI1">Dica Tipo 1</button><br><br>
-                                                <button class="btn btn-info" data-target="#dica2" data-toggle="modal" title="Disciplinas anteriores que te ajudarão em SI1">Dica Tipo 2</button><br><br>
-                                                <button class="btn btn-warning" data-target="#dica3" data-toggle="modal" title="URL de uma matéria útil">Dica Tipo 3</button><br><br>
-                                                <button class="btn btn-success" data-target="#dica4" data-toggle="modal" title="Conselho para futuros alunos">Dica Tipo 4</button>
+                                                <button type="button" class="btn btn-default" data-show="tooltip-right" data-target="#dica1" data-toggle="modal" title="Dicas para não ter dificuldades em SI1">Dica Tipo 1</button><br><br>
+                                                <button type="button" class="btn btn-info" data-show="tooltip-right" data-target="#dica2" data-toggle="modal" title="Disciplinas anteriores que te ajudarão em SI1">Dica Tipo 2</button><br><br>
+                                                <button type="button" class="btn btn-warning" data-show="tooltip-right" data-target="#dica3" data-toggle="modal" title="URL de uma matéria útil">Dica Tipo 3</button><br><br>
+                                                <button type="button" class="btn btn-success" data-show="tooltip-right" data-target="#dica4" data-toggle="modal" title="Conselho para futuros alunos">Dica Tipo 4</button>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
