@@ -132,8 +132,8 @@
                                 @if(tema.getId() == idTema){
                                 <h1 class="page-header">
                                         <!-- Fim do cabeçalho! -->
-                                            @tema.getNome() &nbsp;
 
+                                            @tema.getNome() &nbsp;
                                     <span class="badge" title ="Média da Dificuldade" data-show="tooltip">
                                     @tema.getDificuldadeMediaFormatada()
                                     </span>
@@ -230,6 +230,40 @@
                                                                             </div><!-- /.modal-dialog -->
                                                                         </div>
 
+
+                                                                        @if(dica.getTipo() == "Material útil") {
+
+                                                                            <div id="collapse@dica.getId" class="panel-collapse collapse in">
+                                                                                <div class="panel-body">
+                                                                                    <a href="@dica.toString()" target="_blank">@dica.toString()</a><hr>
+                                                                                    <div class="pull-right"><small>Posted by: @dica.getUsuario()</small></div><br>
+
+                                                                                    @if(!dica.getOpinioesNegativas.isEmpty) {
+                                                                                        <br>
+                                                                                        <div class="panel panel-danger">
+                                                                                            <div class="panel-heading">
+                                                                                                <h3 class="panel-title">Respostas a esta dica</h3>
+                                                                                            </div>
+                                                                                            <div class="panel-body">
+                                                                                                    <!--Orion, dá um help aqui!-->
+                                                                                                @for(usuario <- dica.getOpinioesNegativas.keySet()) {
+                                                                                                    <div class="panel panel-default">
+                                                                                                        <div class="panel-body">
+                                                                                                            @dica.getOpinioesNegativas.get(usuario)
+                                                                                                        <hr>
+                                                                                                        <div class="pull-right"><small>Posted by: @usuario</small></div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                }
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        } else {
+
                                                                         <div id="collapse@dica.getId" class="panel-collapse collapse in">
                                                                             <div class="panel-body">
                                                                                 @dica.toString()<hr>
@@ -257,6 +291,7 @@
                                                                                 }
                                                                             </div>
                                                                         </div>
+                                                                        }
                                                                     </div>
                                                                 </div>
                                                                         }
