@@ -163,7 +163,7 @@
                                                                                 @dica.getNumeroConcordaram
                                                                             <form action="@routes.Dicas.addOpiniao(idTema, dica.getId, 1)" method="POST" style="display:inline!important;">
                                                                                 <button href="" class="btn btn-xs btn-success"><i class="fa fa-thumbs-o-up"></i></button>
-                                                                            </form> &nbsp;&nbsp; @dica.getNumeroDiscordaram <button href="" class="btn btn-xs btn-danger" data-target="#avaliarNeg" data-toggle="modal">
+                                                                            </form> &nbsp;&nbsp; @dica.getNumeroDiscordaram <button href="" class="btn btn-xs btn-danger" data-target="#avaliarNeg@dica.getId" data-toggle="modal">
                                                                                 <i class="fa fa-thumbs-o-down"></i></button>
                                                                             </div>
                                                                             <h3 class="panel-title">
@@ -173,7 +173,7 @@
                                                                         </div>
 
                                                                             <!--Modal para avaliar dica negativo-->
-                                                                        <div class="modal" id="avaliarNeg" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                                                                        <div class="modal" id="avaliarNeg@dica.getId" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
                                                                             <div class="modal-dialog">
                                                                                 <div class="modal-content">
                                                                                     <div class="modal-header">
@@ -183,8 +183,8 @@
                                                                                         <div class="modal-body">
 
                                                                                             <div class="form-group">
-                                                                                                <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:</label>
-                                                                                                <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica"></textarea>
+                                                                                                <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:<br><small>Sua avaliação só será validada se for justificada.</small></label>
+                                                                                                <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica" maxlength="100"></textarea>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="modal-footer">
@@ -294,7 +294,7 @@
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="control-label">Dica:</label>
-                                                        <textarea class="form-control" name="assunto" placeholder="Assunto" id="message-text"></textarea>
+                                                        <textarea class="form-control" name="assunto" placeholder="Assunto" id="message-text" maxlength="250"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -375,7 +375,7 @@
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="control-label">Conselho:</label>
-                                                        <textarea type="text" class="form-control" name="conselho" placeholder="Conselho" required data-validation-required-message="Digite um conselho que não seja vazio" maxlength="200"></textarea>
+                                                        <textarea type="text" class="form-control" name="conselho" placeholder="Conselho" required data-validation-required-message="Digite um conselho que não seja vazio" maxlength="300"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
