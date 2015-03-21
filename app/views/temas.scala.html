@@ -118,6 +118,8 @@
                                     }
                                 }
                                 </ul>
+                            <li>
+                                <a href=""><i class=" fa fa-folder-open-o"></i> Meta Dicas</a>
                             </li>
                         </ul>
                     </div>
@@ -132,14 +134,13 @@
                                 @if(tema.getId() == idTema){
                                 <h1 class="page-header">
                                         <!-- Fim do cabeçalho! -->
-
                                             @tema.getNome() &nbsp;
-                                    <span class="badge" title ="Média da Dificuldade" data-show="tooltip">
-                                    @tema.getDificuldadeMediaFormatada()
-                                    </span>
-                                    <span class="badge" title ="Mediana da Dificuldade" data-show="tooltip-down">
+
+                                    <!--Media e mediana-->
+                                    <small><span class="label label-info" title ="Média da Dificuldade" data-show="tooltip">@tema.getDificuldadeMediaFormatada()</span>&nbsp;
+                                    <span class="label label-info" title ="Mediana da Dificuldade" data-show="tooltip-right">
                                     @tema.getDificuldadeMedianaFormatada()
-                                    </span>
+                                    </span></small>
                                 </h1>
 
                                     <!--Inicio alert sucesso login-->
@@ -341,7 +342,7 @@
                                                 Passe o mouse em cima dos botões para escolher o tipo de dica: <br><br>
                                                 <button type="button" class="btn btn-default" data-show="tooltip-right" data-target="#dica1" data-toggle="modal" title="Dicas para não ter dificuldades em SI1">Dica Tipo 1</button><br><br>
                                                 <button type="button" class="btn btn-info" data-show="tooltip-right" data-target="#dica2" data-toggle="modal" title="Disciplinas anteriores que te ajudarão em SI1">Dica Tipo 2</button><br><br>
-                                                <button type="button" class="btn btn-warning" data-show="tooltip-right" data-target="#dica3" data-toggle="modal" title="URL de uma matéria útil">Dica Tipo 3</button><br><br>
+                                                <button type="button" class="btn btn-warning" data-show="tooltip-right" data-target="#dica3" data-toggle="modal" title="URL de um material útil">Dica Tipo 3</button><br><br>
                                                 <button type="button" class="btn btn-success" data-show="tooltip-right" data-target="#dica4" data-toggle="modal" title="Conselho para futuros alunos">Dica Tipo 4</button>
                                             </div>
                                             <div class="modal-footer">
@@ -414,7 +415,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="upload-avatar-title">URL de uma matéria útil para SI1</h4>
+                                                <h4 class="modal-title" id="upload-avatar-title">URL de um material útil para SI1</h4>
                                             </div>
                                             <form role="form" action="@routes.Dicas.addDica(idTema)" method="POST">
                                                 <div class="modal-body">

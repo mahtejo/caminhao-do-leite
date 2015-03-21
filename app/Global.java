@@ -66,6 +66,7 @@ public class Global extends GlobalSettings {
         dao.persist(tema2);
 
         Tema tema3 = new Tema("GRASP");
+        tema3.addDica(new DisciplinaUtil("orion", "Programação 2", "Java é essencial"));
         dao.persist(tema3);
 
         Tema tema4 = new Tema("GoF");

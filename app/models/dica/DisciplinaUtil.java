@@ -49,9 +49,9 @@ public class DisciplinaUtil extends Dica {
 
     @Override
     public String toString() {
-        StringBuffer str = new StringBuffer ("Nome: ");
-        str.append(getNome()).append("\n").append(" Razão: ").append(getRazao());
-        return str.toString();
+        String multilineString = String.format("%s\n%s\n","Nome: " + getNome(), "Razão: " + getRazao());
+          return multilineString;
+
     }
 
     @Override
