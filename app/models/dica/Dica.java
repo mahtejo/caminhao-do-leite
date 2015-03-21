@@ -109,6 +109,10 @@ public abstract class Dica implements Comparable<Dica> {
             return -1;
         } else if (this.getNumeroConcordaram() > outraDica.getNumeroConcordaram()){
             return 1;
+        } else if (this.getNumeroDiscordaram() > outraDica.getNumeroDiscordaram()){
+            return -1;
+        } else if (this.getNumeroDiscordaram() < outraDica.getNumeroDiscordaram()){
+            return 1;
         } else {
             return 0;
         }

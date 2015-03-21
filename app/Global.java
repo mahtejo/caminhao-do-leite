@@ -1,5 +1,10 @@
 import models.Tema;
+import models.Usuario;
 import models.dao.GenericDAO;
+import models.dica.Conselho;
+import models.dica.Dica;
+import models.dica.MaterialUtil;
+import models.dica.PrecisaSaber;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -47,7 +52,7 @@ public class Global extends GlobalSettings {
         });
     }
 
-    private void popularBD() {
+    /*private void popularBD() {
         String csvFile = Play.application().getFile("/conf/temasFile.csv").getAbsolutePath();
         BufferedReader br = null;
         String line = "";
@@ -77,5 +82,59 @@ public class Global extends GlobalSettings {
                 }
             }
         }
+    }*/
+
+    private void popularBD() throws Exception {
+        Usuario usuario1 = new Usuario("Admin", "admin", "admin");
+        Usuario usuario2 = new Usuario("Órion Winter", "orion", "orion");
+        dao.persist(usuario1);
+        dao.persist(usuario2);
+
+        Tema tema1 = new Tema("Análise x Design");
+        tema1.addDica(new Conselho("admin", "Estude bastante!"));
+        Dica dica1 = new MaterialUtil("admin", "http://www.google.com");
+        dica1.addOpiniaoNegativa("orion", "Engraçado, fera!");
+        Dica dica2 = new PrecisaSaber("orion", "tudo");
+        dica2.addOpiniaoPositiva("admin");
+        tema1.addDica(dica1);
+        tema1.addDica(dica2);
+        dao.persist(tema1);
+
+        Tema tema2 = new Tema("OO");
+        tema2.addDica(new PrecisaSaber("admin", "Programar em Java!"));
+        dao.persist(tema2);
+
+        Tema tema3 = new Tema("GRASP");
+        dao.persist(tema3);
+
+        Tema tema4 = new Tema("GoF");
+        dao.persist(tema4);
+
+        Tema tema5 = new Tema("Arquitetura");
+        dao.persist(tema5);
+
+        Tema tema6 = new Tema("Play");
+        Dica dica = new Conselho("admin", "Não se estresse, é assim mesmo!");
+        dica.addOpiniaoPositiva("admin");
+        tema6.addDica(dica);
+        dao.persist(tema6);
+
+        Tema tema7 = new Tema("JS");
+        dao.persist(tema7);
+
+        Tema tema8 = new Tema("HTML+CSS+Bootstrap");
+        dao.persist(tema8);
+
+        Tema tema9 = new Tema("Heroku");
+        dao.persist(tema9);
+
+        Tema tema10 = new Tema("Labs");
+        dao.persist(tema10);
+
+        Tema tema11 = new Tema("Minitestes");
+        dao.persist(tema11);
+
+        Tema tema12 = new Tema("Projeto");
+        dao.persist(tema12);
     }
 }
