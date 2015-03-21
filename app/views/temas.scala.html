@@ -208,14 +208,12 @@
                                                                                         </div>
                                                                                         <div class="panel-body">
                                                                                                 <!--Orion, dá um help aqui!-->
-                                                                                            @for(opinioes <- dica.getOpinioesNegativas.values()) {
+                                                                                            @for(usuario <- dica.getOpinioesNegativas.keySet()) {
                                                                                                 <div class="panel panel-default">
                                                                                                     <div class="panel-body">
-                                                                                                        @for(opiniao <- opinioes) {
-                                                                                                            @opiniao
-                                                                                                        }
-                                                                                                    <hr>
-                                                                                                    <div class="pull-right"><small>Posted by: @dica.getOpinioesNegativas.get("user")</small></div>
+                                                                                                        @dica.getOpinioesNegativas.get(usuario)
+                                                                                                        <hr>
+                                                                                                        <div class="pull-right"><small>Posted by: @usuario</small></div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             }
