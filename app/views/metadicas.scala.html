@@ -10,6 +10,17 @@
   </head>
   <body>
 
+    <form action="@routes.MetaDicas.addMetaDica()" method="POST">
+      <input type="text" name="comentario"> <br>
+      @for(dica <- dicas){
+        <input type="checkbox" name="dica[]" value="@dica.getId()"> @dica.getTipo - @dica.toString()<br>
+      }
+      <input type="submit" value="Submit">
+    </form>
+
+    @for(metaDica <- metaDicas){
+      <p>@metaDica.toString()</p>
+    }
   </body>
   </html>
 }

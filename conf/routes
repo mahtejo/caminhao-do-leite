@@ -21,7 +21,7 @@ POST        /dica/addDica/:idTema                       controllers.Dicas.addDic
 POST        /dica/addOpiniao/:idTema/:idDica/:opiniao   controllers.Dicas.addOpiniao(idTema: Long, idDica: Long, opiniao: Int)
 POST        /dica/reportarConteudo/:idTema/:idDica      controllers.Dicas.reportarConteudoInapropriado(idTema: Long, idDica: Long)
 
-GET         /metaDica/metaDica                          controllers.MetaDicas.metaDica()
+GET         /metaDica/                                  controllers.MetaDicas.show()
 POST        /metaDica/addMetaDica                       controllers.MetaDicas.addMetaDica()
 
 # Map static resources from the /public folder to the /assets URL path
