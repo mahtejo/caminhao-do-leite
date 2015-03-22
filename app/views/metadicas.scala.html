@@ -109,8 +109,6 @@
                                 <br>
                                 <br>
 
-
-
                                     <!--Modal para add meta dica-->
                                 <div class="modal" id="addMeta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
                                     <div class="modal-dialog">
@@ -132,7 +130,7 @@
                                                         <input type="checkbox" name="dica[]" value="@dica.getId()"> @dica.getTipo - @dica.toString()<br>
                                                     }
                                                    <br>
-                                                        <button type="button" class="btn btn-primary" value="button">Enviar</button>
+                                                        <button type="submit" class="btn btn-primary" value="Submit">Enviar</button>
                                                         </div></div></div></form>
                                                 @*    @for(metaDica <- metaDicas){
                                                     <p>@metaDica.toString()</p>
@@ -166,44 +164,28 @@
                                                                         <!--Thumbs-up -->
                                                                     @dicaMeta.getNumeroConcordaram
                                                                     <form action="@routes.MetaDicas.addOpiniao(dicaMeta.getId, 1)" method="POST" style="display:inline!important;">
-                                                                        <button href="" class="btn btn-xs btn-success" data-show="tooltip" title="Avalie esta dica positivamente">
+                                                                        <button href="" class="btn btn-xs btn-success" data-show="tooltip" title="Avalie esta meta dica positivamente">
                                                                             <i class="fa fa-thumbs-o-up"></i>
                                                                         </button>
                                                                     </form> &nbsp;&nbsp;
                                                                     <!--Thumbs-down -->
                                                                     @dicaMeta.getNumeroDiscordaram
-                                                                    <button href="" class="btn btn-xs btn-danger" data-target="#avaliarNeg@dicaMeta.getId" data-show="tooltip" data-toggle="modal" title="Avalie esta dica negativamente (você terá que justificar sua resposta)">
+                                                                    <form action="@routes.MetaDicas.addOpiniao(dicaMeta.getId, 0)" method="POST" style="display:inline!important;">
+                                                                    <button href="" class="btn btn-xs btn-danger" data-show="tooltip" title="Avalie esta meta dica negativamente">
                                                                         <i class="fa fa-thumbs-o-down"></i>
                                                                     </button>
+                                                                    </form>
                                                                 </div>
                                                                 <h3 class="panel-title">
                                                                     <a data-toggle="collapse" data-target="#collapse@dicaMeta.getId"
-                                                                    href="#collapseOne">@dicaMeta.getTipo()<i class="fa fa-fw fa-caret-down"></i></a>
+                                                                    href="#collapse@dicaMeta.getId">@dicaMeta.getTipo()<i class="fa fa-fw fa-caret-down"></i></a>
                                                                 </h3>
                                                             </div>
-
-                                                                <!--Modal para avaliar dica negativo-->
-                                                            <div class="modal" id="avaliarNeg@dicaMeta.getId" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h4 class="modal-title" id="upload-avatar-title">Avaliação Negativa - Justificativa</h4>
-                                                                        </div>
-                                                                        <form action="@routes.MetaDicas.addOpiniao(dicaMeta.getId, 0)" method="POST">
-                                                                            <div class="modal-body">
-
-                                                                                <div class="form-group">
-                                                                                    <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:<br><small>Sua avaliação só será validada se for justificada.</small></label>
-                                                                                    <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica" maxlength="100"></textarea>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="submit" class="btn btn-primary" >Enviar</button>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div><!-- /.modal-content -->
-                                                                </div><!-- /.modal-dialog -->
-                                                            </div>
+                                                            <div id="collapse@dicaMeta.getId" class="panel-collapse collapse in">
+                                                                <div class="panel-body">
+                                                                    @dicaMeta.getComentario
+                                                                    <hr>
+                                                                <div class="pull-right"><small>Posted by: @dicaMeta.getUsuario()</small></div><br>
 
                                                             @for(dica <- dicaMeta.getDicas()) {
                                                                 @if(dicaMeta.getTipo() == "Material útil") {
@@ -211,21 +193,26 @@
                                                                         <div class="panel panel-info">
                                                                             <div class="panel-heading"><h3 class="panel-title">
                                                                                 <a data-toggle="collapse" data-target="#collapse@dica.getId"
-                                                                                href="#collapseOne">@dica.getTipo()<i class="fa fa-fw fa-caret-down"></i></a>
+                                                                                href="#collapse@dica.getId">@dica.getTipo()<i class="fa fa-fw fa-caret-down"></i></a>
                                                                             </h3>
                                                                             </div>
-
-
                                                                             <div id="collapse@dica.getId" class="panel-collapse collapse in">
                                                                                 <div class="panel-body">
                                                                                     <a href="@dica.toString()" target="_blank">@dica.toString()</a><hr>
                                                                                     <div class="pull-right"><small>Posted by: @dica.getUsuario()</small></div><br>
                                                                                 </div>
                                                                             </div>
-
-
+                                                                            </div>
+                                                                        </div>
                                                                             } else {
 
+                                                                    <div class="panel-group" id="accordion">
+                                                                        <div class="panel panel-info">
+                                                                            <div class="panel-heading"><h3 class="panel-title">
+                                                                                <a data-toggle="collapse" data-target="#collapse@dica.getId"
+                                                                                href="#collapse@dica.getId">@dica.getTipo()<i class="fa fa-fw fa-caret-down"></i></a>
+                                                                            </h3>
+                                                                            </div>
                                                                     <div id="collapse@dica.getId" class="panel-collapse collapse in">
                                                                         <div class="panel-body">
                                                                             @dica.toString()<hr>
@@ -233,8 +220,12 @@
 
                                                                         </div>
                                                                     </div>
+                                                                            </div>
+                                                                        </div>
                                                                 }
                                                             }
+                                                                    </div>
+                                                                    </div>
                                                         </div>
                                                         </div>
                                                         }
@@ -246,20 +237,22 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <ol class="breadcrumb">
-                                        <li>
-                                            <small> Caminhão do Leite </small>
-                                        </li>
-                                        <li> <small> Copyright © 2015</small></li>
-                                        <li>
-                                            <small> Desenvolvido por Marcela Tejo e Órion Winter para a disciplina SI1</small>
-                                        </li>
-                                    </ol>
+
                                 </div>
                             </div>
-                        </div>
-                    </div></div>
-            </div>
+
+
+                        <ol class="breadcrumb">
+                            <li>
+                                <small> Caminhão do Leite </small>
+                            </li>
+                            <li> <small> Copyright © 2015</small></li>
+                            <li>
+                                <small> Desenvolvido por Marcela Tejo e Órion Winter para a disciplina SI1</small>
+                            </li>
+                        </ol>
+                    </div>    </div>
+
 
 
 
