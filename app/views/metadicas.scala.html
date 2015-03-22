@@ -105,9 +105,46 @@
 
                                 Meta dicas são dicas compostas por outras dicas, independente do tema, além de conter também um comentário seu a respeito das dicas escolhidas. <br><br>
 
-                                <button type="submit" class="btn btn-primary" data-target="#addMeta" data-show="tooltip" data-toggle="modal" title="Adicionar uma meta dica">Adicionar Meta Dica</button>&nbsp;
+                                <button type="submit" class="btn btn-primary" data-target="#addMeta" data-show="tooltip" data-toggle="modal" title="Adicionar uma meta dica">Adicionar Meta Dica</button>
                                 <br>
                                 <br>
+
+
+
+                                    <!--Modal para add meta dica-->
+                                <div class="modal" id="addMeta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title" id="exampleModalLabel">Crie uma nova Meta Dica</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="@routes.MetaDicas.addMetaDica()" method="POST">
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="control-label"> Adicione um comentário seu:</label>
+                                                        <textarea class="form-control" name="comentario" placeholder="Comentário" id="message-text" required data-validation-required-message="" maxlength="255"></textarea>
+<br>
+                                                    <div class="panel panel-info">
+                                                        <div class="panel-heading">Escolha as dicas que farão parte da sua Meta Dica</div>
+                                                        <div class="panel-body">
+                                                    @for(dica <- dicas){
+                                                        <input type="checkbox" name="dica[]" value="@dica.getId()"> @dica.getTipo - @dica.toString()<br>
+                                                    }
+                                                   <br>
+                                                        <button type="button" class="btn btn-primary" value="button">Enviar</button>
+                                                        </div></div></div></form>
+                                                @*    @for(metaDica <- metaDicas){
+                                                    <p>@metaDica.toString()</p>
+                                                }*@
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div></div><!-- /.modal-dialog -->
+
+
 
                                     <!--Div de Dicas-->
                                 <div class="panel-group" id="accordion">
@@ -118,57 +155,57 @@
                                         </div>
                                         <div id="collapseOne" class="panel-collapse collapse in">
                                             <div class="panel-body">
-                                                @if(metaDicas.isEmpty) {
-                                                    Não há nenhuma meta dica cadastrada.
-                                                } else {
-                                                    @for(dicaMeta <- metaDicas) {
-                                                        <div class="panel-group" id="accordion">
-                                                            <div class="panel panel-info">
-                                                                <div class="panel-heading">
-                                                                    <div class="pull-right" style='display:inline;'>
-                                                                            <!--Thumbs-up -->
-                                                                        @dicaMeta.getNumeroConcordaram
-                                                                        <form action="@routes.MetaDicas.addOpiniao(dicaMeta.getId, 1)" method="POST" style="display:inline!important;">
-                                                                            <button href="" class="btn btn-xs btn-success" data-show="tooltip" title="Avalie esta dica positivamente">
-                                                                                <i class="fa fa-thumbs-o-up"></i>
-                                                                            </button>
-                                                                        </form> &nbsp;&nbsp;
-                                                                        <!--Thumbs-down -->
-                                                                        @dicaMeta.getNumeroDiscordaram
-                                                                        <button href="" class="btn btn-xs btn-danger" data-target="#avaliarNeg@dicaMeta.getId" data-show="tooltip" data-toggle="modal" title="Avalie esta dica negativamente (você terá que justificar sua resposta)">
-                                                                            <i class="fa fa-thumbs-o-down"></i>
+                                            @if(metaDicas.isEmpty) {
+                                                Não há nenhuma meta dica cadastrada.
+                                            } else {
+                                                @for(dicaMeta <- metaDicas) {
+                                                    <div class="panel-group" id="accordion">
+                                                        <div class="panel panel-info">
+                                                            <div class="panel-heading">
+                                                                <div class="pull-right" style='display:inline;'>
+                                                                        <!--Thumbs-up -->
+                                                                    @dicaMeta.getNumeroConcordaram
+                                                                    <form action="@routes.MetaDicas.addOpiniao(dicaMeta.getId, 1)" method="POST" style="display:inline!important;">
+                                                                        <button href="" class="btn btn-xs btn-success" data-show="tooltip" title="Avalie esta dica positivamente">
+                                                                            <i class="fa fa-thumbs-o-up"></i>
                                                                         </button>
-                                                                    </div>
-                                                                    <h3 class="panel-title">
-                                                                        <a data-toggle="collapse" data-target="#collapse@dicaMeta.getId"
-                                                                        href="#collapseOne">@dicaMeta.getTipo()<i class="fa fa-fw fa-caret-down"></i></a>
-                                                                    </h3>
+                                                                    </form> &nbsp;&nbsp;
+                                                                    <!--Thumbs-down -->
+                                                                    @dicaMeta.getNumeroDiscordaram
+                                                                    <button href="" class="btn btn-xs btn-danger" data-target="#avaliarNeg@dicaMeta.getId" data-show="tooltip" data-toggle="modal" title="Avalie esta dica negativamente (você terá que justificar sua resposta)">
+                                                                        <i class="fa fa-thumbs-o-down"></i>
+                                                                    </button>
                                                                 </div>
+                                                                <h3 class="panel-title">
+                                                                    <a data-toggle="collapse" data-target="#collapse@dicaMeta.getId"
+                                                                    href="#collapseOne">@dicaMeta.getTipo()<i class="fa fa-fw fa-caret-down"></i></a>
+                                                                </h3>
+                                                            </div>
 
-                                                                    <!--Modal para avaliar dica negativo-->
-                                                                <div class="modal" id="avaliarNeg@dicaMeta.getId" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h4 class="modal-title" id="upload-avatar-title">Avaliação Negativa - Justificativa</h4>
+                                                                <!--Modal para avaliar dica negativo-->
+                                                            <div class="modal" id="avaliarNeg@dicaMeta.getId" tabindex="-1" role="dialog" aria-labelledby="upload-avatar-title" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title" id="upload-avatar-title">Avaliação Negativa - Justificativa</h4>
+                                                                        </div>
+                                                                        <form action="@routes.MetaDicas.addOpiniao(dicaMeta.getId, 0)" method="POST">
+                                                                            <div class="modal-body">
+
+                                                                                <div class="form-group">
+                                                                                    <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:<br><small>Sua avaliação só será validada se for justificada.</small></label>
+                                                                                    <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica" maxlength="100"></textarea>
+                                                                                </div>
                                                                             </div>
-                                                                            <form action="@routes.MetaDicas.addOpiniao(dicaMeta.getId, 0)" method="POST">
-                                                                                <div class="modal-body">
+                                                                            <div class="modal-footer">
+                                                                                <button type="submit" class="btn btn-primary" >Enviar</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div><!-- /.modal-content -->
+                                                                </div><!-- /.modal-dialog -->
+                                                            </div>
 
-                                                                                    <div class="form-group">
-                                                                                        <label for="recipient-name" class="control-label">Justifique sua avaliação negativa para esta dica:<br><small>Sua avaliação só será validada se for justificada.</small></label>
-                                                                                        <textarea class="form-control" name="justificativa" placeholder="Justificativa" id="justifica" maxlength="100"></textarea>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button type="submit" class="btn btn-primary" >Enviar</button>
-                                                                                </div>
-                                                                            </form>
-                                                                        </div><!-- /.modal-content -->
-                                                                    </div><!-- /.modal-dialog -->
-                                                                </div>
-
-                                                                @for(dica <- dicaMeta.getDicas()) {
+                                                            @for(dica <- dicaMeta.getDicas()) {
                                                                 @if(dicaMeta.getTipo() == "Material útil") {
                                                                     <div class="panel-group" id="accordion">
                                                                         <div class="panel panel-info">
@@ -179,66 +216,32 @@
                                                                             </div>
 
 
-                                                                    <div id="collapse@dica.getId" class="panel-collapse collapse in">
-                                                                        <div class="panel-body">
-                                                                            <a href="@dica.toString()" target="_blank">@dica.toString()</a><hr>
-                                                                            <div class="pull-right"><small>Posted by: @dica.getUsuario()</small></div><br>
-                                                                        </div>
-                                                                    </div>
+                                                                            <div id="collapse@dica.getId" class="panel-collapse collapse in">
+                                                                                <div class="panel-body">
+                                                                                    <a href="@dica.toString()" target="_blank">@dica.toString()</a><hr>
+                                                                                    <div class="pull-right"><small>Posted by: @dica.getUsuario()</small></div><br>
+                                                                                </div>
+                                                                            </div>
 
 
-                                                                } else {
+                                                                            } else {
 
                                                                     <div id="collapse@dica.getId" class="panel-collapse collapse in">
                                                                         <div class="panel-body">
                                                                             @dica.toString()<hr>
                                                                             <div class="pull-right"><small>Posted by: @dica.getUsuario()</small></div><br>
 
-                                                                </div>
+                                                                        </div>
                                                                     </div>
                                                                 }
-                                                                }
-                                                            </div>
+                                                            }
                                                         </div>
-                                                    }
-</div>
-                                                    </div>
-
-
-
-
-
-
-
-                                                    <!--Modal para add meta dica-->
-                                                <div class="modal" id="addMeta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                                <h4 class="modal-title" id="exampleModalLabel">Escolha o tipo de dica</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <form action="@routes.MetaDicas.addMetaDica()" method="POST">
-                                                                    <input type="text" name="comentario"> <br>
-                                                                    @for(dica <- dicas){
-                                                                        <input type="checkbox" name="dica[]" value="@dica.getId()"> @dica.getTipo - @dica.toString()<br>
-                                                                    }
-                                                                    <input type="submit" value="Submit">
-                                                                </form>
-
-                                                                @for(metaDica <- metaDicas){
-                                                                    <p>@metaDica.toString()</p>
-                                                                }
-
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                                                            </div>
                                                         </div>
-                                                    </div><!-- /.modal-content -->
-                                                </div><!-- /.modal-dialog -->
-                                                }
+                                                        }
+                                            </div>
+                                            </div>
+
+                                            }
                                             </div>
                                         </div>
                                     </div>
