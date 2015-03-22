@@ -23,15 +23,17 @@ import static play.mvc.Results.ok;
 public class Temas {
 
     private static GenericDAO dao = new GenericDAO();
+    private static final int QUATROCENTOS = 400;
+    private static final int DUZENTOS = 200;
 
     @Transactional
     public static Result show() {
-        return temas(200, new Long(-1));
+        return temas(DUZENTOS, new Long(-1));
     }
 
     @Transactional
     public static Result temas(Long id){
-        return temas(200, id);
+        return temas(DUZENTOS, id);
     }
 
     @Transactional
@@ -73,7 +75,7 @@ public class Temas {
         int dificuldade;
         if (filledForm.hasErrors()){
             flash("message", "Formulário invalido!");
-            return Temas.temas(400, idTema);
+            return Temas.temas(QUATROCENTOS, idTema);
         }
         try{
             dificuldade = Integer.parseInt(dificul);
@@ -81,17 +83,17 @@ public class Temas {
             Logger.debug("Usuário: " + session().get("user"));
         } catch (Exception e){
             flash("message", "Dificuldade deve ser um número inteiro!");
-            return Temas.temas(400, idTema);
+            return Temas.temas(QUATROCENTOS, idTema);
         }
         try{
             Tema tema = dao.findByEntityId(Tema.class, idTema);
             tema.addDificuldade(session().get("user"), dificuldade);
             dao.merge(tema);
             dao.flush();
-            return Temas.temas(200, idTema);
+            return Temas.temas(DUZENTOS, idTema);
         } catch (Exception e){
             flash("message", e.getMessage());
-            return Temas.temas(400, idTema);
+            return Temas.temas(QUATROCENTOS, idTema);
         }
     }
 }

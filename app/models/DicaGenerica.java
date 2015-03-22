@@ -21,6 +21,11 @@ public abstract class DicaGenerica implements Comparable<DicaGenerica> {
     @Column
     @CollectionTable
     private Map<String, String> opinioesNegativas, opinioesPositivas, conteudoInapropriado;
+    private static final int OPINIAO_MAX = 100;
+    private static final int CONCORDAM_MAX = 20;
+    private static final int ZERO = 0;
+    private static final int UM = 1;
+    private static final int MENOS_UM = -1;
 
     public DicaGenerica(){
         this.conteudoInapropriado = new HashMap<String, String>();
@@ -54,9 +59,9 @@ public abstract class DicaGenerica implements Comparable<DicaGenerica> {
 
     public void addOpiniaoNegativa(String usuario, String opiniao) throws Exception {
         if(!isMensagemFixada()) {
-            if (opiniao.length() > 100) {
+            if (opiniao.length() > OPINIAO_MAX) {
                 throw new Exception("Erro: Opinião deve conter menos que 100 caracteres!");
-            } else if (opiniao.length() == 0) {
+            } else if (opiniao.length() == ZERO) {
                 throw new Exception("Erro: Opinião deve conter mais que 0 caracteres!");
             }
             opinioesPositivas.remove(usuario);
@@ -106,15 +111,15 @@ public abstract class DicaGenerica implements Comparable<DicaGenerica> {
 
     public int compareTo(DicaGenerica outraDica){
         if (this.getNumeroConcordaram() < outraDica.getNumeroConcordaram()){
-            return -1;
+            return MENOS_UM;
         } else if (this.getNumeroConcordaram() > outraDica.getNumeroConcordaram()){
-            return 1;
+            return UM;
         } else if (this.getNumeroDiscordaram() > outraDica.getNumeroDiscordaram()){
-            return -1;
+            return MENOS_UM;
         } else if (this.getNumeroDiscordaram() < outraDica.getNumeroDiscordaram()){
-            return 1;
+            return UM;
         } else {
-            return 0;
+            return ZERO;
         }
     }
 
@@ -137,7 +142,7 @@ public abstract class DicaGenerica implements Comparable<DicaGenerica> {
     }
 
     private boolean isMensagemFixada() throws Exception {
-        if (getNumeroConcordaram() >= 20 || getNumeroDiscordaram() >= 20){
+        if (getNumeroConcordaram() >= CONCORDAM_MAX || getNumeroDiscordaram() >= CONCORDAM_MAX){
             throw new Exception("Erro: Número máximo de discordância deve ser 20");
         }
         return false;
