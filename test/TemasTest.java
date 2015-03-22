@@ -1,22 +1,16 @@
 import base.AbstractTest;
 import models.Tema;
 import models.dao.GenericDAO;
-import models.dica.Conselho;
-import models.dica.Dica;
-import models.dica.DicaGenerica;
-import models.dica.PrecisaSaber;
+import models.Conselho;
+import models.DicaGenerica;
+import models.PrecisaSaber;
 import org.junit.Test;
-import play.Logger;
-import play.mvc.Result;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static play.test.Helpers.*;
 
 
 /**

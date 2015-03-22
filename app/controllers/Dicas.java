@@ -1,8 +1,7 @@
 package controllers;
 
-import models.Tema;
+import models.*;
 import models.dao.GenericDAO;
-import models.dica.*;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;

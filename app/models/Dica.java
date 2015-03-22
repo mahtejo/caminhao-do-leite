@@ -1,6 +1,4 @@
-package models.dica;
-
-import models.Tema;
+package models;
 
 import javax.persistence.*;
 

@@ -1,7 +1,6 @@
 import base.AbstractTest;
-import models.Tema;
+import models.*;
 import models.dao.GenericDAO;
-import models.dica.*;
 import org.junit.Before;
 import org.junit.Test;
 

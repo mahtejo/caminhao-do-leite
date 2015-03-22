@@ -1,4 +1,4 @@
-package models.dica;
+package models;
 
 import javax.persistence.*;
 import java.util.HashMap;

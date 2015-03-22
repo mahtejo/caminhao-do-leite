@@ -1,9 +1,8 @@
 package controllers;
 
+import models.DicaGenerica;
+import models.MetaDica;
 import models.dao.GenericDAO;
-import models.dica.DicaGenerica;
-import models.dica.MetaDica;
-import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -46,6 +45,41 @@ public class MetaDicas {
             return show();
         } catch (Exception e) {
             flash("message", e.getMessage());
+            return show();
+        }
+    }
+
+    @Transactional
+    public static Result addOpiniao(long idMeta, int opiniao) {
+        DynamicForm filledForm = Form.form().bindFromRequest();
+        if (filledForm.hasErrors()){
+            flash("message", "Formulário invalido!");
+            return show();
+        }
+        DicaGenerica dica = dao.findByEntityId(DicaGenerica.class, idMeta);
+        if (opiniao == 0){
+            String justificativa = filledForm.get("justificativa");
+            try {
+                dica.addOpiniaoNegativa(session().get("user"), justificativa);
+                dao.merge(dica);
+                dao.flush();
+                return show();
+            } catch (Exception e) {
+                flash("message", e.getMessage());
+                return show();
+            }
+        } else if (opiniao == 1){
+            try {
+                dica.addOpiniaoPositiva(session().get("user"));
+                dao.merge(dica);
+                dao.flush();
+                return show();
+            } catch (Exception e) {
+                flash("message", e.getMessage());
+                return show();
+            }
+        } else {
+            flash("message", "Erro: Não foi possível adicionar opinião!");
             return show();
         }
     }

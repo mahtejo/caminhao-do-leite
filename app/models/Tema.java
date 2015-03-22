@@ -1,8 +1,5 @@
 package models;
 
-import models.dica.Dica;
-import models.dica.DicaGenerica;
-
 import javax.persistence.*;
 import java.util.*;
 

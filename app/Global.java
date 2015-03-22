@@ -1,7 +1,5 @@
-import models.Tema;
-import models.Usuario;
+import models.*;
 import models.dao.GenericDAO;
-import models.dica.*;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;

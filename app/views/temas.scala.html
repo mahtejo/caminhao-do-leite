@@ -119,7 +119,7 @@
                                 }
                                 </ul>
                             <li>
-                                <a href=""><i class=" fa fa-folder-open-o"></i> Meta Dicas</a>
+                                <a href="@routes.MetaDicas.show()"><i class=" fa fa-folder-open-o"></i> Meta Dicas</a>
                             </li>
                         </ul>
                     </div>
@@ -246,7 +246,6 @@
                                                                                                 <h3 class="panel-title">Respostas a esta dica</h3>
                                                                                             </div>
                                                                                             <div class="panel-body">
-                                                                                                    <!--Orion, dá um help aqui!-->
                                                                                                 @for(usuario <- dica.getOpinioesNegativas.keySet()) {
                                                                                                     <div class="panel panel-default">
                                                                                                         <div class="panel-body">
