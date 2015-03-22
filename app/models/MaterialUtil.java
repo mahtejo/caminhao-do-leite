@@ -11,6 +11,9 @@ public class MaterialUtil extends Dica {
 
     @Column
     private String material;
+    private static final int QUATRO = 4;
+    private static final int SETE = 7;
+
 
     public MaterialUtil(){}
 
@@ -32,10 +35,10 @@ public class MaterialUtil extends Dica {
 
     private boolean verificaAutenticidadeDoMaterial(String material){
         if (material.startsWith("http://") &&
-                (material.startsWith(".com", material.length()-4)
-                || material.startsWith(".com.br", material.length()-7)
-                || material.startsWith(".edu", material.length()-4)
-                || material.startsWith(".edu.br", material.length()-7))){
+                (material.startsWith(".com", material.length()- QUATRO)
+                || material.startsWith(".com.br", material.length()- SETE)
+                || material.startsWith(".edu", material.length()-QUATRO)
+                || material.startsWith(".edu.br", material.length()-SETE))){
             return true;
         }
         return false;
