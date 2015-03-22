@@ -26,13 +26,6 @@ public class Tema {
     @Column
     @CollectionTable
     private Map<String, Integer> dificuldadeUsuarios;
-    private final int ZERO = 0;
-    private final int UM = 1;
-    private final int MENOS_DOIS = -2;
-    private final int MAIS_DOIS = 2;
-    private final int TRES = 3;
-    private final double DOIS_DEC = 2.0;
-
 
     public Tema(){
         dicas = new ArrayList<DicaGenerica>();
@@ -42,7 +35,7 @@ public class Tema {
     public Tema(String nome){
         dicas = new ArrayList<DicaGenerica>();
         dificuldadeUsuarios = new HashMap<String, Integer>();
-        setNome(nome);
+        this.nome = nome;
     }
 
     public Long getId() {
@@ -80,7 +73,7 @@ public class Tema {
     }
 
     public void addDificuldade(String usuario, int dificuldade) throws Exception {
-        if(usuario == null || dificuldade < MENOS_DOIS || dificuldade > MAIS_DOIS){
+        if(usuario == null || dificuldade < -2 || dificuldade > 2){
             throw new Exception("Erro: Dificuldade deve ser entre -2 e 2!");
         }
         dificuldadeUsuarios.put(usuario, dificuldade);
@@ -92,10 +85,10 @@ public class Tema {
 
     public double getDificuldadeMedia(){
         int numeroDeUsuarios = dificuldadeUsuarios.size();
-        if (numeroDeUsuarios == ZERO){
-            return ZERO;
+        if (numeroDeUsuarios == 0){
+            return 0;
         }
-        double soma = ZERO;
+        double soma = 0;
         for (Integer i: dificuldadeUsuarios.values()){
             soma += i;
         }
@@ -108,8 +101,8 @@ public class Tema {
 
     public double getDificuldadeMediana(){
         int numeroDeUsuarios = dificuldadeUsuarios.size();
-        if (numeroDeUsuarios == ZERO){
-            return ZERO;
+        if (numeroDeUsuarios == 0){
+            return 0;
         }
         List<Integer> dificuldades = new LinkedList<Integer>();
         for (Integer i: dificuldadeUsuarios.values()){
@@ -121,16 +114,16 @@ public class Tema {
     private double mediana(List<Integer> lista){
         Collections.sort(lista);
         int n = lista.size();
-        if (n % MAIS_DOIS != ZERO){
-            return lista.get((n - UM ) / MAIS_DOIS);
+        if (n % 2 != 0){
+            return lista.get((n - 1 ) / 2);
         } else {
-            return (lista.get(n/MAIS_DOIS) + lista.get((n/MAIS_DOIS)-UM)) / DOIS_DEC;
+            return (lista.get(n/2) + lista.get((n/2)-1)) / 2.0;
         }
     }
 
     public void informaConteudoInapropriado(DicaGenerica dica, String usuario) throws Exception {
         dica.informaConteudoInapropriado(usuario);
-        if (dica.numeroConteudoInapropriado() >= TRES){
+        if (dica.numeroConteudoInapropriado() >= 3){
             dicas.remove(dica);
         }
     }

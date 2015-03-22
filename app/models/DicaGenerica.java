@@ -23,9 +23,6 @@ public abstract class DicaGenerica implements Comparable<DicaGenerica> {
     private Map<String, String> opinioesNegativas, opinioesPositivas, conteudoInapropriado;
     private static final int OPINIAO_MAX = 100;
     private static final int CONCORDAM_MAX = 20;
-    private static final int ZERO = 0;
-    private static final int UM = 1;
-    private static final int MENOS_UM = -1;
 
     public DicaGenerica(){
         this.conteudoInapropriado = new HashMap<String, String>();
@@ -37,7 +34,7 @@ public abstract class DicaGenerica implements Comparable<DicaGenerica> {
         this.conteudoInapropriado = new HashMap<String, String>();
         this.opinioesNegativas = new HashMap<String, String>();
         this.opinioesPositivas = new HashMap<String, String>();
-        setUsuario(usuario);
+        this.usuario = usuario;
     }
 
     public Long getId() {
@@ -68,7 +65,7 @@ public abstract class DicaGenerica implements Comparable<DicaGenerica> {
         if(!isMensagemFixada()) {
             if (opiniao.length() > OPINIAO_MAX) {
                 throw new Exception("Erro: Opinião deve conter menos que 100 caracteres!");
-            } else if (opiniao.length() == ZERO) {
+            } else if (opiniao.length() == 0) {
                 throw new Exception("Erro: Opinião deve conter mais que 0 caracteres!");
             }
             opinioesPositivas.remove(usuario);
@@ -118,15 +115,15 @@ public abstract class DicaGenerica implements Comparable<DicaGenerica> {
 
     public int compareTo(DicaGenerica outraDica){
         if (this.getNumeroConcordaram() < outraDica.getNumeroConcordaram()){
-            return MENOS_UM;
+            return -1;
         } else if (this.getNumeroConcordaram() > outraDica.getNumeroConcordaram()){
-            return UM;
+            return 1;
         } else if (this.getNumeroDiscordaram() > outraDica.getNumeroDiscordaram()){
-            return MENOS_UM;
+            return -1;
         } else if (this.getNumeroDiscordaram() < outraDica.getNumeroDiscordaram()){
-            return UM;
+            return 1;
         } else {
-            return ZERO;
+            return 0;
         }
     }
 

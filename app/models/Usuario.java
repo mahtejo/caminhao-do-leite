@@ -21,9 +21,9 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nome, String password, String user) {
-        setNome(nome);
-        setUser(user);
+    public Usuario(String nome, String password, String usuario) {
+        this.nome = nome;
+        this.usuario = usuario;
         setSenha(password);
     }
 

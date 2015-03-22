@@ -26,9 +26,6 @@ public class Login {
     private static final int BADREQUEST = 400;
     private static final int OK = 200;
 
-    public String user;
-    public String senha;
-
     @Transactional
     public static Result login() {
         DynamicForm filledForm = Form.form().bindFromRequest();

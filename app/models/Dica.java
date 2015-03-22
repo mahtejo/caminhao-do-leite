@@ -17,7 +17,7 @@ public abstract class Dica extends DicaGenerica {
 
     public Dica(String usuario, Tema tema) {
         super(usuario);
-        setTema(tema);
+        this.tema = tema;
     }
 
     public Tema getTema() {
