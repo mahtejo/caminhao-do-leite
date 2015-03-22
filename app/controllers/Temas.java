@@ -23,22 +23,24 @@ import static play.mvc.Results.ok;
 public class Temas {
 
     private static GenericDAO dao = new GenericDAO();
-    private static final int QUATROCENTOS = 400;
-    private static final int DUZENTOS = 200;
+    private static final int BADREQUEST = 400;
+    private static final int OK = 200;
+    private static final int IDINVALIDO = -1;
+    private static final int PRIMEIROELEMENTO = 0;
 
     @Transactional
     public static Result show() {
-        return temas(DUZENTOS, new Long(-1));
+        return temas(OK, new Long(IDINVALIDO));
     }
 
     @Transactional
     public static Result temas(Long id){
-        return temas(DUZENTOS, id);
+        return temas(OK, id);
     }
 
     @Transactional
     public static Result temas(int status){
-        return temas(status, new Long(-1));
+        return temas(status, new Long(IDINVALIDO));
     }
 
     @Transactional
@@ -51,14 +53,14 @@ public class Temas {
                 message = "";
             }
 
-            if (id.equals(new Long(-1)) && listaDeTemas.size() > 0) {
-                id = listaDeTemas.get(0).getId();
+            if (id.equals(new Long(IDINVALIDO)) && listaDeTemas.size() > 0) {
+                id = listaDeTemas.get(PRIMEIROELEMENTO).getId();
             }
 
             switch (status) {
-                case 200:
+                case OK:
                     return ok(temas.render(message, id, listaDeTemas));
-                case 400:
+                case BADREQUEST:
                     return badRequest(temas.render(message, id, listaDeTemas));
                 default:
                     return badRequest(temas.render(message, id, listaDeTemas));
@@ -75,7 +77,7 @@ public class Temas {
         int dificuldade;
         if (filledForm.hasErrors()){
             flash("message", "Formulário invalido!");
-            return Temas.temas(QUATROCENTOS, idTema);
+            return Temas.temas(BADREQUEST, idTema);
         }
         try{
             dificuldade = Integer.parseInt(dificul);
@@ -83,17 +85,17 @@ public class Temas {
             Logger.debug("Usuário: " + session().get("user"));
         } catch (Exception e){
             flash("message", "Dificuldade deve ser um número inteiro!");
-            return Temas.temas(QUATROCENTOS, idTema);
+            return Temas.temas(BADREQUEST, idTema);
         }
         try{
             Tema tema = dao.findByEntityId(Tema.class, idTema);
             tema.addDificuldade(session().get("user"), dificuldade);
             dao.merge(tema);
             dao.flush();
-            return Temas.temas(DUZENTOS, idTema);
+            return Temas.temas(OK, idTema);
         } catch (Exception e){
             flash("message", e.getMessage());
-            return Temas.temas(QUATROCENTOS, idTema);
+            return Temas.temas(BADREQUEST, idTema);
         }
     }
 }

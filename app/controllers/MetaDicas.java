@@ -23,9 +23,7 @@ import static play.mvc.Results.ok;
 public class MetaDicas {
 
     private static GenericDAO dao = new GenericDAO();
-    private static final int ZERO = 0;
     private static final int OPINIAO_NEGATIVA= 0;
-    private static final int UM = 1;
     private static final int OPINIAO_POSITIVA= 1;
 
     @Transactional
@@ -39,7 +37,7 @@ public class MetaDicas {
         Map<String, String> form = filledForm.data();
         List<DicaGenerica> dicas = new ArrayList<DicaGenerica>();
 
-        for (int i = ZERO; i < form.size() - UM; i++){
+        for (int i = 0; i < form.size() - 1; i++){
             dicas.add(dao.findByEntityId(DicaGenerica.class, Long.parseLong(form.get("dica["+i+"]"))));
         }
 

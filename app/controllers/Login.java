@@ -23,6 +23,8 @@ import static play.mvc.Results.ok;
 public class Login {
 
     private static GenericDAO dao = new GenericDAO();
+    private static final int BADREQUEST = 400;
+    private static final int OK = 200;
 
     public String user;
     public String senha;
@@ -40,7 +42,7 @@ public class Login {
             session().clear();
             session("user", usuario);
             flash("message", "Login efetuado com sucesso!");
-            return Temas.temas(200);
+            return Temas.temas(OK);
         }
     }
 
@@ -51,16 +53,15 @@ public class Login {
             return ok(index.render(""));
         } else {
             flash("message", "Erro: Tente fazer logout novamente!");
-            return Temas.temas(400);
+            return Temas.temas(BADREQUEST);
         }
     }
 
     @Transactional
     public static Result show() {
         if (session().get("user") != null) {
-            //return badRequest(temas.render("Erro: Você já está logado!", Temas.temas()));
             flash("message", "Erro: Você já está logado!");
-            return Temas.temas(400);
+            return Temas.temas(BADREQUEST);
         }
         return ok(login.render(""));
     }

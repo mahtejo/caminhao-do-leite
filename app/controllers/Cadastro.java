@@ -23,7 +23,7 @@ import static play.mvc.Results.ok;
 public class Cadastro {
 
     private static GenericDAO dao = new GenericDAO();
-    private static final int QUATROCENTOS = 400;
+    private static final int BADREQUEST = 400;
     @Transactional
     public static Result cadastrar() {
         DynamicForm filledForm = Form.form().bindFromRequest();
@@ -51,7 +51,7 @@ public class Cadastro {
             return ok(cadastro.render(""));
         } else {
             flash("message", "Erro: Faça logout para se cadastrar!");
-            return Temas.temas(QUATROCENTOS);
+            return Temas.temas(BADREQUEST);
         }
     }
 
