@@ -11,20 +11,49 @@
 
             <title>Caminhão do Leite</title>
 
-            <link href="@routes.Assets.at("stylesheets/bootstrap.css")" rel="stylesheet" media="screen">
-            <link href="@routes.Assets.at("stylesheets/sb-admin.css")" rel="stylesheet" media="screen">
-            <link href="@routes.Assets.at("stylesheets/plugins/morris.css")" rel="stylesheet" media="screen">
-            <link href="@routes.Assets.at("font-awesome/css/font-awesome.min.css")" rel="stylesheet" media="screen">
+                <!-- Bootstrap Core CSS -->
+            <link href="@routes.Assets.at("stylesheets/bootstrap.css")" rel="stylesheet">
+
+                <!-- Custom CSS -->
+            <link href="@routes.Assets.at("stylesheets/sb-admin.css")" rel="stylesheet">
+
+                <!-- Morris Charts CSS -->
+            <link href="@routes.Assets.at("stylesheets/plugins/morris.css")" rel="stylesheet">
+
+                <!-- Custom Fonts -->
+            <link href="@routes.Assets.at("font-awesome/css/font-awesome.min.css")" rel="stylesheet" type="text/css">
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 
                 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
                 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-                <!--[if lt IE 9]>
-    <script src="@routes.Assets.at("js/html5shiv.js")">
-    <script src="@routes.Assets.at("js/respond.min.js")"></script>
-    <![endif]-->
+                <!--[if lt IE 9]>-->
+            <script src="@routes.Assets.at("js/html5shiv.js")"></script>
+            <script src="@routes.Assets.at("js/respond.min.js")"></script>
 
+            <script type="text/javascript">
+            $(document).ready(function(){
+            $('[data-show="tooltip"]').tooltip({
+            placement : 'top'
+            });
+            $('[data-show="tooltip-right"]').tooltip({
+            placement : 'right'
+            });
+            $('[data-show="tooltip-left"]').tooltip({
+            placement : 'left'
+            });
+            $('[data-show="tooltip-down"]').tooltip({
+            placement : 'bottom'
+            });
+            });
+            </script>
 
+            <style type="text/css">
+            .bs-example{
+            margin: 100px 50px;
+            }
+            </style>
 
         </head>
 
@@ -109,16 +138,47 @@
                                     </div>
                                 }
                                 <br>
-                                <img src="http://br.iyf.org/CONTENTS/data/file/reflexao/929145166_RI2Jup1r_vaca.jpg">
+                                <div class="row">
+                                    <div class="col-lg-6 text-center">
+                                        <div class="panel panel-green">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Interface intuitiva e moderna</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                Com um menu de fácil navagação, você pode facilmente navegar entre os temas.<br><br>
+                                                <a href='http://s23.postimg.org/dtbk4g7zf/menu_itertivo.png' alt="Clique para ampliar. Na imagem: Menu da Aplicação." target='_blank'><img src='http://s4.postimg.org/wdh5vcmvd/menu_itertivo.jpg' border='0' /></a>
+                                                <br><br>
+                                                    Clicar em um tema te levará à página de dicas do tema escolhido. O usuário poderá avaliar a dificuldade de um tema,
+                                                    e a média e a mediana da dificuldade de todos os usuários que o avaliaram ficará disponível.<br><br>
+                                                    <a href='http://s23.postimg.org/6njt1zywb/media.png' target='_blank' alt="Clique para ampliar. Na imagem: Média dos temas."><img src='http://s4.postimg.org/pyi4yog5l/media.jpg' data-show="tooltip-left" border='0' alt="Clique para ampliar. Na imagem: Média dos temas." /></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 text-center">
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Discutir e compartilhar suas ideias nunca foi tão fácil</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <br>
+                                                O fórum de discussões do Caminhão do Leite foi projetado para garantir uma experiência confortável para o usuário, permitindo que
+                                                ele avalie as dicas postadas, comente-as e sinalize caso o conteúdo seja inapropriado.<br><br>
+                                                <a href='http://s23.postimg.org/o62g49qwb/resposta.png' target='_blank'><img src='http://s4.postimg.org/qt4okpo09/resposta.jpg' border='0' alt="resposta" /></a>
+                                                <br><br>
+                                                Quando a discussão se torna muito grande, nada melhor do que poder recolher as discussões que não te interessam e poder focar no
+                                                mais importante.<br><br>
+                                                <a href='http://s23.postimg.org/8te3wi2cr/forum_recolhido.png' target='_blank'><img src='http://s4.postimg.org/9rbuim955/forum_recolhido.jpg' border='0' alt="forum recolhido" /></a>
+                                               </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <br>
-                                // explicando como o sistema funciona aqui
-                                <br>
-                                // alguns prints das páginas do sistema aqui
-                                <br>
-                                // essa é a ultima coisa que será concluida :)
-                                <br><br>
-                                E agora apresentamos a Genivalda:<br><br>
-                                <img src="http://media.giphy.com/media/h55EUEsTG9224/giphy.gif">
+                                <center>Nós esperamos que você aproveite todos os recursos do nosso portal, e use-o para pagar suas disciplinas
+                                da melhor forma possível!<br><br></center>
+
+                                <center> <img src="http://data2.whicdn.com/images/32795481/original.gif"></center>
+
 
                             </div>
                         </div><br>
@@ -139,7 +199,6 @@
                 <!-- /#page-wrapper -->
 
 
-                <!-- /#wrapper -->
 
                 <!-- jQuery -->
             <script src="@routes.Assets.at("js/jquery.js")"></script>
@@ -152,6 +211,14 @@
             <script src="@routes.Assets.at("js/plugins/morris/raphael.min.js")"></script>
             <script src="@routes.Assets.at("js/plugins/morris/morris.min.js")"></script>
             <script src="@routes.Assets.at("js/plugins/morris/morris-data.js")"></script>
+
+
+                <!-- Flot Charts JavaScript -->
+            <script src="@routes.Assets.at("js/plugins/flot/jquery.flot.js")"></script>
+            <script src="@routes.Assets.at("js/plugins/flot/jquery.flot.tooltip.min.js")"></script>
+            <script src="@routes.Assets.at("js/plugins/flot/jquery.flot.resize.js")"></script>
+            <script src="@routes.Assets.at("js/plugins/flot/jquery.flot.pie.js")"></script>
+            <script src=@routes.Assets.at("js/plugins/flot/flot-data.js")""></script>
 
         </body>
 
