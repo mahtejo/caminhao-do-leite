@@ -88,10 +88,10 @@ public class MetaDicas {
     public static Result show() {
         String message = flash("message");
         List<DicaGenerica> dicas = dao.findAllByClass(DicaGenerica.class);
-        List<DicaGenerica> metaDicas = new ArrayList<DicaGenerica>();
+        List<MetaDica> metaDicas = new ArrayList<MetaDica>();
         for (DicaGenerica dica: dicas){
             if (dica instanceof MetaDica){
-                metaDicas.add(dica);
+                metaDicas.add((MetaDica)dica);
             }
         }
         return ok(metadicas.render(message, dicas, metaDicas));
