@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Usuario {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column
@@ -16,7 +16,7 @@ public class Usuario {
     @Column
     private String senha;
     @Column
-    private String user;
+    private String usuario;
 
     public Usuario() {
     }
@@ -48,20 +48,19 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
-        /*this.senha = BCrypt.hashpw(senha, BCrypt.gensalt());*/
-        this.senha = senha;
+        this.senha = BCrypt.hashpw(senha, BCrypt.gensalt());
     }
 
     public String getUser() {
-        return user;
+        return usuario;
     }
 
     public void setUser(String user) {
-        this.user = user;
+        this.usuario = user;
     }
 
     public boolean autentica(String user, String password) {
-        if (user.equals(getUser()) && password.equals(getSenha())/*BCrypt.checkpw(password, getSenha())*/){
+        if (user.equals(getUser()) && BCrypt.checkpw(password, getSenha())){
             return true;
         }
         return false;
