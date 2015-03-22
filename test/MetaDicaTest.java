@@ -16,25 +16,18 @@ import static org.junit.Assert.fail;
  */
 public class MetaDicaTest extends AbstractTest {
 
-    DicaGenerica dica1, dica2, dica3, dica4;
     List<DicaGenerica> dicas;
     GenericDAO dao = new GenericDAO();
-    Tema tema;
 
-    @Before
-    public void before() throws Exception {
-        Tema tema = new Tema("OO");
-        dica1 = new Conselho("admin", tema, "Estude");
-        dica2 = new PrecisaSaber("admin", tema, "Tudo");
-        dica3 = new DisciplinaUtil("admin", tema, "Programação 2", "Porque sim");
-        dica4 = new MaterialUtil("admin", tema, "http://www.google.com.br");
-        dicas = new ArrayList<DicaGenerica>();
-    }
-
-   /* @Test
+    @Test
     public void deveAdicionarMetaDicas() throws Exception {
-        dao.persist(dica1);
-        dao.persist(dica2);
+        Tema tema = new Tema("OO");
+        Dica dica1 = new Conselho("admin", tema, "Estude");
+        Dica dica2 = new PrecisaSaber("admin", tema, "Tudo");
+        tema.addDica(dica1);
+        tema.addDica(dica2);
+
+        dao.persist(tema);
 
         dicas = dao.findAllByClass(DicaGenerica.class);
         assertThat(dicas.size()).isEqualTo(2);
@@ -42,8 +35,10 @@ public class MetaDicaTest extends AbstractTest {
         DicaGenerica metaDica = new MetaDica("admin", "Concordo com tudo", dicas);
         dao.persist(metaDica);
 
-        assertThat(dicas.size()).isEqualTo(2);
-    }*/
+        dicas = dao.findAllByClass(DicaGenerica.class);
+
+        assertThat(dicas.size()).isEqualTo(3);
+    }
 
     @Test
     public void naoDeveCriarMetaDicaVazia(){

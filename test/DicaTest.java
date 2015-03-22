@@ -58,7 +58,7 @@ public class DicaTest extends AbstractTest{
         dicas = dao.findAllByClass(DicaGenerica.class);
 
         assertThat(dicas.size()).isEqualTo(1);
-        assertThat(dicas.get(0).toString()).isEqualTo("Nome: Programação 2\n Razão: Padrões de projeto");
+        assertThat(dicas.get(0).toString()).isEqualTo("Nome: Programação 2\nRazão: Padrões de projeto\n");
     }
 
     @Test
