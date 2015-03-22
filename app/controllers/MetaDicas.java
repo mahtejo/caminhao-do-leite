@@ -23,6 +23,10 @@ import static play.mvc.Results.ok;
 public class MetaDicas {
 
     private static GenericDAO dao = new GenericDAO();
+    private static final int ZERO = 0;
+    private static final int OPINIAO_NEGATIVA= 0;
+    private static final int UM = 1;
+    private static final int OPINIAO_POSITIVA= 1;
 
     @Transactional
     public static Result addMetaDica() {
@@ -35,7 +39,7 @@ public class MetaDicas {
         Map<String, String> form = filledForm.data();
         List<DicaGenerica> dicas = new ArrayList<DicaGenerica>();
 
-        for (int i = 0; i < form.size() - 1; i++){
+        for (int i = ZERO; i < form.size() - UM; i++){
             dicas.add(dao.findByEntityId(DicaGenerica.class, Long.parseLong(form.get("dica["+i+"]"))));
         }
 
@@ -57,7 +61,7 @@ public class MetaDicas {
             return show();
         }
         DicaGenerica dica = dao.findByEntityId(DicaGenerica.class, idMeta);
-        if (opiniao == 0){
+        if (opiniao == OPINIAO_NEGATIVA){
             String justificativa = filledForm.get("justificativa");
             try {
                 dica.addOpiniaoNegativa(session().get("user"), justificativa);
@@ -68,7 +72,7 @@ public class MetaDicas {
                 flash("message", e.getMessage());
                 return show();
             }
-        } else if (opiniao == 1){
+        } else if (opiniao == OPINIAO_POSITIVA){
             try {
                 dica.addOpiniaoPositiva(session().get("user"));
                 dao.merge(dica);
