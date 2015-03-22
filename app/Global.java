@@ -45,7 +45,7 @@ public class Global extends GlobalSettings {
 
     private void popularBD() throws Exception {
         Usuario usuario1 = new Usuario("Admin", "admin", "admin");
-        Usuario usuario2 = new Usuario("Órion Winter", "orion", "orion");
+        Usuario usuario2 = new Usuario("Orion Winter", "orion", "orion");
         dao.persist(usuario1);
         dao.persist(usuario2);
 
