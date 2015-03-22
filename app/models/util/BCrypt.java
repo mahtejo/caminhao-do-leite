@@ -405,7 +405,7 @@ public class BCrypt {
      * @return	base64-encoded string
      * @exception IllegalArgumentException if the length is invalid
      */
-    private static String encode_base64(byte d[], int len)
+    private static String encodeBase64(byte d[], int len)
             throws IllegalArgumentException {
         int off = 0;
         StringBuffer rs = new StringBuffer();
@@ -445,8 +445,9 @@ public class BCrypt {
      * @return	the decoded value of x
      */
     private static byte char64(char x) {
-        if ((int)x < 0 || (int)x > INTEX_64.length)
+        if ((int)x < 0 || (int)x > INTEX_64.length) {
             return -1;
+        }
         return INTEX_64[(int)x];
     }
 
@@ -459,7 +460,7 @@ public class BCrypt {
      * @return	an array containing the decoded bytes
      * @throws IllegalArgumentException if maxolen is invalid
      */
-    private static byte[] decode_base64(String s, int maxolen)
+    private static byte[] decodeBase64(String s, int maxolen)
             throws IllegalArgumentException {
         StringBuffer rs = new StringBuffer();
         int off = 0, slen = s.length(), olen = 0;
@@ -558,7 +559,7 @@ public class BCrypt {
     /**
      * Initialise the Blowfish key schedule
      */
-    private void init_key() {
+    private void initKey() {
         f = (int[]) P_ORIG.clone();
         s = (int[]) S_ORIG.clone();
     }
@@ -632,8 +633,8 @@ public class BCrypt {
      * @param cdata         the plaintext to encrypt
      * @return	an array containing the binary hashed password
      */
-    public byte[] crypt_raw(byte password[], byte salt[], int log_rounds,
-                            int cdata[]) {
+    public byte[] cryptRaw(byte password[], byte salt[], int log_rounds,
+                           int cdata[]) {
         int rounds, i, j;
         int clen = cdata.length;
         byte ret[];
@@ -645,7 +646,7 @@ public class BCrypt {
         if (salt.length != BCRYPT_SALT_LEN) {
             throw new IllegalArgumentException("Bad salt length");
         }
-        init_key();
+        initKey();
         ekskey(salt, password);
         for (i = 0; i != rounds; i++) {
             key(password);
@@ -676,8 +677,8 @@ public class BCrypt {
      * @return	the hashed password
      */
     public static String hashpw(String password, String salt) {
-        BCrypt B;
-        String real_salt;
+        BCrypt b;
+        String realSalt;
         byte passwordb[], saltb[], hashed[];
         char minor = (char)0;
         int rounds, off = 0;
@@ -703,17 +704,17 @@ public class BCrypt {
         }
         rounds = Integer.parseInt(salt.substring(off, off + TWO));
 
-        real_salt = salt.substring(off + THREE, off + TWENTY_FIVE);
+        realSalt = salt.substring(off + THREE, off + TWENTY_FIVE);
         try {
             passwordb = (password + (minor >= 'a' ? "\000" : "")).getBytes("UTF-8");
         } catch (UnsupportedEncodingException uee) {
             throw new AssertionError("UTF-8 is not supported");
         }
 
-        saltb = decode_base64(real_salt, BCRYPT_SALT_LEN);
+        saltb = decodeBase64(realSalt, BCRYPT_SALT_LEN);
 
-        B = new BCrypt();
-        hashed = B.crypt_raw(passwordb, saltb, rounds,
+        b = new BCrypt();
+        hashed = b.cryptRaw(passwordb, saltb, rounds,
                 (int[]) BF_CRYPT_CIPHERTEXT.clone());
 
         rs.append("$2");
@@ -730,49 +731,49 @@ public class BCrypt {
         }
         rs.append(Integer.toString(rounds));
         rs.append("$");
-        rs.append(encode_base64(saltb, saltb.length));
-        rs.append(encode_base64(hashed,
+        rs.append(encodeBase64(saltb, saltb.length));
+        rs.append(encodeBase64(hashed,
                 BF_CRYPT_CIPHERTEXT.length * FOUR - 1));
         return rs.toString();
     }
 
     /**
      * Generate a salt for use with the BCrypt.hashpw() method
-     * @param log_rounds	the log2 of the number of rounds of
+     * @param logRounds	the log2 of the number of rounds of
      * hashing to apply - the work factor therefore increases as
      * 2**log_rounds.
      * @param random		an instance of SecureRandom to use
      * @return	an encoded salt value
      */
-    public static String gensalt(int log_rounds, SecureRandom random) {
+    public static String gensalt(int logRounds, SecureRandom random) {
         StringBuffer rs = new StringBuffer();
         byte rnd[] = new byte[BCRYPT_SALT_LEN];
 
         random.nextBytes(rnd);
 
         rs.append("$2a$");
-        if (log_rounds < TEN) {
+        if (logRounds < TEN) {
             rs.append("0");
         }
-        if (log_rounds > THIRTY) {
+        if (logRounds > THIRTY) {
             throw new IllegalArgumentException(
                     "log_rounds exceeds maximum (30)");
         }
-        rs.append(Integer.toString(log_rounds));
+        rs.append(Integer.toString(logRounds));
         rs.append("$");
-        rs.append(encode_base64(rnd, rnd.length));
+        rs.append(encodeBase64(rnd, rnd.length));
         return rs.toString();
     }
 
     /**
      * Generate a salt for use with the BCrypt.hashpw() method
-     * @param log_rounds	the log2 of the number of rounds of
+     * @param logRounds	the log2 of the number of rounds of
      * hashing to apply - the work factor therefore increases as
      * 2**log_rounds.
      * @return	an encoded salt value
      */
-    public static String gensalt(int log_rounds) {
-        return gensalt(log_rounds, new SecureRandom());
+    public static String gensalt(int logRounds) {
+        return gensalt(logRounds, new SecureRandom());
     }
 
     /**
@@ -793,21 +794,21 @@ public class BCrypt {
      * @return	true if the passwords match, false otherwise
      */
     public static boolean checkpw(String plaintext, String hashed) {
-        byte hashed_bytes[];
+        byte hashedBytes[];
         byte try_bytes[];
         try {
-            String try_pw = hashpw(plaintext, hashed);
-            hashed_bytes = hashed.getBytes("UTF-8");
-            try_bytes = try_pw.getBytes("UTF-8");
+            String tryPw = hashpw(plaintext, hashed);
+            hashedBytes = hashed.getBytes("UTF-8");
+            try_bytes = tryPw.getBytes("UTF-8");
         } catch (UnsupportedEncodingException uee) {
             return false;
         }
-        if (hashed_bytes.length != try_bytes.length) {
+        if (hashedBytes.length != try_bytes.length) {
             return false;
         }
         byte ret = 0;
         for (int i = 0; i < try_bytes.length; i++) {
-            ret |= hashed_bytes[i] ^ try_bytes[i];
+            ret |= hashedBytes[i] ^ try_bytes[i];
         }
         return ret == 0;
     }

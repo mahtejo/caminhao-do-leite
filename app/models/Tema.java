@@ -27,6 +27,10 @@ public class Tema {
     @CollectionTable
     private Map<String, Integer> dificuldadeUsuarios;
 
+    private static final int DIFICULDADE_MINIMA = -2;
+    private static final int DIFICULDADE_MAXIMA = 2;
+    private static final int CONTEUDO_INAPROPRIADO_MAXIMO = 3;
+
     public Tema(){
         dicas = new ArrayList<DicaGenerica>();
         dificuldadeUsuarios = new HashMap<String, Integer>();
@@ -73,7 +77,7 @@ public class Tema {
     }
 
     public void addDificuldade(String usuario, int dificuldade) throws Exception {
-        if(usuario == null || dificuldade < -2 || dificuldade > 2){
+        if(usuario == null || dificuldade < DIFICULDADE_MINIMA || dificuldade > DIFICULDADE_MAXIMA){
             throw new Exception("Erro: Dificuldade deve ser entre -2 e 2!");
         }
         dificuldadeUsuarios.put(usuario, dificuldade);
@@ -123,7 +127,7 @@ public class Tema {
 
     public void informaConteudoInapropriado(DicaGenerica dica, String usuario) throws Exception {
         dica.informaConteudoInapropriado(usuario);
-        if (dica.numeroConteudoInapropriado() >= 3){
+        if (dica.numeroConteudoInapropriado() >= CONTEUDO_INAPROPRIADO_MAXIMO){
             dicas.remove(dica);
         }
     }
