@@ -48,7 +48,8 @@ public class Usuario {
     }
 
     public void setSenha(String senha) {
-        this.senha = BCrypt.hashpw(senha, BCrypt.gensalt());
+        /*this.senha = BCrypt.hashpw(senha, BCrypt.gensalt());*/
+        this.senha = senha;
     }
 
     public String getUser() {
@@ -60,7 +61,7 @@ public class Usuario {
     }
 
     public boolean autentica(String user, String password) {
-        if (user.equals(getUser()) && BCrypt.checkpw(password, getSenha())){
+        if (user.equals(getUser()) && password.equals(getSenha())/*BCrypt.checkpw(password, getSenha()*/)){
             return true;
         }
         return false;
