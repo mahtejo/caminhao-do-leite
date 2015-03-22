@@ -62,5 +62,4 @@ public class MetaDicas {
         }
         return ok(metadicas.render(message, dicas, metaDicas));
     }
-
 }
