@@ -17,13 +17,15 @@ import static play.mvc.Controller.session;
 public class Dicas {
 
     private static GenericDAO dao = new GenericDAO();
+    private static final int QUATROCENTOS = 400;
+    private static final int DUZENTOS = 200;
 
     @Transactional
     public static Result addDica(Long idTema) {
         DynamicForm filledForm = Form.form().bindFromRequest();
         if (filledForm.hasErrors()){
             flash("message", "Formulário invalido!");
-            return Temas.temas(400, idTema);
+            return Temas.temas(QUATROCENTOS, idTema);
         }
         Tema tema = dao.findByEntityId(Tema.class, idTema);
         if (filledForm.get("conselho") != null) {
@@ -34,10 +36,10 @@ public class Dicas {
                 dao.flush();
 
                 Logger.debug("Adicionou dica");
-                return Temas.temas(200, idTema);
+                return Temas.temas(DUZENTOS, idTema);
             } catch (Exception e) {
                 flash("message", e.getMessage());
-                return Temas.temas(400, idTema);
+                return Temas.temas(QUATROCENTOS, idTema);
             }
         } else if (filledForm.get("url") != null){
             try {
@@ -47,10 +49,10 @@ public class Dicas {
                 dao.flush();
 
                 Logger.debug("Adicionou dica");
-                return Temas.temas(200, idTema);
+                return Temas.temas(DUZENTOS, idTema);
             } catch (Exception e) {
                 flash("message", e.getMessage());
-                return Temas.temas(400, idTema);
+                return Temas.temas(QUATROCENTOS, idTema);
             }
         } else if (filledForm.get("disciplina") != null){
             try {
@@ -61,10 +63,10 @@ public class Dicas {
                 dao.flush();
 
                 Logger.debug("Adicionou dica");
-                return Temas.temas(200, idTema);
+                return Temas.temas(DUZENTOS, idTema);
             } catch (Exception e) {
                 flash("message", e.getMessage());
-                return Temas.temas(400, idTema);
+                return Temas.temas(QUATROCENTOS, idTema);
             }
         } else if (filledForm.get("assunto") != null){
             try {
@@ -74,14 +76,14 @@ public class Dicas {
                 dao.flush();
 
                 Logger.debug("Adicionou dica");
-                return Temas.temas(200, idTema);
+                return Temas.temas(DUZENTOS, idTema);
             } catch (Exception e) {
                 flash("message", e.getMessage());
-                return Temas.temas(400, idTema);
+                return Temas.temas(QUATROCENTOS, idTema);
             }
         }
         flash("message", "Ocorreu um erro");
-        return Temas.temas(400, idTema);
+        return Temas.temas(QUATROCENTOS, idTema);
     }
 
     @Transactional
@@ -89,7 +91,7 @@ public class Dicas {
         DynamicForm filledForm = Form.form().bindFromRequest();
         if (filledForm.hasErrors()){
             flash("message", "Formulário invalido!");
-            return Temas.temas(400, idTema);
+            return Temas.temas(QUATROCENTOS, idTema);
         }
         DicaGenerica dica = dao.findByEntityId(DicaGenerica.class, idDica);
         if (opiniao == 0){
@@ -98,24 +100,24 @@ public class Dicas {
                 dica.addOpiniaoNegativa(session().get("user"), justificativa);
                 dao.merge(dica);
                 dao.flush();
-                return Temas.temas(200, idTema);
+                return Temas.temas(DUZENTOS, idTema);
             } catch (Exception e) {
                 flash("message", e.getMessage());
-                return Temas.temas(400, idTema);
+                return Temas.temas(QUATROCENTOS, idTema);
             }
         } else if (opiniao == 1){
             try {
                 dica.addOpiniaoPositiva(session().get("user"));
                 dao.merge(dica);
                 dao.flush();
-                return Temas.temas(200, idTema);
+                return Temas.temas(DUZENTOS, idTema);
             } catch (Exception e) {
                 flash("message", e.getMessage());
-                return Temas.temas(400, idTema);
+                return Temas.temas(QUATROCENTOS, idTema);
             }
         } else {
             flash("message", "Erro: Não foi possível adicionar opinião!");
-            return Temas.temas(400, idTema);
+            return Temas.temas(QUATROCENTOS, idTema);
         }
     }
 
@@ -126,10 +128,10 @@ public class Dicas {
 
         try {
             tema.informaConteudoInapropriado(dica, session().get("user"));
-            return Temas.temas(200, idTema);
+            return Temas.temas(DUZENTOS, idTema);
         } catch (Exception e) {
             flash("message", e.getMessage());
-            return Temas.temas(400, idTema);
+            return Temas.temas(QUATROCENTOS, idTema);
         }
     }
 }
