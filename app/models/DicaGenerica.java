@@ -57,6 +57,13 @@ public abstract class DicaGenerica implements Comparable<DicaGenerica> {
         }
     }
 
+    public void addOpiniaoNegativa(String usuario) throws Exception {
+        if(!isMensagemFixada()) {
+            opinioesPositivas.remove(usuario);
+            opinioesNegativas.put(usuario, "");
+        }
+    }
+
     public void addOpiniaoNegativa(String usuario, String opiniao) throws Exception {
         if(!isMensagemFixada()) {
             if (opiniao.length() > OPINIAO_MAX) {

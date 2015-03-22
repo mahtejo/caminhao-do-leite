@@ -62,9 +62,8 @@ public class MetaDicas {
         }
         DicaGenerica dica = dao.findByEntityId(DicaGenerica.class, idMeta);
         if (opiniao == OPINIAO_NEGATIVA){
-            String justificativa = filledForm.get("justificativa");
             try {
-                dica.addOpiniaoNegativa(session().get("user"), justificativa);
+                dica.addOpiniaoNegativa(session().get("user"));
                 dao.merge(dica);
                 dao.flush();
                 return show();
