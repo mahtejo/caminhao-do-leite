@@ -111,7 +111,7 @@
                                 <a href="javascript:;" data-toggle="collapse" data-target="#do"><i class="fa fa-fw fa-desktop"></i> Temas Práticos<i class="fa fa-fw fa-caret-down"></i></a>
                                 <ul id="do" class="collapse">
                                 @if(temas.size >= 9) {
-                                    @for(i <- 9 until temas.size) {
+                                    @for(i <- 9 until 12) {
                                         <li>
                                             <a href="@routes.Temas.temas(temas(i).getId)"> @temas(i).getNome() </a>
                                         </li>
